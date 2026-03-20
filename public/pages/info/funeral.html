@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>장례안내 - 천주교 노원성당</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/style.css" />
+  <style>
+    .funeral-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 1.5rem 0 2rem;
+      position: relative;
+    }
+    .funeral-step {
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      padding: 1rem 0;
+      position: relative;
+    }
+    .funeral-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 20px;
+      top: 52px;
+      bottom: 0;
+      width: 2px;
+      background: var(--border);
+    }
+    .funeral-num {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      flex-shrink: 0;
+      font-family: 'Noto Serif KR', serif;
+      position: relative;
+      z-index: 1;
+    }
+    .funeral-detail h4 {
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.3rem;
+      font-size: 1rem;
+    }
+    .funeral-detail p {
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.7;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <header id="header">
+    <div class="header-inner">
+      <div class="logo">
+        <a href="../../index.html">
+          <span class="logo-cross">✝</span>
+          <div class="logo-text">
+            <span class="logo-main">노원성당</span>
+            <span class="logo-sub">천주교 서울대교구 5지구장</span>
+          </div>
+        </a>
+      </div>
+      <nav id="nav">
+        <ul>
+          <li class="has-dropdown">
+            <a href="#">노원본당 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/nowon/saint.html">주보성인</a></li>
+              <li><a href="../../pages/nowon/greeting.html">주임신부 인사말</a></li>
+              <li><a href="../../pages/nowon/guideline.html">본당 사목지침</a></li>
+              <li><a href="../../pages/nowon/father.html">본당사제단</a></li>
+              <li><a href="../../pages/nowon/sister.html">수녀님</a></li>
+              <li><a href="../../pages/nowon/father_history.html">역대 본당 신부</a></li>
+              <li><a href="../../pages/nowon/conference.html">사목협의회</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">사목안내 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/business/guide.html">업무안내</a></li>
+              <li><a href="../../pages/business/location.html">찾아오시는 길</a></li>
+              <li><a href="../../pages/business/office.html">사무실 안내</a></li>
+              <li><a href="../../pages/business/faq.html">자주하는 질문</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">본당소식 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/board/notice.html">공지사항</a></li>
+              <li><a href="../../pages/board/free.html">자유게시판</a></li>
+              <li><a href="../../pages/board/bulletin.html">본당주보</a></li>
+              <li><a href="../../pages/board/volunteer.html">전례 봉사자</a></li>
+              <li><a href="../../pages/board/recruit.html">단체모집</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">자료실 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/dataroom/photo.html">사진자료실</a></li>
+              <li><a href="../../pages/dataroom/video.html">동영상자료실</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">미사와 성사 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/info/mass.html">미사 안내</a></li>
+              <li><a href="../../pages/info/baptism.html">세례성사</a></li>
+              <li><a href="../../pages/info/eucharist.html">성체성사</a></li>
+              <li><a href="../../pages/info/confirmation.html">견진성사</a></li>
+              <li><a href="../../pages/info/confession.html">고해성사</a></li>
+              <li><a href="../../pages/info/marriage.html">혼인성사</a></li>
+              <li><a href="../../pages/info/anointing.html">병자성사</a></li>
+              <li><a href="../../pages/info/funeral.html">장례안내</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">가톨릭 안내 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/catholic/intro.html">가톨릭 첫걸음</a></li>
+              <li><a href="../../pages/catholic/doctrine.html">기본교리</a></li>
+              <li><a href="../../pages/catholic/history.html">한국천주교회사</a></li>
+              <li><a href="../../pages/catholic/class.html">예비신자교리반</a></li>
+              <li><a href="../../pages/catholic/study.html">성경공부모임</a></li>
+              <li><a href="../../pages/catholic/prayer.html">기도문</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 서브페이지 배너 -->
+  <div class="sub-banner">
+    <div class="sub-banner-inner">
+      <p class="breadcrumb"><a href="../../index.html">홈</a> <span>›</span> 미사와 성사 <span>›</span> 장례안내</p>
+      <h1>장례안내</h1>
+    </div>
+  </div>
+
+  <!-- 본문 -->
+  <main class="sub-main">
+    <div class="container">
+      <div class="sub-layout">
+        <!-- 사이드 메뉴 -->
+        <aside class="sub-sidebar">
+          <div class="sidebar-menu">
+            <h3 class="sidebar-title">미사와 성사</h3>
+            <ul>
+              <li><a href="mass.html">미사 안내</a></li>
+              <li><a href="baptism.html">세례성사</a></li>
+              <li><a href="eucharist.html">성체성사</a></li>
+              <li><a href="confirmation.html">견진성사</a></li>
+              <li><a href="confession.html">고해성사</a></li>
+              <li><a href="marriage.html">혼인성사</a></li>
+              <li><a href="anointing.html">병자성사</a></li>
+              <li class="active"><a href="funeral.html">장례안내</a></li>
+            </ul>
+          </div>
+        </aside>
+
+        <!-- 본문 콘텐츠 -->
+        <section class="sub-content">
+          <div class="content-header">
+            <h2>장례안내</h2>
+          </div>
+
+          <div class="content-body">
+
+            <div style="background: linear-gradient(135deg, #1a2c4e, #253d68); color: white; border-radius: 12px; padding: 1.5rem 2rem; margin-bottom: 2rem; font-family: 'Noto Serif KR', serif; font-size: 1.05rem; line-height: 1.8; text-align: center;">
+              "나는 부활이요 생명이니, 나를 믿는 사람은 죽더라도 살 것이다."<br>
+              <span style="font-size: 0.8rem; color: rgba(255,255,255,0.6); font-family: 'Noto Sans KR', sans-serif;">(요한 11,25)</span>
+            </div>
+
+            <h3>가톨릭 장례의 의미</h3>
+            <p>교회는 장례식을 통하여 <strong>그리스도의 파스카 신비</strong>를 드러내며, 영원한 생명에 대한 희망을 강조합니다. 가톨릭 장례는 죽음을 슬픔으로만 바라보지 않고, 부활하신 주님 안에서의 새로운 생명으로 나아가는 여정으로 이해합니다.</p>
+
+            <p>신자가 선종(善終)하면 연령회 단원들이 위로와 함께 기도로 고인의 명복을 빕니다. 장례는 교회의 전례에 따라 엄숙하고 품위 있게 거행됩니다.</p>
+
+            <h3>장례 절차</h3>
+            <div class="funeral-flow">
+              <div class="funeral-step">
+                <div class="funeral-num">1</div>
+                <div class="funeral-detail">
+                  <h4>임종 → 연락</h4>
+                  <p>신자가 위독하거나 선종하면 즉시 본당 사무실(02-933-9981) 또는 연령회에 연락합니다. 병자성사(종부성사)가 필요한 경우도 함께 알립니다.</p>
+                </div>
+              </div>
+              <div class="funeral-step">
+                <div class="funeral-num">2</div>
+                <div class="funeral-detail">
+                  <h4>출관예식</h4>
+                  <p>장례 첫날 빈소에서 연령회 단원들이 함께 기도하며 위령 예절을 거행합니다.</p>
+                </div>
+              </div>
+              <div class="funeral-step">
+                <div class="funeral-num">3</div>
+                <div class="funeral-detail">
+                  <h4>장례미사</h4>
+                  <p>본당 성당에서 신부님 집전으로 장례미사가 거행됩니다. 유족과 신자들이 함께 고인을 위해 기도합니다.</p>
+                </div>
+              </div>
+              <div class="funeral-step">
+                <div class="funeral-num">4</div>
+                <div class="funeral-detail">
+                  <h4>고별식</h4>
+                  <p>장례미사 후 고인에 대한 마지막 작별 인사를 나눕니다.</p>
+                </div>
+              </div>
+              <div class="funeral-step">
+                <div class="funeral-num">5</div>
+                <div class="funeral-detail">
+                  <h4>운구예식 및 하관예식</h4>
+                  <p>묘지 또는 납골당으로 이동하여 하관예식을 거행합니다. 신부님 또는 연령회 단원들이 함께 기도합니다.</p>
+                </div>
+              </div>
+            </div>
+
+            <h3>연령회 안내</h3>
+            <p>노원성당 연령회는 본당 신자들의 장례를 돕고, 선종한 신자들을 위해 기도하는 단체입니다. 장례 발생 시 연령회에 연락하면 기도와 실무적인 도움을 받으실 수 있습니다.</p>
+
+            <table class="info-table">
+              <thead>
+                <tr>
+                  <th>항목</th>
+                  <th>내용</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>장례 연락처</strong></td>
+                  <td>본당 사무실: 02-933-9981</td>
+                </tr>
+                <tr>
+                  <td><strong>위령 미사</strong></td>
+                  <td>매주 월요일 06:00 (위령미사)</td>
+                </tr>
+                <tr>
+                  <td><strong>11월 위령성월</strong></td>
+                  <td>매년 11월, 특별 위령미사 및 묘지 순례 거행</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="contact-box">
+              <h4>✝ 장례 발생 시 연락처</h4>
+              <p style="font-size: 0.95rem; color: var(--text); line-height: 1.8;">
+                장례가 발생하면 가능한 빨리 본당 사무실에 연락주시기 바랍니다.<br>
+                📞 본당 사무실: <strong>02-933-9981</strong><br>
+                근무시간 외에는 자동응답 안내를 확인하시거나, 다음 날 아침 연락주세요.
+              </p>
+            </div>
+
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="footer-cross">✝</span>
+          <div>
+            <h3>천주교 노원성당</h3>
+            <p>천주교 서울대교구 5지구장</p>
+          </div>
+        </div>
+        <div class="footer-info">
+          <p>📞 02-933-9981 &nbsp;|&nbsp; 📠 02-933-9986</p>
+          <p>서울특별시 노원구 한글비석로 585</p>
+        </div>
+        <a href="../../admin/" class="admin-link">관리자</a>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 천주교 노원성당. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../js/sub.js"></script>
+</body>
+</html>

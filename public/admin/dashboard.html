@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>관리자 대시보드 – 노원성당</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+
+  <!-- 사이드바 -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-cross">✝</span>
+      <div>
+        <div class="sidebar-title">노원성당</div>
+        <div class="sidebar-sub">관리자 패널</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-section="banner">
+        <span class="nav-icon">🖼️</span> 배너 관리
+      </a>
+      <a href="#" class="nav-item" data-section="parish-info">
+        <span class="nav-icon">⛪</span> 성당 기본 정보
+      </a>
+      <a href="#" class="nav-item" data-section="mass-schedule">
+        <span class="nav-icon">🕐</span> 미사 시간 관리
+      </a>
+      <a href="#" class="nav-item" data-section="parish-services">
+        <span class="nav-icon">📋</span> 성당 업무 정보
+      </a>
+      <a href="#" class="nav-item" data-section="notices">
+        <span class="nav-icon">📢</span> 공지사항 관리
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../index.html" target="_blank" class="sidebar-link">🏠 홈페이지 보기</a>
+      <button class="btn-logout" id="logoutBtn">로그아웃</button>
+    </div>
+  </aside>
+
+  <!-- 메인 콘텐츠 -->
+  <main class="main">
+    <div class="topbar">
+      <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+      <h1 class="page-title" id="pageTitle">배너 관리</h1>
+      <div class="admin-badge">관리자</div>
+    </div>
+
+    <div class="content">
+
+      <!-- ① 배너 관리 -->
+      <section class="panel active" id="section-banner">
+        <div class="panel-header">
+          <h2>배너 이미지 &amp; 텍스트 관리</h2>
+          <p>메인 화면 상단 히어로 영역을 수정합니다.</p>
+        </div>
+
+        <div class="card-grid two-col">
+          <!-- 배너 이미지 -->
+          <div class="card">
+            <div class="card-title">배너 이미지</div>
+            <div class="banner-preview" id="bannerPreview">
+              <div class="banner-preview-inner">
+                <span id="bannerPreviewIcon">🖼️</span>
+                <p id="bannerPreviewText">이미지를 업로드하세요</p>
+              </div>
+            </div>
+            <label class="upload-label" for="bannerImageInput">
+              📁 이미지 선택 (JPG, PNG, WebP)
+            </label>
+            <input type="file" id="bannerImageInput" accept="image/*" style="display:none" />
+            <p class="hint">권장 크기: 1920 × 1080px 이상</p>
+            <div class="form-group" style="margin-top:1rem">
+              <label>배경 오버레이 투명도</label>
+              <input type="range" id="overlayOpacity" min="0" max="0.8" step="0.05" value="0.4" />
+              <span id="overlayVal">40%</span>
+            </div>
+            <button class="btn btn-primary" id="saveBannerImage">이미지 저장</button>
+          </div>
+
+          <!-- 배너 텍스트 -->
+          <div class="card">
+            <div class="card-title">배너 텍스트</div>
+            <div class="form-group">
+              <label>상단 라벨 (소제목)</label>
+              <input type="text" id="heroLabel" placeholder="천주교 서울대교구 5지구장" />
+            </div>
+            <div class="form-group">
+              <label>메인 제목</label>
+              <input type="text" id="heroTitle" placeholder="노원성당" />
+            </div>
+            <div class="form-group">
+              <label>부제목 설명</label>
+              <input type="text" id="heroDesc" placeholder="하느님 안에서 함께하는 노원 신앙 공동체" />
+            </div>
+            <div class="form-group">
+              <label>버튼 1 텍스트</label>
+              <input type="text" id="heroBtn1" placeholder="미사 시간 보기" />
+            </div>
+            <div class="form-group">
+              <label>버튼 2 텍스트</label>
+              <input type="text" id="heroBtn2" placeholder="오시는 길" />
+            </div>
+            <button class="btn btn-primary" id="saveBannerText">텍스트 저장</button>
+          </div>
+        </div>
+
+        <!-- 미리보기 -->
+        <div class="card" style="margin-top:1.5rem">
+          <div class="card-title">현재 배너 미리보기</div>
+          <div class="hero-mockup" id="heroMockup">
+            <div class="hero-mockup-overlay" id="heroMockupOverlay"></div>
+            <div class="hero-mockup-content">
+              <p class="mockup-label" id="mockupLabel">천주교 서울대교구 5지구장</p>
+              <h2 class="mockup-title" id="mockupTitle">노원성당</h2>
+              <p class="mockup-desc" id="mockupDesc">하느님 안에서 함께하는 노원 신앙 공동체</p>
+              <div class="mockup-btns">
+                <span class="mockup-btn primary" id="mockupBtn1">미사 시간 보기</span>
+                <span class="mockup-btn outline" id="mockupBtn2">오시는 길</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ② 성당 기본 정보 -->
+      <section class="panel" id="section-parish-info">
+        <div class="panel-header">
+          <h2>성당 기본 정보</h2>
+          <p>홈페이지에 표시되는 성당의 기본 정보를 수정합니다.</p>
+        </div>
+        <div class="card-grid two-col">
+          <div class="card">
+            <div class="card-title">연락처 정보</div>
+            <div class="form-group">
+              <label>성당 이름</label>
+              <input type="text" id="parishName" placeholder="천주교 노원성당" />
+            </div>
+            <div class="form-group">
+              <label>소속 교구</label>
+              <input type="text" id="parishDiocese" placeholder="천주교 서울대교구 5지구장" />
+            </div>
+            <div class="form-group">
+              <label>전화번호</label>
+              <input type="tel" id="parishPhone" placeholder="02-933-9981" />
+            </div>
+            <div class="form-group">
+              <label>팩스</label>
+              <input type="tel" id="parishFax" placeholder="02-933-9986" />
+            </div>
+            <div class="form-group">
+              <label>이메일</label>
+              <input type="email" id="parishEmail" placeholder="nowon@catholic.or.kr" />
+            </div>
+            <button class="btn btn-primary" id="saveParishContact">저장</button>
+          </div>
+          <div class="card">
+            <div class="card-title">주소 및 위치</div>
+            <div class="form-group">
+              <label>도로명 주소</label>
+              <input type="text" id="parishAddress" placeholder="서울특별시 노원구 노원로 000" />
+            </div>
+            <div class="form-group">
+              <label>지하철 안내</label>
+              <input type="text" id="parishSubway" placeholder="7호선 노원역 하차 후 도보 5분" />
+            </div>
+            <div class="form-group">
+              <label>버스 안내</label>
+              <input type="text" id="parishBus" placeholder="노원역 정류장 하차" />
+            </div>
+            <div class="form-group">
+              <label>주차 안내</label>
+              <input type="text" id="parishParking" placeholder="성당 주차장 이용 가능" />
+            </div>
+            <div class="form-group">
+              <label>Google Maps 임베드 URL</label>
+              <input type="text" id="parishMapUrl" placeholder="https://www.google.com/maps/embed?pb=..." />
+              <p class="hint">Google Maps → 공유 → 지도 퍼가기 → URL 복사</p>
+            </div>
+            <button class="btn btn-primary" id="saveParishLocation">저장</button>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:1.5rem">
+          <div class="card-title">성당 소개 문구</div>
+          <div class="card-grid three-col">
+            <div class="form-group">
+              <label>카드 1 제목</label>
+              <input type="text" id="aboutCard1Title" placeholder="본당 소개" />
+              <label style="margin-top:0.75rem">카드 1 내용</label>
+              <textarea id="aboutCard1Desc" rows="4" placeholder="본당 소개 내용..."></textarea>
+            </div>
+            <div class="form-group">
+              <label>카드 2 제목</label>
+              <input type="text" id="aboutCard2Title" placeholder="사목 방향" />
+              <label style="margin-top:0.75rem">카드 2 내용</label>
+              <textarea id="aboutCard2Desc" rows="4" placeholder="사목 방향 내용..."></textarea>
+            </div>
+            <div class="form-group">
+              <label>카드 3 제목</label>
+              <input type="text" id="aboutCard3Title" placeholder="단체 활동" />
+              <label style="margin-top:0.75rem">카드 3 내용</label>
+              <textarea id="aboutCard3Desc" rows="4" placeholder="단체 활동 내용..."></textarea>
+            </div>
+          </div>
+          <button class="btn btn-primary" id="saveAboutCards">저장</button>
+        </div>
+      </section>
+
+      <!-- ③ 미사 시간 관리 -->
+      <section class="panel" id="section-mass-schedule">
+        <div class="panel-header">
+          <h2>미사 시간 관리</h2>
+          <p>주일·평일 미사 시간을 수정하고 특이사항을 추가합니다.</p>
+        </div>
+
+        <div class="card-grid two-col">
+          <!-- 주일 미사 -->
+          <div class="card">
+            <div class="card-title">주일 미사</div>
+            <div id="sundayMassList" class="mass-edit-list"></div>
+            <button class="btn btn-secondary" id="addSundayMass">+ 시간 추가</button>
+            <button class="btn btn-primary" style="margin-top:0.75rem" id="saveSundayMass">저장</button>
+          </div>
+
+          <!-- 평일 미사 -->
+          <div class="card">
+            <div class="card-title">평일 미사</div>
+            <div id="weekdayMassList" class="mass-edit-list"></div>
+            <button class="btn btn-secondary" id="addWeekdayMass">+ 시간 추가</button>
+            <button class="btn btn-primary" style="margin-top:0.75rem" id="saveWeekdayMass">저장</button>
+          </div>
+        </div>
+
+        <!-- 고해성사 -->
+        <div class="card" style="margin-top:1.5rem">
+          <div class="card-title">고해성사 시간</div>
+          <div class="card-grid two-col">
+            <div class="form-group">
+              <label>주일 고해성사</label>
+              <input type="text" id="confessionSunday" placeholder="미사 30분 전" />
+            </div>
+            <div class="form-group">
+              <label>평일 고해성사</label>
+              <input type="text" id="confessionWeekday" placeholder="미사 20분 전" />
+            </div>
+          </div>
+          <button class="btn btn-primary" id="saveConfession">저장</button>
+        </div>
+      </section>
+
+      <!-- ④ 성당 업무 정보 -->
+      <section class="panel" id="section-parish-services">
+        <div class="panel-header">
+          <h2>성당 업무 정보</h2>
+          <p>세례, 혼인, 장례 등 성사 및 업무 안내 정보를 관리합니다.</p>
+        </div>
+
+        <div class="card-grid two-col">
+          <div class="card">
+            <div class="card-title">🙏 세례성사</div>
+            <div class="form-group">
+              <label>교리 일정</label>
+              <input type="text" id="baptismClass" placeholder="매주 화요일 오후 7시" />
+            </div>
+            <div class="form-group">
+              <label>접수 방법</label>
+              <input type="text" id="baptismRegister" placeholder="본당 사무실 방문 또는 전화 접수" />
+            </div>
+            <div class="form-group">
+              <label>준비물</label>
+              <textarea id="baptismRequirements" rows="3" placeholder="신분증, 증명사진 2매..."></textarea>
+            </div>
+            <div class="form-group">
+              <label>안내 문구</label>
+              <textarea id="baptismNote" rows="3" placeholder="세례성사 관련 안내 사항..."></textarea>
+            </div>
+            <button class="btn btn-primary" id="saveBaptism">저장</button>
+          </div>
+
+          <div class="card">
+            <div class="card-title">💍 혼인성사</div>
+            <div class="form-group">
+              <label>신청 시기</label>
+              <input type="text" id="marriageApply" placeholder="예식 6개월 전 신청" />
+            </div>
+            <div class="form-group">
+              <label>접수 방법</label>
+              <input type="text" id="marriageRegister" placeholder="본당 사무실 방문" />
+            </div>
+            <div class="form-group">
+              <label>준비 교육</label>
+              <input type="text" id="marriagePrep" placeholder="혼인 준비 교육 이수 필수" />
+            </div>
+            <div class="form-group">
+              <label>안내 문구</label>
+              <textarea id="marriageNote" rows="3" placeholder="혼인성사 관련 안내 사항..."></textarea>
+            </div>
+            <button class="btn btn-primary" id="saveMarriage">저장</button>
+          </div>
+
+          <div class="card">
+            <div class="card-title">✝ 장례 미사</div>
+            <div class="form-group">
+              <label>연락처</label>
+              <input type="text" id="funeralContact" placeholder="본당 사무실 02-933-9981" />
+            </div>
+            <div class="form-group">
+              <label>접수 방법</label>
+              <input type="text" id="funeralRegister" placeholder="전화 또는 방문 접수" />
+            </div>
+            <div class="form-group">
+              <label>안내 문구</label>
+              <textarea id="funeralNote" rows="3" placeholder="장례 미사 관련 안내 사항..."></textarea>
+            </div>
+            <button class="btn btn-primary" id="saveFuneral">저장</button>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🏢 사무실 운영</div>
+            <div class="form-group">
+              <label>운영 시간 (평일)</label>
+              <input type="text" id="officeWeekday" placeholder="오전 9시 ~ 오후 6시" />
+            </div>
+            <div class="form-group">
+              <label>운영 시간 (주말)</label>
+              <input type="text" id="officeWeekend" placeholder="오전 8시 ~ 오후 1시" />
+            </div>
+            <div class="form-group">
+              <label>휴무일</label>
+              <input type="text" id="officeHoliday" placeholder="공휴일 휴무" />
+            </div>
+            <div class="form-group">
+              <label>기타 안내</label>
+              <textarea id="officeNote" rows="3" placeholder="사무실 관련 안내..."></textarea>
+            </div>
+            <button class="btn btn-primary" id="saveOffice">저장</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ⑤ 공지사항 관리 -->
+      <section class="panel" id="section-notices">
+        <div class="panel-header">
+          <h2>공지사항 관리</h2>
+          <p>공지사항을 추가하거나 삭제합니다.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">새 공지 작성</div>
+          <div class="card-grid two-col">
+            <div class="form-group">
+              <label>분류</label>
+              <select id="noticeCategory">
+                <option value="공지">공지</option>
+                <option value="행사">행사</option>
+                <option value="주보">주보</option>
+                <option value="교육">교육</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>날짜</label>
+              <input type="date" id="noticeDate" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>제목</label>
+            <input type="text" id="noticeTitle" placeholder="공지 제목을 입력하세요" />
+          </div>
+          <div class="form-group">
+            <label>내용</label>
+            <textarea id="noticeContent" rows="5" placeholder="공지 내용을 입력하세요..."></textarea>
+          </div>
+          <button class="btn btn-primary" id="addNotice">공지 등록</button>
+        </div>
+
+        <div class="card" style="margin-top:1.5rem">
+          <div class="card-title">공지사항 목록</div>
+          <div id="noticeAdminList"></div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- 저장 완료 토스트 -->
+  <div class="toast" id="toast">✅ 저장되었습니다</div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>

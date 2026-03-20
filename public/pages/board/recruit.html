@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>단체모집 - 천주교 노원성당</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/style.css" />
+  <style>
+    .group-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+    .group-card {
+      border: 1px solid #dde5f0;
+      border-radius: 10px;
+      padding: 1.5rem;
+      background: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .group-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--navy);
+    }
+    .group-card.recruiting::before { background: var(--gold); }
+    .group-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 20px;
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.05em;
+    }
+    .badge-recruiting { background: #fff3cd; color: #a07000; border: 1px solid #ffd966; }
+    .badge-open { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+    .group-card h4 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 0 0 0.5rem;
+    }
+    .group-card p {
+      font-size: 0.88rem;
+      color: #555;
+      line-height: 1.7;
+      margin: 0 0 0.75rem;
+    }
+    .group-meta {
+      font-size: 0.82rem;
+      color: #777;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .group-meta span { display: flex; align-items: flex-start; gap: 0.4rem; }
+  </style>
+</head>
+<body>
+  <header id="header">
+    <div class="header-inner">
+      <div class="logo">
+        <a href="../../index.html">
+          <span class="logo-cross">✝</span>
+          <div class="logo-text">
+            <span class="logo-main">노원성당</span>
+            <span class="logo-sub">천주교 서울대교구 5지구장</span>
+          </div>
+        </a>
+      </div>
+      <nav id="nav">
+        <ul>
+          <li class="has-dropdown">
+            <a href="#">노원본당 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/nowon/saint.html">주보성인</a></li>
+              <li><a href="../../pages/nowon/greeting.html">주임신부 인사말</a></li>
+              <li><a href="../../pages/nowon/guideline.html">본당 사목지침</a></li>
+              <li><a href="../../pages/nowon/father.html">본당사제단</a></li>
+              <li><a href="../../pages/nowon/sister.html">수녀님</a></li>
+              <li><a href="../../pages/nowon/father_history.html">역대 본당 신부</a></li>
+              <li><a href="../../pages/nowon/conference.html">사목협의회</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">사목안내 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/business/guide.html">업무안내</a></li>
+              <li><a href="../../pages/business/location.html">찾아오시는 길</a></li>
+              <li><a href="../../pages/business/office.html">사무실 안내</a></li>
+              <li><a href="../../pages/business/faq.html">자주하는 질문</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">본당소식 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/board/notice.html">공지사항</a></li>
+              <li><a href="../../pages/board/free.html">자유게시판</a></li>
+              <li><a href="../../pages/board/bulletin.html">본당주보</a></li>
+              <li><a href="../../pages/board/volunteer.html">전례 봉사자</a></li>
+              <li><a href="../../pages/board/recruit.html">단체모집</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">자료실 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/dataroom/photo.html">사진자료실</a></li>
+              <li><a href="../../pages/dataroom/video.html">동영상자료실</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">미사와 성사 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/info/mass.html">미사 안내</a></li>
+              <li><a href="../../pages/info/baptism.html">세례성사</a></li>
+              <li><a href="../../pages/info/eucharist.html">성체성사</a></li>
+              <li><a href="../../pages/info/confirmation.html">견진성사</a></li>
+              <li><a href="../../pages/info/confession.html">고해성사</a></li>
+              <li><a href="../../pages/info/marriage.html">혼인성사</a></li>
+              <li><a href="../../pages/info/anointing.html">병자성사</a></li>
+              <li><a href="../../pages/info/funeral.html">장례안내</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">가톨릭 안내 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/catholic/intro.html">가톨릭 첫걸음</a></li>
+              <li><a href="../../pages/catholic/doctrine.html">기본교리</a></li>
+              <li><a href="../../pages/catholic/history.html">한국천주교회사</a></li>
+              <li><a href="../../pages/catholic/class.html">예비신자교리반</a></li>
+              <li><a href="../../pages/catholic/study.html">성경공부모임</a></li>
+              <li><a href="../../pages/catholic/prayer.html">기도문</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 서브페이지 배너 -->
+  <div class="sub-banner">
+    <div class="sub-banner-inner">
+      <p class="breadcrumb"><a href="../../index.html">홈</a> <span>›</span> 본당소식 <span>›</span> 단체모집</p>
+      <h1>단체모집</h1>
+    </div>
+  </div>
+
+  <!-- 본문 -->
+  <main class="sub-main">
+    <div class="container">
+      <div class="sub-layout">
+        <!-- 사이드 메뉴 -->
+        <aside class="sub-sidebar">
+          <div class="sidebar-menu">
+            <h3 class="sidebar-title">본당소식</h3>
+            <ul>
+              <li><a href="notice.html">공지사항</a></li>
+              <li><a href="free.html">자유게시판</a></li>
+              <li><a href="bulletin.html">본당주보</a></li>
+              <li><a href="volunteer.html">전례 봉사자</a></li>
+              <li class="active"><a href="recruit.html">단체모집</a></li>
+            </ul>
+          </div>
+        </aside>
+
+        <!-- 본문 콘텐츠 -->
+        <section class="sub-content">
+          <div class="content-header">
+            <h2>단체모집</h2>
+          </div>
+
+          <div class="content-body">
+
+            <p>노원성당에는 신앙을 함께 나누고 봉사를 실천하는 다양한 단체와 모임이 있습니다. 관심 있는 단체에 참여하여 신앙 공동체 안에서 더욱 풍요로운 신앙 생활을 하시기 바랍니다.</p>
+
+            <div class="group-grid">
+
+              <div class="group-card recruiting">
+                <span class="group-badge badge-recruiting">모집중</span>
+                <h4>레지오 마리애</h4>
+                <p>성모 마리아께 봉헌된 사도직 단체로, 매주 정기 회합을 통해 기도와 활동을 이어갑니다. 병원 방문, 전교 활동 등 다양한 봉사 사업을 펼칩니다.</p>
+                <div class="group-meta">
+                  <span>🕐 매주 주일 오전 활동 후 회합</span>
+                  <span>👥 세례받은 가톨릭 신자 누구나</span>
+                  <span>📞 문의: 사무실 02-933-9981</span>
+                </div>
+              </div>
+
+              <div class="group-card">
+                <span class="group-badge badge-open">상시모집</span>
+                <h4>성가대</h4>
+                <p>주일 11시 미사를 중심으로 아름다운 성가를 봉헌하는 단체입니다. 음악적 재능으로 하느님께 영광을 드리고 싶으신 분들을 환영합니다.</p>
+                <div class="group-meta">
+                  <span>🕐 주일 11:00 미사 / 매주 목요일 저녁 연습</span>
+                  <span>👥 노래를 사랑하는 신자 누구나</span>
+                  <span>📞 문의: 사무실 02-933-9981</span>
+                </div>
+              </div>
+
+              <div class="group-card recruiting">
+                <span class="group-badge badge-recruiting">모집중</span>
+                <h4>청년부</h4>
+                <p>만 18세~35세 청년 신자들의 신앙 친교 모임입니다. 주일 저녁 미사를 중심으로 모임을 갖고 MT, 봉사 활동, 성경공부 등 다양한 프로그램을 진행합니다.</p>
+                <div class="group-meta">
+                  <span>🕐 주일 오후 6시 미사 중심</span>
+                  <span>👥 18세~35세 세례받은 청년 신자</span>
+                  <span>📞 문의: 사무실 02-933-9981</span>
+                </div>
+              </div>
+
+              <div class="group-card">
+                <span class="group-badge badge-open">상시모집</span>
+                <h4>중고등부</h4>
+                <p>중학생 및 고등학생 청소년들의 신앙 모임으로 주일 9시30분 미사를 중심으로 활동합니다. 캠프, 성지순례, 봉사 활동 등을 통해 신앙을 성장시킵니다.</p>
+                <div class="group-meta">
+                  <span>🕐 주일 9:30 미사</span>
+                  <span>👥 중학교 1학년 ~ 고등학교 3학년</span>
+                  <span>📞 문의: 사무실 02-933-9981</span>
+                </div>
+              </div>
+
+              <div class="group-card">
+                <span class="group-badge badge-open">상시모집</span>
+                <h4>초등부 (주일학교)</h4>
+                <p>초등학생을 위한 주일학교 프로그램입니다. 토요일 오후 및 주일에 어린이 신앙 교육, 성경 이야기, 찬양 등 다채로운 프로그램을 운영합니다.</p>
+                <div class="group-meta">
+                  <span>🕐 토요일 오후 / 주일 활동</span>
+                  <span>👥 초등학교 1학년 ~ 6학년</span>
+                  <span>📞 문의: 사무실 02-933-9981</span>
+                </div>
+              </div>
+
+              <div class="group-card">
+                <span class="group-badge badge-open">상시모집</span>
+                <h4>연령회</h4>
+                <p>본당 신자의 장례를 봉사하고 죽은 이를 위해 기도하는 단체입니다. 위로와 나눔을 실천하며 죽음과 부활의 신앙을 증거합니다.</p>
+                <div class="group-meta">
+                  <span>🕐 수시 장례 봉사 활동</span>
+                  <span>👥 세례받은 성인 신자 누구나</span>
+                  <span>📞 문의: 사무실 02-933-9981</span>
+                </div>
+              </div>
+
+              <div class="group-card recruiting">
+                <span class="group-badge badge-recruiting">모집중</span>
+                <h4>성모회</h4>
+                <p>여성 신자들의 친교와 봉사 모임입니다. 성모 마리아의 정신을 본받아 기도와 나눔으로 공동체를 섬기며 신앙적 유대를 쌓아갑니다.</p>
+                <div class="group-meta">
+                  <span>🕐 매월 정기 모임</span>
+                  <span>👥 세례받은 여성 신자 누구나</span>
+                  <span>📞 문의: 사무실 02-933-9981</span>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="contact-box">
+              <h4>✝ 단체 참여 문의</h4>
+              <p style="font-size: 0.95rem; color: var(--text); line-height: 1.8;">
+                각 단체 가입 및 참여에 관한 문의는 본당 사무실로 연락해 주시기 바랍니다.<br>
+                📞 <strong>02-933-9981</strong> &nbsp;|&nbsp; 평일 09:00~18:00, 토요일 09:00~17:00
+              </p>
+            </div>
+
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="footer-cross">✝</span>
+          <div>
+            <h3>천주교 노원성당</h3>
+            <p>천주교 서울대교구 5지구장</p>
+          </div>
+        </div>
+        <div class="footer-info">
+          <p>📞 02-933-9981 &nbsp;|&nbsp; 📠 02-933-9986</p>
+          <p>서울특별시 노원구 한글비석로 585</p>
+        </div>
+        <a href="../../admin/" class="admin-link">관리자</a>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 천주교 노원성당. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="../../js/sub.js"></script>
+</body>
+</html>

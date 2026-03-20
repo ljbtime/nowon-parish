@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>자유게시판 - 천주교 노원성당</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/style.css" />
+  <style>
+    .board-search {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      justify-content: flex-end;
+    }
+    .board-search input {
+      padding: 0.5rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .board-search input:focus { border-color: var(--navy); }
+    .board-search button {
+      padding: 0.5rem 1.1rem;
+      background: var(--navy);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.2s;
+    }
+    .board-search button:hover { background: var(--navy-light); }
+    .login-notice {
+      background: #f0f4fa;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    .login-notice .lock-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .login-notice h3 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.15rem;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+    .login-notice p { font-size: 0.92rem; color: var(--text-sub); margin-bottom: 1.25rem; }
+    .login-btn {
+      display: inline-block;
+      padding: 0.65rem 2rem;
+      background: var(--navy);
+      color: white;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .login-btn:hover { background: var(--navy-light); color: white; }
+  </style>
+</head>
+<body>
+  <header id="header">
+    <div class="header-inner">
+      <div class="logo">
+        <a href="../../index.html">
+          <span class="logo-cross">✝</span>
+          <div class="logo-text">
+            <span class="logo-main">노원성당</span>
+            <span class="logo-sub">천주교 서울대교구 5지구장</span>
+          </div>
+        </a>
+      </div>
+      <nav id="nav">
+        <ul>
+          <li class="has-dropdown">
+            <a href="#">노원본당 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/nowon/saint.html">주보성인</a></li>
+              <li><a href="../../pages/nowon/greeting.html">주임신부 인사말</a></li>
+              <li><a href="../../pages/nowon/guideline.html">본당 사목지침</a></li>
+              <li><a href="../../pages/nowon/father.html">본당사제단</a></li>
+              <li><a href="../../pages/nowon/sister.html">수녀님</a></li>
+              <li><a href="../../pages/nowon/father_history.html">역대 본당 신부</a></li>
+              <li><a href="../../pages/nowon/conference.html">사목협의회</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">사목안내 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/business/guide.html">업무안내</a></li>
+              <li><a href="../../pages/business/location.html">찾아오시는 길</a></li>
+              <li><a href="../../pages/business/office.html">사무실 안내</a></li>
+              <li><a href="../../pages/business/faq.html">자주하는 질문</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">본당소식 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/board/notice.html">공지사항</a></li>
+              <li><a href="../../pages/board/free.html">자유게시판</a></li>
+              <li><a href="../../pages/board/bulletin.html">본당주보</a></li>
+              <li><a href="../../pages/board/volunteer.html">전례 봉사자</a></li>
+              <li><a href="../../pages/board/recruit.html">단체모집</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">자료실 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/dataroom/photo.html">사진자료실</a></li>
+              <li><a href="../../pages/dataroom/video.html">동영상자료실</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">미사와 성사 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/info/mass.html">미사 안내</a></li>
+              <li><a href="../../pages/info/baptism.html">세례성사</a></li>
+              <li><a href="../../pages/info/eucharist.html">성체성사</a></li>
+              <li><a href="../../pages/info/confirmation.html">견진성사</a></li>
+              <li><a href="../../pages/info/confession.html">고해성사</a></li>
+              <li><a href="../../pages/info/marriage.html">혼인성사</a></li>
+              <li><a href="../../pages/info/anointing.html">병자성사</a></li>
+              <li><a href="../../pages/info/funeral.html">장례안내</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">가톨릭 안내 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/catholic/intro.html">가톨릭 첫걸음</a></li>
+              <li><a href="../../pages/catholic/doctrine.html">기본교리</a></li>
+              <li><a href="../../pages/catholic/history.html">한국천주교회사</a></li>
+              <li><a href="../../pages/catholic/class.html">예비신자교리반</a></li>
+              <li><a href="../../pages/catholic/study.html">성경공부모임</a></li>
+              <li><a href="../../pages/catholic/prayer.html">기도문</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 서브페이지 배너 -->
+  <div class="sub-banner">
+    <div class="sub-banner-inner">
+      <p class="breadcrumb"><a href="../../index.html">홈</a> <span>›</span> 본당소식 <span>›</span> 자유게시판</p>
+      <h1>자유게시판</h1>
+    </div>
+  </div>
+
+  <!-- 본문 -->
+  <main class="sub-main">
+    <div class="container">
+      <div class="sub-layout">
+        <!-- 사이드 메뉴 -->
+        <aside class="sub-sidebar">
+          <div class="sidebar-menu">
+            <h3 class="sidebar-title">본당소식</h3>
+            <ul>
+              <li><a href="notice.html">공지사항</a></li>
+              <li class="active"><a href="free.html">자유게시판</a></li>
+              <li><a href="bulletin.html">본당주보</a></li>
+              <li><a href="volunteer.html">전례 봉사자</a></li>
+              <li><a href="recruit.html">단체모집</a></li>
+            </ul>
+          </div>
+        </aside>
+
+        <!-- 본문 콘텐츠 -->
+        <section class="sub-content">
+          <div class="content-header">
+            <h2>자유게시판</h2>
+          </div>
+
+          <div class="board-search">
+            <input type="text" placeholder="검색어를 입력하세요" />
+            <button>검색</button>
+          </div>
+
+          <!-- 로그인 필요 안내 -->
+          <div class="login-notice">
+            <div class="lock-icon">🔒</div>
+            <h3>로그인이 필요합니다</h3>
+            <p>자유게시판은 로그인 후 이용하실 수 있습니다.<br>노원성당 신자 여러분의 소중한 이야기를 나눠주세요.</p>
+            <a href="../../admin/" class="login-btn">로그인하기</a>
+          </div>
+
+          <div style="margin-top: 1.5rem; padding: 1rem 1.25rem; background: #faf8f4; border-radius: 8px; border-left: 3px solid var(--gold);">
+            <p style="font-size: 0.88rem; color: var(--text-sub); line-height: 1.8; margin: 0;">
+              <strong style="color: var(--navy);">게시판 이용 안내</strong><br>
+              · 본 게시판은 노원성당 신자 여러분이 자유롭게 의견을 나누는 공간입니다.<br>
+              · 타인을 비방하거나 불쾌감을 주는 내용은 관리자에 의해 삭제될 수 있습니다.<br>
+              · 성당 관련 문의는 사무실(02-933-9981)로 직접 연락해 주시기 바랍니다.
+            </p>
+          </div>
+
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="footer-cross">✝</span>
+          <div>
+            <h3>천주교 노원성당</h3>
+            <p>천주교 서울대교구 5지구장</p>
+          </div>
+        </div>
+        <div class="footer-info">
+          <p>📞 02-933-9981 &nbsp;|&nbsp; 📠 02-933-9986</p>
+          <p>서울특별시 노원구 한글비석로 585</p>
+        </div>
+        <a href="../../admin/" class="admin-link">관리자</a>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 천주교 노원성당. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../js/sub.js"></script>
+</body>
+</html>

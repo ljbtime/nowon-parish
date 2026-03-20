@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>본당주보 - 천주교 노원성당</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/style.css" />
+  <style>
+    .bulletin-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    .bulletin-table thead tr { background: var(--navy); color: #fff; }
+    .bulletin-table th { padding: 0.75rem 1rem; font-size: 0.88rem; font-weight: 600; text-align: left; }
+    .bulletin-table tbody tr { border-bottom: 1px solid #e8ecf4; }
+    .bulletin-table tbody tr:hover { background: #f3f6fb; }
+    .bulletin-table td { padding: 0.8rem 1rem; font-size: 0.92rem; color: var(--text); vertical-align: middle; }
+    .bulletin-table td.num { color: #888; font-size: 0.85rem; width: 55px; text-align: center; }
+    .bulletin-table td.date { width: 120px; color: #666; font-size: 0.88rem; }
+    .bulletin-table td.title { font-weight: 500; }
+    .pdf-icon {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: #e8ecf4;
+      border: 1px solid #c8d0e0;
+      border-radius: 5px;
+      padding: 0.3rem 0.65rem;
+      font-size: 0.8rem;
+      color: #c0392b;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: default;
+    }
+    .pdf-icon:hover { background: #dde5f0; }
+  </style>
+</head>
+<body>
+  <header id="header">
+    <div class="header-inner">
+      <div class="logo">
+        <a href="../../index.html">
+          <span class="logo-cross">✝</span>
+          <div class="logo-text">
+            <span class="logo-main">노원성당</span>
+            <span class="logo-sub">천주교 서울대교구 5지구장</span>
+          </div>
+        </a>
+      </div>
+      <nav id="nav">
+        <ul>
+          <li class="has-dropdown">
+            <a href="#">노원본당 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/nowon/saint.html">주보성인</a></li>
+              <li><a href="../../pages/nowon/greeting.html">주임신부 인사말</a></li>
+              <li><a href="../../pages/nowon/guideline.html">본당 사목지침</a></li>
+              <li><a href="../../pages/nowon/father.html">본당사제단</a></li>
+              <li><a href="../../pages/nowon/sister.html">수녀님</a></li>
+              <li><a href="../../pages/nowon/father_history.html">역대 본당 신부</a></li>
+              <li><a href="../../pages/nowon/conference.html">사목협의회</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">사목안내 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/business/guide.html">업무안내</a></li>
+              <li><a href="../../pages/business/location.html">찾아오시는 길</a></li>
+              <li><a href="../../pages/business/office.html">사무실 안내</a></li>
+              <li><a href="../../pages/business/faq.html">자주하는 질문</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">본당소식 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/board/notice.html">공지사항</a></li>
+              <li><a href="../../pages/board/free.html">자유게시판</a></li>
+              <li><a href="../../pages/board/bulletin.html">본당주보</a></li>
+              <li><a href="../../pages/board/volunteer.html">전례 봉사자</a></li>
+              <li><a href="../../pages/board/recruit.html">단체모집</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">자료실 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/dataroom/photo.html">사진자료실</a></li>
+              <li><a href="../../pages/dataroom/video.html">동영상자료실</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">미사와 성사 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/info/mass.html">미사 안내</a></li>
+              <li><a href="../../pages/info/baptism.html">세례성사</a></li>
+              <li><a href="../../pages/info/eucharist.html">성체성사</a></li>
+              <li><a href="../../pages/info/confirmation.html">견진성사</a></li>
+              <li><a href="../../pages/info/confession.html">고해성사</a></li>
+              <li><a href="../../pages/info/marriage.html">혼인성사</a></li>
+              <li><a href="../../pages/info/anointing.html">병자성사</a></li>
+              <li><a href="../../pages/info/funeral.html">장례안내</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">가톨릭 안내 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/catholic/intro.html">가톨릭 첫걸음</a></li>
+              <li><a href="../../pages/catholic/doctrine.html">기본교리</a></li>
+              <li><a href="../../pages/catholic/history.html">한국천주교회사</a></li>
+              <li><a href="../../pages/catholic/class.html">예비신자교리반</a></li>
+              <li><a href="../../pages/catholic/study.html">성경공부모임</a></li>
+              <li><a href="../../pages/catholic/prayer.html">기도문</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 서브페이지 배너 -->
+  <div class="sub-banner">
+    <div class="sub-banner-inner">
+      <p class="breadcrumb"><a href="../../index.html">홈</a> <span>›</span> 본당소식 <span>›</span> 본당주보</p>
+      <h1>본당주보</h1>
+    </div>
+  </div>
+
+  <!-- 본문 -->
+  <main class="sub-main">
+    <div class="container">
+      <div class="sub-layout">
+        <!-- 사이드 메뉴 -->
+        <aside class="sub-sidebar">
+          <div class="sidebar-menu">
+            <h3 class="sidebar-title">본당소식</h3>
+            <ul>
+              <li><a href="notice.html">공지사항</a></li>
+              <li><a href="free.html">자유게시판</a></li>
+              <li class="active"><a href="bulletin.html">본당주보</a></li>
+              <li><a href="volunteer.html">전례 봉사자</a></li>
+              <li><a href="recruit.html">단체모집</a></li>
+            </ul>
+          </div>
+        </aside>
+
+        <!-- 본문 콘텐츠 -->
+        <section class="sub-content">
+          <div class="content-header">
+            <h2>본당주보</h2>
+          </div>
+
+          <div class="content-body">
+
+            <div style="background: #f0f4fa; border-radius: 10px; padding: 1rem 1.25rem; border-left: 4px solid var(--gold); margin-bottom: 1.5rem; font-size: 0.92rem; color: var(--text); line-height: 1.7;">
+              주보는 <strong>매주 일요일 미사 후 성당 입구</strong>에서 배포됩니다. 본당 소식, 주간 공지사항, 전례 일정 등을 담고 있으니 꼭 받아가시기 바랍니다.
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+              <h3 style="margin: 0;">2024년 주보 목록</h3>
+              <span style="font-size: 0.85rem; color: var(--text-sub);">총 10건</span>
+            </div>
+
+            <table class="bulletin-table">
+              <thead>
+                <tr>
+                  <th class="num">호수</th>
+                  <th class="date">날짜</th>
+                  <th>제목</th>
+                  <th style="width: 80px; text-align: center;">파일</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="num">2024-10</td>
+                  <td class="date">2024.12.29</td>
+                  <td class="title">예수, 마리아, 요셉의 성가정 축일 — 2024년 12월 29일</td>
+                  <td style="text-align: center;"><span class="pdf-icon">📄 PDF</span></td>
+                </tr>
+                <tr>
+                  <td class="num">2024-09</td>
+                  <td class="date">2024.12.25</td>
+                  <td class="title">주님 성탄 대축일 — 2024년 12월 25일</td>
+                  <td style="text-align: center;"><span class="pdf-icon">📄 PDF</span></td>
+                </tr>
+                <tr>
+                  <td class="num">2024-08</td>
+                  <td class="date">2024.12.22</td>
+                  <td class="title">대림 제4주일 — 2024년 12월 22일</td>
+                  <td style="text-align: center;"><span class="pdf-icon">📄 PDF</span></td>
+                </tr>
+                <tr>
+                  <td class="num">2024-07</td>
+                  <td class="date">2024.12.15</td>
+                  <td class="title">대림 제3주일 (기쁨의 주일) — 2024년 12월 15일</td>
+                  <td style="text-align: center;"><span class="pdf-icon">📄 PDF</span></td>
+                </tr>
+                <tr>
+                  <td class="num">2024-06</td>
+                  <td class="date">2024.12.08</td>
+                  <td class="title">대림 제2주일 — 2024년 12월 8일</td>
+                  <td style="text-align: center;"><span class="pdf-icon">📄 PDF</span></td>
+                </tr>
+                <tr>
+                  <td class="num">2024-05</td>
+                  <td class="date">2024.12.01</td>
+                  <td class="title">대림 제1주일 — 2024년 12월 1일</td>
+                  <td style="text-align: center;"><span class="pdf-icon">📄 PDF</span></td>
+                </tr>
+                <tr>
+                  <td class="num">2024-04</td>
+                  <td class="date">2024.11.24</td>
+                  <td class="title">온 누리의 임금이신 우리 주 예수 그리스도왕 대축일 — 2024년 11월 24일</td>
+                  <td style="text-align: center;"><span class="pdf-icon">📄 PDF</span></td>
+                </tr>
+                <tr>
+                  <td class="num">2024-03</td>
+                  <td class="date">2024.11.17</td>
+                  <td class="title">연중 제33주일 — 2024년 11월 17일</td>
+                  <td style="text-align: center;"><span class="pdf-icon">📄 PDF</span></td>
+                </tr>
+                <tr>
+                  <td class="num">2024-02</td>
+                  <td class="date">2024.11.10</td>
+                  <td class="title">연중 제32주일 — 2024년 11월 10일</td>
+                  <td style="text-align: center;"><span class="pdf-icon">📄 PDF</span></td>
+                </tr>
+                <tr>
+                  <td class="num">2024-01</td>
+                  <td class="date">2024.11.03</td>
+                  <td class="title">연중 제31주일 — 2024년 11월 3일</td>
+                  <td style="text-align: center;"><span class="pdf-icon">📄 PDF</span></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p style="font-size: 0.88rem; color: var(--text-sub); margin-top: 1rem;">※ 주보 파일은 순차적으로 업로드됩니다. 문의: 02-933-9981</p>
+
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="footer-cross">✝</span>
+          <div>
+            <h3>천주교 노원성당</h3>
+            <p>천주교 서울대교구 5지구장</p>
+          </div>
+        </div>
+        <div class="footer-info">
+          <p>📞 02-933-9981 &nbsp;|&nbsp; 📠 02-933-9986</p>
+          <p>서울특별시 노원구 한글비석로 585</p>
+        </div>
+        <a href="../../admin/" class="admin-link">관리자</a>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 천주교 노원성당. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="../../js/sub.js"></script>
+</body>
+</html>

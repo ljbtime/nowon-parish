@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>기도문 - 천주교 노원성당</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/style.css" />
+  <style>
+    .prayer-block {
+      margin-bottom: 2.5rem;
+    }
+    .prayer-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .prayer-title-kr {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .prayer-title-en {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      font-style: italic;
+    }
+    .prayer-text {
+      background: #faf8f4;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--gold);
+      border-radius: 0 10px 10px 0;
+      padding: 1.5rem 1.75rem;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.05rem;
+      line-height: 2.1;
+      color: var(--text);
+      white-space: pre-line;
+    }
+    .prayer-note {
+      font-size: 0.82rem;
+      color: var(--text-sub);
+      margin-top: 0.5rem;
+      font-style: italic;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <header id="header">
+    <div class="header-inner">
+      <div class="logo">
+        <a href="../../index.html">
+          <span class="logo-cross">✝</span>
+          <div class="logo-text">
+            <span class="logo-main">노원성당</span>
+            <span class="logo-sub">천주교 서울대교구 5지구장</span>
+          </div>
+        </a>
+      </div>
+      <nav id="nav">
+        <ul>
+          <li class="has-dropdown">
+            <a href="#">노원본당 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/nowon/saint.html">주보성인</a></li>
+              <li><a href="../../pages/nowon/greeting.html">주임신부 인사말</a></li>
+              <li><a href="../../pages/nowon/guideline.html">본당 사목지침</a></li>
+              <li><a href="../../pages/nowon/father.html">본당사제단</a></li>
+              <li><a href="../../pages/nowon/sister.html">수녀님</a></li>
+              <li><a href="../../pages/nowon/father_history.html">역대 본당 신부</a></li>
+              <li><a href="../../pages/nowon/conference.html">사목협의회</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">사목안내 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/business/guide.html">업무안내</a></li>
+              <li><a href="../../pages/business/location.html">찾아오시는 길</a></li>
+              <li><a href="../../pages/business/office.html">사무실 안내</a></li>
+              <li><a href="../../pages/business/faq.html">자주하는 질문</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">본당소식 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/board/notice.html">공지사항</a></li>
+              <li><a href="../../pages/board/free.html">자유게시판</a></li>
+              <li><a href="../../pages/board/bulletin.html">본당주보</a></li>
+              <li><a href="../../pages/board/volunteer.html">전례 봉사자</a></li>
+              <li><a href="../../pages/board/recruit.html">단체모집</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">자료실 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/dataroom/photo.html">사진자료실</a></li>
+              <li><a href="../../pages/dataroom/video.html">동영상자료실</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">미사와 성사 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/info/mass.html">미사 안내</a></li>
+              <li><a href="../../pages/info/baptism.html">세례성사</a></li>
+              <li><a href="../../pages/info/eucharist.html">성체성사</a></li>
+              <li><a href="../../pages/info/confirmation.html">견진성사</a></li>
+              <li><a href="../../pages/info/confession.html">고해성사</a></li>
+              <li><a href="../../pages/info/marriage.html">혼인성사</a></li>
+              <li><a href="../../pages/info/anointing.html">병자성사</a></li>
+              <li><a href="../../pages/info/funeral.html">장례안내</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">가톨릭 안내 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/catholic/intro.html">가톨릭 첫걸음</a></li>
+              <li><a href="../../pages/catholic/doctrine.html">기본교리</a></li>
+              <li><a href="../../pages/catholic/history.html">한국천주교회사</a></li>
+              <li><a href="../../pages/catholic/class.html">예비신자교리반</a></li>
+              <li><a href="../../pages/catholic/study.html">성경공부모임</a></li>
+              <li><a href="../../pages/catholic/prayer.html">기도문</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 서브페이지 배너 -->
+  <div class="sub-banner">
+    <div class="sub-banner-inner">
+      <p class="breadcrumb"><a href="../../index.html">홈</a> <span>›</span> 가톨릭 안내 <span>›</span> 기도문</p>
+      <h1>기도문</h1>
+    </div>
+  </div>
+
+  <!-- 본문 -->
+  <main class="sub-main">
+    <div class="container">
+      <div class="sub-layout">
+        <!-- 사이드 메뉴 -->
+        <aside class="sub-sidebar">
+          <div class="sidebar-menu">
+            <h3 class="sidebar-title">가톨릭 안내</h3>
+            <ul>
+              <li><a href="intro.html">가톨릭 첫걸음</a></li>
+              <li><a href="doctrine.html">기본교리</a></li>
+              <li><a href="history.html">한국천주교회사</a></li>
+              <li><a href="class.html">예비신자교리반</a></li>
+              <li><a href="study.html">성경공부모임</a></li>
+              <li class="active"><a href="prayer.html">기도문</a></li>
+            </ul>
+          </div>
+        </aside>
+
+        <!-- 본문 콘텐츠 -->
+        <section class="sub-content">
+          <div class="content-header">
+            <h2>기도문</h2>
+          </div>
+
+          <div class="content-body">
+
+            <p>가톨릭 신앙의 기본 기도문입니다. 매일 이 기도문을 바치며 하느님께 나아가시기 바랍니다.</p>
+
+            <!-- 주님의 기도 -->
+            <div class="prayer-block">
+              <div class="prayer-title">
+                <span style="font-size: 1.3rem;">✝</span>
+                <div>
+                  <div class="prayer-title-kr">주님의 기도</div>
+                  <div class="prayer-title-en">Pater Noster / Our Father</div>
+                </div>
+              </div>
+              <div class="prayer-text">하늘에 계신 우리 아버지,
+아버지의 이름이 거룩히 빛나시며
+아버지의 나라가 오시며
+아버지의 뜻이 하늘에서와 같이
+땅에서도 이루어지소서.
+
+오늘 저희에게 일용할 양식을 주시고
+저희에게 잘못한 이를 저희가 용서하오니
+저희 죄를 용서하시고
+저희를 유혹에 빠지지 않게 하시고
+악에서 구하소서.
+
+아멘.</div>
+            </div>
+
+            <!-- 성모송 -->
+            <div class="prayer-block">
+              <div class="prayer-title">
+                <span style="font-size: 1.3rem;">✝</span>
+                <div>
+                  <div class="prayer-title-kr">성모송</div>
+                  <div class="prayer-title-en">Ave Maria / Hail Mary</div>
+                </div>
+              </div>
+              <div class="prayer-text">은총이 가득하신 마리아님, 기뻐하소서.
+주님께서 함께 계시니 여인 중에 복되시며
+태중의 아들 예수님 또한 복되시나이다.
+
+천주의 성모 마리아님,
+이제와 저희 죽을 때에
+저희 죄인을 위하여 빌어주소서.
+
+아멘.</div>
+            </div>
+
+            <!-- 사도신경 -->
+            <div class="prayer-block">
+              <div class="prayer-title">
+                <span style="font-size: 1.3rem;">✝</span>
+                <div>
+                  <div class="prayer-title-kr">사도신경</div>
+                  <div class="prayer-title-en">Symbolum Apostolorum / Apostles' Creed</div>
+                </div>
+              </div>
+              <div class="prayer-text">전능하신 천주 성부,
+천지의 창조주를 저는 믿나이다.
+
+그 외아들 우리 주 예수 그리스도님을 믿나이다.
+그분께서는 성령으로 인하여 동정 마리아께 잉태되어 나시고,
+본시오 빌라도 통치 아래서 고난을 받으시고
+십자가에 못 박혀 돌아가시고 묻히셨으며
+저승에 가시어 사흗날에 죽은 이들 가운데서 부활하시고
+하늘에 올라 전능하신 천주 성부 오른편에 앉으시며
+그리로부터 산 이와 죽은 이를 심판하러 오시리라 믿나이다.
+
+성령을 믿으며
+거룩하고 보편된 교회와
+모든 성인의 통공을 믿으며
+죄의 용서와
+육신의 부활과
+영원한 삶을 믿나이다.
+
+아멘.</div>
+              <p class="prayer-note">※ 사도신경은 그리스도교 신앙의 핵심 내용을 간결하게 고백하는 기도문입니다. 미사 중 신자들이 함께 바칩니다.</p>
+            </div>
+
+            <!-- 영광송 -->
+            <div class="prayer-block">
+              <div class="prayer-title">
+                <span style="font-size: 1.3rem;">✝</span>
+                <div>
+                  <div class="prayer-title-kr">영광송</div>
+                  <div class="prayer-title-en">Gloria Patri / Glory Be</div>
+                </div>
+              </div>
+              <div class="prayer-text">영광이 성부와 성자와 성령께
+처음과 같이 이제와 항상
+영원히 세세에.
+
+아멘.</div>
+              <p class="prayer-note">※ 영광송은 삼위일체 하느님께 드리는 찬미 기도로, 묵주기도의 각 10단 끝에 바칩니다.</p>
+            </div>
+
+            <!-- 식사 전 기도 -->
+            <div class="prayer-block">
+              <div class="prayer-title">
+                <span style="font-size: 1.3rem;">✝</span>
+                <div>
+                  <div class="prayer-title-kr">식사 전 기도</div>
+                </div>
+              </div>
+              <div class="prayer-text">주님, 이 음식을 주시어
+저희를 돌보아 주시니 감사합니다.
+
+저희에게 일용할 양식을 주신 것처럼
+굶주린 이들에게도 먹을 것을 주소서.
+
+우리 주 예수 그리스도를 통하여 비나이다.
+아멘.</div>
+            </div>
+
+            <!-- 식사 후 기도 -->
+            <div class="prayer-block">
+              <div class="prayer-title">
+                <span style="font-size: 1.3rem;">✝</span>
+                <div>
+                  <div class="prayer-title-kr">식사 후 감사 기도</div>
+                </div>
+              </div>
+              <div class="prayer-text">이 음식을 먹고 힘을 내어
+주님을 더 잘 섬기겠나이다.
+
+이 음식을 주신 주님,
+감사하나이다.
+
+아멘.</div>
+            </div>
+
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="footer-cross">✝</span>
+          <div>
+            <h3>천주교 노원성당</h3>
+            <p>천주교 서울대교구 5지구장</p>
+          </div>
+        </div>
+        <div class="footer-info">
+          <p>📞 02-933-9981 &nbsp;|&nbsp; 📠 02-933-9986</p>
+          <p>서울특별시 노원구 한글비석로 585</p>
+        </div>
+        <a href="../../admin/" class="admin-link">관리자</a>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 천주교 노원성당. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../js/sub.js"></script>
+</body>
+</html>

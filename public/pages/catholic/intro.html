@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>가톨릭 첫걸음 - 천주교 노원성당</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/style.css" />
+  <style>
+    .intro-card {
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      border: 1px solid var(--border);
+      margin-bottom: 1.25rem;
+    }
+    .intro-card h4 {
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.4rem;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .intro-card p {
+      font-size: 0.92rem;
+      color: var(--text);
+      line-height: 1.8;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <header id="header">
+    <div class="header-inner">
+      <div class="logo">
+        <a href="../../index.html">
+          <span class="logo-cross">✝</span>
+          <div class="logo-text">
+            <span class="logo-main">노원성당</span>
+            <span class="logo-sub">천주교 서울대교구 5지구장</span>
+          </div>
+        </a>
+      </div>
+      <nav id="nav">
+        <ul>
+          <li class="has-dropdown">
+            <a href="#">노원본당 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/nowon/saint.html">주보성인</a></li>
+              <li><a href="../../pages/nowon/greeting.html">주임신부 인사말</a></li>
+              <li><a href="../../pages/nowon/guideline.html">본당 사목지침</a></li>
+              <li><a href="../../pages/nowon/father.html">본당사제단</a></li>
+              <li><a href="../../pages/nowon/sister.html">수녀님</a></li>
+              <li><a href="../../pages/nowon/father_history.html">역대 본당 신부</a></li>
+              <li><a href="../../pages/nowon/conference.html">사목협의회</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">사목안내 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/business/guide.html">업무안내</a></li>
+              <li><a href="../../pages/business/location.html">찾아오시는 길</a></li>
+              <li><a href="../../pages/business/office.html">사무실 안내</a></li>
+              <li><a href="../../pages/business/faq.html">자주하는 질문</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">본당소식 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/board/notice.html">공지사항</a></li>
+              <li><a href="../../pages/board/free.html">자유게시판</a></li>
+              <li><a href="../../pages/board/bulletin.html">본당주보</a></li>
+              <li><a href="../../pages/board/volunteer.html">전례 봉사자</a></li>
+              <li><a href="../../pages/board/recruit.html">단체모집</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">자료실 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/dataroom/photo.html">사진자료실</a></li>
+              <li><a href="../../pages/dataroom/video.html">동영상자료실</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">미사와 성사 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/info/mass.html">미사 안내</a></li>
+              <li><a href="../../pages/info/baptism.html">세례성사</a></li>
+              <li><a href="../../pages/info/eucharist.html">성체성사</a></li>
+              <li><a href="../../pages/info/confirmation.html">견진성사</a></li>
+              <li><a href="../../pages/info/confession.html">고해성사</a></li>
+              <li><a href="../../pages/info/marriage.html">혼인성사</a></li>
+              <li><a href="../../pages/info/anointing.html">병자성사</a></li>
+              <li><a href="../../pages/info/funeral.html">장례안내</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">가톨릭 안내 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/catholic/intro.html">가톨릭 첫걸음</a></li>
+              <li><a href="../../pages/catholic/doctrine.html">기본교리</a></li>
+              <li><a href="../../pages/catholic/history.html">한국천주교회사</a></li>
+              <li><a href="../../pages/catholic/class.html">예비신자교리반</a></li>
+              <li><a href="../../pages/catholic/study.html">성경공부모임</a></li>
+              <li><a href="../../pages/catholic/prayer.html">기도문</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 서브페이지 배너 -->
+  <div class="sub-banner">
+    <div class="sub-banner-inner">
+      <p class="breadcrumb"><a href="../../index.html">홈</a> <span>›</span> 가톨릭 안내 <span>›</span> 가톨릭 첫걸음</p>
+      <h1>가톨릭 첫걸음</h1>
+    </div>
+  </div>
+
+  <!-- 본문 -->
+  <main class="sub-main">
+    <div class="container">
+      <div class="sub-layout">
+        <!-- 사이드 메뉴 -->
+        <aside class="sub-sidebar">
+          <div class="sidebar-menu">
+            <h3 class="sidebar-title">가톨릭 안내</h3>
+            <ul>
+              <li class="active"><a href="intro.html">가톨릭 첫걸음</a></li>
+              <li><a href="doctrine.html">기본교리</a></li>
+              <li><a href="history.html">한국천주교회사</a></li>
+              <li><a href="class.html">예비신자교리반</a></li>
+              <li><a href="study.html">성경공부모임</a></li>
+              <li><a href="prayer.html">기도문</a></li>
+            </ul>
+          </div>
+        </aside>
+
+        <!-- 본문 콘텐츠 -->
+        <section class="sub-content">
+          <div class="content-header">
+            <h2>가톨릭 첫걸음</h2>
+          </div>
+
+          <div class="content-body">
+
+            <h3>가톨릭이란?</h3>
+            <p><strong>가톨릭(Catholic)</strong>이란 '보편적'이라는 뜻의 그리스어에서 유래한 말로, 예수 그리스도를 구세주로 믿고 따르는 그리스도교의 한 종파입니다. 가톨릭교회는 예수님으로부터 사도들에게 이어진 사도적 전통을 간직하며, 교황을 수장으로 하는 세계적 교회 공동체입니다.</p>
+
+            <p>가톨릭 신자들은 성경과 거룩한 전통을 신앙의 원천으로 삼으며, 일곱 가지 성사를 통해 하느님의 은총을 받으며 살아갑니다.</p>
+
+            <h3>가톨릭 신앙의 핵심</h3>
+
+            <div class="intro-card">
+              <h4>✝ 하느님에 대한 믿음</h4>
+              <p>가톨릭 신자는 성부·성자·성령의 삼위일체 하느님을 믿습니다. 하느님은 천지를 창조하시고 우리를 사랑으로 구원하신 분입니다.</p>
+            </div>
+
+            <div class="intro-card">
+              <h4>✝ 예수 그리스도</h4>
+              <p>예수님은 하느님의 아들로서 인간이 되셨고, 우리의 죄를 위해 십자가에 돌아가셨다가 부활하셨습니다. 그분을 통해 우리는 구원을 받고 영원한 생명에 들어갑니다.</p>
+            </div>
+
+            <div class="intro-card">
+              <h4>✝ 교회와 성사</h4>
+              <p>가톨릭 교회는 세례, 성체, 고해, 견진, 혼인, 신품, 병자성사 등 일곱 가지 성사를 통해 신자들이 하느님의 은총을 받도록 돕습니다.</p>
+            </div>
+
+            <div class="intro-card">
+              <h4>✝ 성모 마리아와 성인들</h4>
+              <p>가톨릭 신자들은 예수님의 어머니 마리아와 성인들을 공경하며 그들의 전구를 청합니다. 이는 하느님께 대한 신앙을 보완하는 것이지, 대체하는 것이 아닙니다.</p>
+            </div>
+
+            <h3>예비신자 교리 안내</h3>
+            <p>가톨릭 신앙에 관심 있으신 분은 누구나 예비신자 교리반에 참석하실 수 있습니다. 특별한 조건 없이 관심만 있으시면 됩니다.</p>
+
+            <table class="info-table">
+              <thead>
+                <tr>
+                  <th>교리반</th>
+                  <th>일정</th>
+                  <th>장소</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>저녁 교리반</strong></td>
+                  <td>매주 화요일 19:30</td>
+                  <td>본당 교육관</td>
+                </tr>
+                <tr>
+                  <td><strong>오후 교리반</strong></td>
+                  <td>매주 토요일 14:00</td>
+                  <td>본당 교육관</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h3>자주 묻는 질문</h3>
+
+            <div style="border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-top: 0.5rem;">
+              <div style="padding: 1rem 1.25rem; border-bottom: 1px solid var(--border); background: #f8f7f4;">
+                <p style="font-weight: 700; color: var(--navy); margin: 0;">Q. 가톨릭에 입문하려면 어떻게 해야 하나요?</p>
+              </div>
+              <div style="padding: 1rem 1.25rem; border-bottom: 1px solid var(--border);">
+                <p style="margin: 0; font-size: 0.92rem; line-height: 1.8;">A. 가까운 성당에 방문하거나 전화로 예비신자 등록을 신청하시면 됩니다. 특별한 자격이나 조건은 없습니다.</p>
+              </div>
+              <div style="padding: 1rem 1.25rem; border-bottom: 1px solid var(--border); background: #f8f7f4;">
+                <p style="font-weight: 700; color: var(--navy); margin: 0;">Q. 교리 기간은 얼마나 되나요?</p>
+              </div>
+              <div style="padding: 1rem 1.25rem; border-bottom: 1px solid var(--border);">
+                <p style="margin: 0; font-size: 0.92rem; line-height: 1.8;">A. 일반적으로 약 1년의 교리 기간이 필요합니다. 부활 성야나 성탄 성야에 세례를 받게 됩니다.</p>
+              </div>
+              <div style="padding: 1rem 1.25rem; border-bottom: 1px solid var(--border); background: #f8f7f4;">
+                <p style="font-weight: 700; color: var(--navy); margin: 0;">Q. 비용이 드나요?</p>
+              </div>
+              <div style="padding: 1rem 1.25rem;">
+                <p style="margin: 0; font-size: 0.92rem; line-height: 1.8;">A. 교리 수강에는 별도 비용이 없습니다. 세례 관련 교재 비용이 소액 발생할 수 있습니다.</p>
+              </div>
+            </div>
+
+            <div class="contact-box">
+              <h4>✝ 문의 및 등록</h4>
+              <p style="font-size: 0.95rem; color: var(--text); line-height: 1.8;">
+                가톨릭에 관심 있으신 분 누구나 환영합니다!<br>
+                📞 <strong>02-933-9981</strong> &nbsp;|&nbsp; 평일 09:00~17:00
+              </p>
+            </div>
+
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="footer-cross">✝</span>
+          <div>
+            <h3>천주교 노원성당</h3>
+            <p>천주교 서울대교구 5지구장</p>
+          </div>
+        </div>
+        <div class="footer-info">
+          <p>📞 02-933-9981 &nbsp;|&nbsp; 📠 02-933-9986</p>
+          <p>서울특별시 노원구 한글비석로 585</p>
+        </div>
+        <a href="../../admin/" class="admin-link">관리자</a>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 천주교 노원성당. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../js/sub.js"></script>
+</body>
+</html>

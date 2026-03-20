@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>자주하는 질문 - 천주교 노원성당</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/style.css" />
+  <style>
+    .faq-list { margin: 1.5rem 0; }
+    .faq-list details {
+      border: 1px solid #dde5f0;
+      border-radius: 8px;
+      margin-bottom: 0.75rem;
+      overflow: hidden;
+    }
+    .faq-list details[open] {
+      border-color: var(--navy);
+    }
+    .faq-list summary {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--navy);
+      font-size: 0.97rem;
+      list-style: none;
+      background: #f7f9fd;
+      user-select: none;
+    }
+    .faq-list details[open] summary {
+      background: var(--navy);
+      color: #fff;
+    }
+    .faq-list summary::-webkit-details-marker { display: none; }
+    .faq-q-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.82rem;
+      font-weight: 900;
+      flex-shrink: 0;
+      font-family: 'Noto Serif KR', serif;
+    }
+    details[open] .faq-q-badge {
+      background: rgba(255,255,255,0.2);
+    }
+    .faq-answer {
+      padding: 1.1rem 1.25rem 1.1rem 3.25rem;
+      font-size: 0.93rem;
+      line-height: 1.85;
+      color: var(--text);
+      background: #fff;
+      border-top: 1px solid #dde5f0;
+    }
+    .faq-toggle-icon {
+      margin-left: auto;
+      font-size: 1rem;
+      transition: transform 0.2s;
+    }
+    details[open] .faq-toggle-icon {
+      transform: rotate(45deg);
+    }
+  </style>
+</head>
+<body>
+  <header id="header">
+    <div class="header-inner">
+      <div class="logo">
+        <a href="../../index.html">
+          <span class="logo-cross">✝</span>
+          <div class="logo-text">
+            <span class="logo-main">노원성당</span>
+            <span class="logo-sub">천주교 서울대교구 5지구장</span>
+          </div>
+        </a>
+      </div>
+      <nav id="nav">
+        <ul>
+          <li class="has-dropdown">
+            <a href="#">노원본당 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/nowon/saint.html">주보성인</a></li>
+              <li><a href="../../pages/nowon/greeting.html">주임신부 인사말</a></li>
+              <li><a href="../../pages/nowon/guideline.html">본당 사목지침</a></li>
+              <li><a href="../../pages/nowon/father.html">본당사제단</a></li>
+              <li><a href="../../pages/nowon/sister.html">수녀님</a></li>
+              <li><a href="../../pages/nowon/father_history.html">역대 본당 신부</a></li>
+              <li><a href="../../pages/nowon/conference.html">사목협의회</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">사목안내 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/business/guide.html">업무안내</a></li>
+              <li><a href="../../pages/business/location.html">찾아오시는 길</a></li>
+              <li><a href="../../pages/business/office.html">사무실 안내</a></li>
+              <li><a href="../../pages/business/faq.html">자주하는 질문</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">본당소식 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/board/notice.html">공지사항</a></li>
+              <li><a href="../../pages/board/free.html">자유게시판</a></li>
+              <li><a href="../../pages/board/bulletin.html">본당주보</a></li>
+              <li><a href="../../pages/board/volunteer.html">전례 봉사자</a></li>
+              <li><a href="../../pages/board/recruit.html">단체모집</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">자료실 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/dataroom/photo.html">사진자료실</a></li>
+              <li><a href="../../pages/dataroom/video.html">동영상자료실</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">미사와 성사 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/info/mass.html">미사 안내</a></li>
+              <li><a href="../../pages/info/baptism.html">세례성사</a></li>
+              <li><a href="../../pages/info/eucharist.html">성체성사</a></li>
+              <li><a href="../../pages/info/confirmation.html">견진성사</a></li>
+              <li><a href="../../pages/info/confession.html">고해성사</a></li>
+              <li><a href="../../pages/info/marriage.html">혼인성사</a></li>
+              <li><a href="../../pages/info/anointing.html">병자성사</a></li>
+              <li><a href="../../pages/info/funeral.html">장례안내</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">가톨릭 안내 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/catholic/intro.html">가톨릭 첫걸음</a></li>
+              <li><a href="../../pages/catholic/doctrine.html">기본교리</a></li>
+              <li><a href="../../pages/catholic/history.html">한국천주교회사</a></li>
+              <li><a href="../../pages/catholic/class.html">예비신자교리반</a></li>
+              <li><a href="../../pages/catholic/study.html">성경공부모임</a></li>
+              <li><a href="../../pages/catholic/prayer.html">기도문</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 서브페이지 배너 -->
+  <div class="sub-banner">
+    <div class="sub-banner-inner">
+      <p class="breadcrumb"><a href="../../index.html">홈</a> <span>›</span> 사목안내 <span>›</span> 자주하는 질문</p>
+      <h1>자주하는 질문</h1>
+    </div>
+  </div>
+
+  <!-- 본문 -->
+  <main class="sub-main">
+    <div class="container">
+      <div class="sub-layout">
+        <!-- 사이드 메뉴 -->
+        <aside class="sub-sidebar">
+          <div class="sidebar-menu">
+            <h3 class="sidebar-title">사목안내</h3>
+            <ul>
+              <li><a href="guide.html">업무안내</a></li>
+              <li><a href="location.html">찾아오시는 길</a></li>
+              <li><a href="office.html">사무실 안내</a></li>
+              <li class="active"><a href="faq.html">자주하는 질문</a></li>
+            </ul>
+          </div>
+        </aside>
+
+        <!-- 본문 콘텐츠 -->
+        <section class="sub-content">
+          <div class="content-header">
+            <h2>자주하는 질문</h2>
+          </div>
+
+          <div class="content-body">
+
+            <p>노원성당에 자주 문의하시는 질문들을 모았습니다. 아래에서 원하시는 항목을 클릭하시면 답변을 확인하실 수 있습니다. 추가 문의는 사무실(02-933-9981)로 연락 주십시오.</p>
+
+            <div class="faq-list">
+
+              <details>
+                <summary>
+                  <span class="faq-q-badge">Q</span>
+                  세례를 받으려면 어떻게 해야 하나요?
+                  <span class="faq-toggle-icon">+</span>
+                </summary>
+                <div class="faq-answer">
+                  세례를 받으시려면 먼저 <strong>예비신자 교리반에 등록</strong>하셔야 합니다. 교리반은 매주 화요일 저녁 19:30 (화요반)과 토요일 오후 14:00 (토요반)에 운영됩니다. 약 1년간 교리를 수강하신 후 신부님 면담을 거쳐 <strong>부활 성야 또는 성탄 성야</strong>에 세례를 받으시게 됩니다. 등록은 본당 사무실(02-933-9981)로 연락하시거나 직접 방문하여 신청하시면 됩니다.
+                </div>
+              </details>
+
+              <details>
+                <summary>
+                  <span class="faq-q-badge">Q</span>
+                  미사 중 늦게 도착했을 때는 어떻게 하나요?
+                  <span class="faq-toggle-icon">+</span>
+                </summary>
+                <div class="faq-answer">
+                  미사에 늦게 도착하셨더라도 당황하지 마시고 조용히 자리에 앉으시면 됩니다. 일반적으로 <strong>복음 선포 이전(독서 시작 전)</strong>에 도착하시면 미사에 온전히 참여하신 것으로 인정됩니다. 만약 복음 이후에 도착하셨다면 미사는 드릴 수 있지만, 그날 미사 참례 의무를 완전히 이행한 것으로 보기 어렵습니다. 가능하면 미사 시작 5분 전에는 자리에 앉아 준비하는 것을 권장합니다.
+                </div>
+              </details>
+
+              <details>
+                <summary>
+                  <span class="faq-q-badge">Q</span>
+                  세례(영세)증명서는 어떻게 발급받나요?
+                  <span class="faq-toggle-icon">+</span>
+                </summary>
+                <div class="faq-answer">
+                  세례증명서는 <strong>본당 사무실을 방문</strong>하거나 <strong>전화로 신청</strong>하실 수 있습니다. 신청 시 본인 신분증이 필요하며, 대리 수령 시에는 위임장과 대리인 신분증이 필요합니다. 발급 소요 시간은 보통 당일 또는 다음 영업일입니다. 단, 타 본당에서 세례를 받으신 경우 해당 본당에서 발급받으셔야 합니다.<br>
+                  📞 문의: <strong>02-933-9981</strong>
+                </div>
+              </details>
+
+              <details>
+                <summary>
+                  <span class="faq-q-badge">Q</span>
+                  혼인미사 예약은 어떻게 하나요?
+                  <span class="faq-toggle-icon">+</span>
+                </summary>
+                <div class="faq-answer">
+                  혼인미사 예약은 <strong>최소 3~6개월 전</strong>에 본당 사무실을 방문하여 신청하셔야 합니다. 혼인 준비 과정에는 서류 제출, 교구 혼인강의 수강, 신부님 면담 등이 포함됩니다. 가톨릭 신자가 아닌 배우자와의 혼인 시 별도 절차가 필요하오니 반드시 사전에 사무실에 문의하여 안내를 받으시기 바랍니다. 구두 예약은 불가하며 반드시 사무실 방문을 통해 신청해야 합니다.
+                </div>
+              </details>
+
+              <details>
+                <summary>
+                  <span class="faq-q-badge">Q</span>
+                  교적 이전(전입·전출)은 어떻게 하나요?
+                  <span class="faq-toggle-icon">+</span>
+                </summary>
+                <div class="faq-answer">
+                  이사 등으로 인해 교적을 이전하실 경우, 먼저 <strong>현재 본당에서 전출 신청</strong>을 하시고 전출증을 받으신 다음, 새로운 본당 사무실에 전출증을 지참하여 <strong>전입 신청</strong>을 하시면 됩니다. 노원성당으로 전입을 원하시는 경우 사무실로 방문하시거나 전화(02-933-9981)로 안내를 받으실 수 있습니다. 교적 이전은 교회 공동체에 온전히 참여하기 위해 중요한 절차입니다.
+                </div>
+              </details>
+
+              <details>
+                <summary>
+                  <span class="faq-q-badge">Q</span>
+                  봉헌미사 신청 방법은 무엇인가요?
+                  <span class="faq-toggle-icon">+</span>
+                </summary>
+                <div class="faq-answer">
+                  봉헌미사(기일미사, 생일미사 등)는 <strong>본당 사무실을 방문</strong>하거나 <strong>전화(02-933-9981)</strong>로 신청하실 수 있습니다. 원하시는 날짜와 시간, 봉헌 의향(고인의 이름 또는 생존자 지향 등)을 알려주시면 됩니다. 미사 봉헌 예약은 미사 일정에 따라 조율될 수 있으니 여유 있게 신청하시기 바랍니다.
+                </div>
+              </details>
+
+              <details>
+                <summary>
+                  <span class="faq-q-badge">Q</span>
+                  성당 시설 이용은 어떻게 하나요?
+                  <span class="faq-toggle-icon">+</span>
+                </summary>
+                <div class="faq-answer">
+                  소성당, 교육관 등 성당 시설 이용은 <strong>사전에 사무실에 문의</strong>하셔야 합니다. 시설 이용 가능 여부 및 사용 규정을 안내받으신 후 예약하실 수 있습니다. 성당 시설은 원칙적으로 종교 활동 및 교우들의 신앙 모임을 위해 우선 사용되며, 외부 행사는 제한될 수 있습니다.<br>
+                  📞 문의: <strong>02-933-9981</strong> (평일 09:00~18:00)
+                </div>
+              </details>
+
+              <details>
+                <summary>
+                  <span class="faq-q-badge">Q</span>
+                  주보는 어디서 구할 수 있나요?
+                  <span class="faq-toggle-icon">+</span>
+                </summary>
+                <div class="faq-answer">
+                  본당 주보는 <strong>매주 주일 미사 후 성당 입구</strong>에서 배포됩니다. 주보에는 주간 공지사항, 전례 일정, 미사 봉헌 명단, 본당 소식 등이 담겨 있습니다. 주보를 받지 못하셨거나 지난 주보가 필요하신 경우, 본당 사무실을 방문하시거나 이 홈페이지의 <a href="../../pages/board/bulletin.html" style="color: var(--navy); font-weight: 600;">본당주보</a> 페이지에서 확인하실 수 있습니다.
+                </div>
+              </details>
+
+              <details>
+                <summary>
+                  <span class="faq-q-badge">Q</span>
+                  고해성사는 언제 어떻게 받을 수 있나요?
+                  <span class="faq-toggle-icon">+</span>
+                </summary>
+                <div class="faq-answer">
+                  고해성사는 <strong>정기 고해 시간</strong>에 성당 고해소에서 받으실 수 있습니다. 정기 고해 시간은 매주 토요일 오전 및 주일 미사 전에 운영됩니다. 자세한 시간은 주보 또는 공지사항을 통해 확인하시기 바랍니다. 특별한 사정이 있으시면 사무실을 통해 신부님과 고해 일정을 별도로 잡으실 수도 있습니다.
+                </div>
+              </details>
+
+            </div>
+
+            <div class="contact-box">
+              <h4>✝ 추가 문의</h4>
+              <p style="font-size: 0.95rem; color: var(--text); line-height: 1.8;">
+                위 FAQ에서 원하시는 답변을 찾지 못하셨다면 사무실로 직접 문의해 주시기 바랍니다.<br>
+                📞 <strong>02-933-9981</strong> &nbsp;|&nbsp; 평일 09:00~18:00, 토요일 09:00~17:00
+              </p>
+            </div>
+
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="footer-cross">✝</span>
+          <div>
+            <h3>천주교 노원성당</h3>
+            <p>천주교 서울대교구 5지구장</p>
+          </div>
+        </div>
+        <div class="footer-info">
+          <p>📞 02-933-9981 &nbsp;|&nbsp; 📠 02-933-9986</p>
+          <p>서울특별시 노원구 한글비석로 585</p>
+        </div>
+        <a href="../../admin/" class="admin-link">관리자</a>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 천주교 노원성당. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="../../js/sub.js"></script>
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>미사 안내 - 천주교 노원성당</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/style.css" />
+  <style>
+    .mass-block {
+      margin-bottom: 2rem;
+    }
+    .mass-block-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      background: var(--navy);
+      padding: 0.65rem 1rem;
+      border-radius: 8px 8px 0 0;
+      letter-spacing: 0.03em;
+    }
+    .mass-rows {
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      overflow: hidden;
+    }
+    .mass-row {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      gap: 1rem;
+    }
+    .mass-row:last-child { border-bottom: none; }
+    .mass-row:nth-child(even) { background: var(--bg); }
+    .mass-time-big {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--navy);
+      font-variant-numeric: tabular-nums;
+      min-width: 70px;
+    }
+    .mass-desc {
+      font-size: 0.92rem;
+      color: var(--text);
+      flex: 1;
+    }
+    .mass-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: var(--gold);
+      color: white;
+      border-radius: 20px;
+      padding: 0.1rem 0.55rem;
+      white-space: nowrap;
+    }
+    .mass-tag.blue { background: #3d7dd4; }
+    .mass-tag.green { background: #2d7a46; }
+    .mass-tag.red { background: #c0392b; }
+    .special-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+    }
+    .special-table th {
+      background: var(--navy);
+      color: white;
+      padding: 0.65rem 1rem;
+      text-align: left;
+      font-weight: 600;
+    }
+    .special-table td {
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .special-table tr:last-child td { border-bottom: none; }
+    .special-table tr:nth-child(even) td { background: var(--bg); }
+  </style>
+</head>
+<body>
+  <header id="header">
+    <div class="header-inner">
+      <div class="logo">
+        <a href="../../index.html">
+          <span class="logo-cross">✝</span>
+          <div class="logo-text">
+            <span class="logo-main">노원성당</span>
+            <span class="logo-sub">천주교 서울대교구 5지구장</span>
+          </div>
+        </a>
+      </div>
+      <nav id="nav">
+        <ul>
+          <li class="has-dropdown">
+            <a href="#">노원본당 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/nowon/saint.html">주보성인</a></li>
+              <li><a href="../../pages/nowon/greeting.html">주임신부 인사말</a></li>
+              <li><a href="../../pages/nowon/guideline.html">본당 사목지침</a></li>
+              <li><a href="../../pages/nowon/father.html">본당사제단</a></li>
+              <li><a href="../../pages/nowon/sister.html">수녀님</a></li>
+              <li><a href="../../pages/nowon/father_history.html">역대 본당 신부</a></li>
+              <li><a href="../../pages/nowon/conference.html">사목협의회</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">사목안내 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/business/guide.html">업무안내</a></li>
+              <li><a href="../../pages/business/location.html">찾아오시는 길</a></li>
+              <li><a href="../../pages/business/office.html">사무실 안내</a></li>
+              <li><a href="../../pages/business/faq.html">자주하는 질문</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">본당소식 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/board/notice.html">공지사항</a></li>
+              <li><a href="../../pages/board/free.html">자유게시판</a></li>
+              <li><a href="../../pages/board/bulletin.html">본당주보</a></li>
+              <li><a href="../../pages/board/volunteer.html">전례 봉사자</a></li>
+              <li><a href="../../pages/board/recruit.html">단체모집</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">자료실 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/dataroom/photo.html">사진자료실</a></li>
+              <li><a href="../../pages/dataroom/video.html">동영상자료실</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">미사와 성사 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/info/mass.html">미사 안내</a></li>
+              <li><a href="../../pages/info/baptism.html">세례성사</a></li>
+              <li><a href="../../pages/info/eucharist.html">성체성사</a></li>
+              <li><a href="../../pages/info/confirmation.html">견진성사</a></li>
+              <li><a href="../../pages/info/confession.html">고해성사</a></li>
+              <li><a href="../../pages/info/marriage.html">혼인성사</a></li>
+              <li><a href="../../pages/info/anointing.html">병자성사</a></li>
+              <li><a href="../../pages/info/funeral.html">장례안내</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">가톨릭 안내 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/catholic/intro.html">가톨릭 첫걸음</a></li>
+              <li><a href="../../pages/catholic/doctrine.html">기본교리</a></li>
+              <li><a href="../../pages/catholic/history.html">한국천주교회사</a></li>
+              <li><a href="../../pages/catholic/class.html">예비신자교리반</a></li>
+              <li><a href="../../pages/catholic/study.html">성경공부모임</a></li>
+              <li><a href="../../pages/catholic/prayer.html">기도문</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 서브페이지 배너 -->
+  <div class="sub-banner">
+    <div class="sub-banner-inner">
+      <p class="breadcrumb"><a href="../../index.html">홈</a> <span>›</span> 미사와 성사 <span>›</span> 미사 안내</p>
+      <h1>미사 안내</h1>
+    </div>
+  </div>
+
+  <!-- 본문 -->
+  <main class="sub-main">
+    <div class="container">
+      <div class="sub-layout">
+        <!-- 사이드 메뉴 -->
+        <aside class="sub-sidebar">
+          <div class="sidebar-menu">
+            <h3 class="sidebar-title">미사와 성사</h3>
+            <ul>
+              <li class="active"><a href="mass.html">미사 안내</a></li>
+              <li><a href="baptism.html">세례성사</a></li>
+              <li><a href="eucharist.html">성체성사</a></li>
+              <li><a href="confirmation.html">견진성사</a></li>
+              <li><a href="confession.html">고해성사</a></li>
+              <li><a href="marriage.html">혼인성사</a></li>
+              <li><a href="anointing.html">병자성사</a></li>
+              <li><a href="funeral.html">장례안내</a></li>
+            </ul>
+          </div>
+        </aside>
+
+        <!-- 본문 콘텐츠 -->
+        <section class="sub-content">
+          <div class="content-header">
+            <h2>미사 안내</h2>
+          </div>
+
+          <!-- 주일미사 -->
+          <div class="mass-block">
+            <div class="mass-block-title">주일미사 (일요일)</div>
+            <div class="mass-rows">
+              <div class="mass-row">
+                <span class="mass-time-big">06:00</span>
+                <span class="mass-desc">대성당</span>
+                <span class="mass-tag">일반</span>
+              </div>
+              <div class="mass-row">
+                <span class="mass-time-big">08:00</span>
+                <span class="mass-desc">대성당</span>
+                <span class="mass-tag">일반</span>
+              </div>
+              <div class="mass-row">
+                <span class="mass-time-big">09:30</span>
+                <span class="mass-desc">대성당</span>
+                <span class="mass-tag green">중고등부</span>
+              </div>
+              <div class="mass-row">
+                <span class="mass-time-big">11:00</span>
+                <span class="mass-desc">대성당 (교중미사·유아부)</span>
+                <span class="mass-tag red">교중</span>
+              </div>
+              <div class="mass-row">
+                <span class="mass-time-big">18:00</span>
+                <span class="mass-desc">대성당</span>
+                <span class="mass-tag blue">청년</span>
+              </div>
+              <div class="mass-row">
+                <span class="mass-time-big">20:00</span>
+                <span class="mass-desc">대성당</span>
+                <span class="mass-tag">일반</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 토요특전미사 -->
+          <div class="mass-block">
+            <div class="mass-block-title">토요특전미사 (토요일)</div>
+            <div class="mass-rows">
+              <div class="mass-row">
+                <span class="mass-time-big">15:00</span>
+                <span class="mass-desc">소성당</span>
+                <span class="mass-tag green">초등 3~6학년</span>
+              </div>
+              <div class="mass-row">
+                <span class="mass-time-big">19:00</span>
+                <span class="mass-desc">대성당</span>
+                <span class="mass-tag">일반</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 평일미사 -->
+          <div class="mass-block">
+            <div class="mass-block-title">평일미사</div>
+            <div class="mass-rows">
+              <div class="mass-row">
+                <span class="mass-time-big">06:00</span>
+                <span class="mass-desc">월요일 ~ 금요일</span>
+                <span class="mass-tag">일반</span>
+              </div>
+              <div class="mass-row">
+                <span class="mass-time-big">10:00</span>
+                <span class="mass-desc">화요일 ~ 토요일</span>
+                <span class="mass-tag">일반</span>
+              </div>
+              <div class="mass-row">
+                <span class="mass-time-big">19:00</span>
+                <span class="mass-desc">화요일 ~ 금요일</span>
+                <span class="mass-tag">일반</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 특별 일정 -->
+          <div class="content-body">
+            <h3>특별 일정 안내</h3>
+          </div>
+          <table class="special-table" style="margin-bottom: 2rem;">
+            <thead>
+              <tr>
+                <th>항목</th>
+                <th>일정</th>
+                <th>장소</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>성시간</strong></td>
+                <td>첫째 목요일 19:30</td>
+                <td>대성당</td>
+              </tr>
+              <tr>
+                <td><strong>고해성사</strong></td>
+                <td>미사 20분 전 (주일 30분 전)</td>
+                <td>고해소</td>
+              </tr>
+              <tr>
+                <td><strong>유아세례</strong></td>
+                <td>첫째 토요일 17:00</td>
+                <td>소성당</td>
+              </tr>
+              <tr>
+                <td><strong>환자영성체</strong></td>
+                <td>셋째 수요일 10:00</td>
+                <td>성당 내</td>
+              </tr>
+              <tr>
+                <td><strong>혼인면담</strong></td>
+                <td>둘째·넷째 토요일 16:00</td>
+                <td>사무실</td>
+              </tr>
+              <tr>
+                <td><strong>주일학교 (초등부)</strong></td>
+                <td>토요일 16:00</td>
+                <td>교육관</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div style="background: #fff8e6; border-radius: 10px; padding: 1.25rem 1.5rem; border-left: 4px solid var(--gold);">
+            <p style="font-size: 0.92rem; color: var(--text); line-height: 1.8; margin: 0;">
+              <strong style="color: var(--navy);">⚠ 안내</strong><br>
+              미사 시간은 교회 사정에 따라 변동될 수 있습니다. 변경 사항은 주보 및 공지사항을 통해 안내됩니다.<br>
+              문의: <strong>02-933-9981</strong>
+            </p>
+          </div>
+
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="footer-cross">✝</span>
+          <div>
+            <h3>천주교 노원성당</h3>
+            <p>천주교 서울대교구 5지구장</p>
+          </div>
+        </div>
+        <div class="footer-info">
+          <p>📞 02-933-9981 &nbsp;|&nbsp; 📠 02-933-9986</p>
+          <p>서울특별시 노원구 한글비석로 585</p>
+        </div>
+        <a href="../../admin/" class="admin-link">관리자</a>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 천주교 노원성당. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../js/sub.js"></script>
+</body>
+</html>

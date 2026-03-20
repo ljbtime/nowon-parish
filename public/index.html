@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>천주교 노원성당</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- 헤더 -->
+  <header id="header">
+    <div class="header-inner">
+      <div class="logo">
+        <a href="index.html">
+          <span class="logo-cross">✝</span>
+          <div class="logo-text">
+            <span class="logo-main">노원성당</span>
+            <span class="logo-sub">천주교 서울대교구 5지구장</span>
+          </div>
+        </a>
+      </div>
+      <nav id="nav">
+        <ul>
+          <li class="has-dropdown">
+            <a href="#">노원본당 ▾</a>
+            <ul class="dropdown">
+              <li><a href="pages/nowon/saint.html">주보성인</a></li>
+              <li><a href="pages/nowon/greeting.html">주임신부 인사말</a></li>
+              <li><a href="pages/nowon/guideline.html">본당 사목지침</a></li>
+              <li><a href="pages/nowon/father.html">본당사제단</a></li>
+              <li><a href="pages/nowon/sister.html">수녀님</a></li>
+              <li><a href="pages/nowon/father_history.html">역대 본당 신부</a></li>
+              <li><a href="pages/nowon/conference.html">사목협의회</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">사목안내 ▾</a>
+            <ul class="dropdown">
+              <li><a href="pages/business/guide.html">업무안내</a></li>
+              <li><a href="pages/business/location.html">찾아오시는 길</a></li>
+              <li><a href="pages/business/office.html">사무실 안내</a></li>
+              <li><a href="pages/business/faq.html">자주하는 질문</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#notice">본당소식 ▾</a>
+            <ul class="dropdown">
+              <li><a href="pages/board/notice.html">공지사항</a></li>
+              <li><a href="pages/board/free.html">자유게시판</a></li>
+              <li><a href="pages/board/bulletin.html">본당주보</a></li>
+              <li><a href="pages/board/volunteer.html">전례 봉사자</a></li>
+              <li><a href="pages/board/recruit.html">단체모집</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">자료실 ▾</a>
+            <ul class="dropdown">
+              <li><a href="pages/dataroom/photo.html">사진자료실</a></li>
+              <li><a href="pages/dataroom/video.html">동영상자료실</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#mass">미사와 성사 ▾</a>
+            <ul class="dropdown">
+              <li><a href="pages/info/mass.html">미사 안내</a></li>
+              <li><a href="pages/info/baptism.html">세례성사</a></li>
+              <li><a href="pages/info/eucharist.html">성체성사</a></li>
+              <li><a href="pages/info/confirmation.html">견진성사</a></li>
+              <li><a href="pages/info/confession.html">고해성사</a></li>
+              <li><a href="pages/info/marriage.html">혼인성사</a></li>
+              <li><a href="pages/info/anointing.html">병자성사</a></li>
+              <li><a href="pages/info/funeral.html">장례안내</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">가톨릭 안내 ▾</a>
+            <ul class="dropdown">
+              <li><a href="pages/catholic/intro.html">가톨릭 첫걸음</a></li>
+              <li><a href="pages/catholic/doctrine.html">기본교리</a></li>
+              <li><a href="pages/catholic/history.html">한국천주교회사</a></li>
+              <li><a href="pages/catholic/class.html">예비신자교리반</a></li>
+              <li><a href="pages/catholic/study.html">성경공부모임</a></li>
+              <li><a href="pages/catholic/prayer.html">기도문</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ① 배너 이미지 -->
+  <section class="banner" id="banner">
+    <img class="banner-bg" src="images/banner.jpg" alt="">
+    <div class="banner-overlay" id="bannerOverlay"></div>
+  </section>
+
+  <!-- ② 한눈에 보는 핵심 정보 (한 화면) -->
+  <section class="info-screen" id="info">
+    <div class="info-grid">
+
+      <!-- 미사 시간 -->
+      <div class="info-card mass-card-main" id="mass">
+        <div class="info-card-header">
+          <span class="info-icon">🕐</span>
+          <h2>미사 시간</h2>
+        </div>
+        <div class="mass-section">
+          <h3 class="mass-day">주일 미사</h3>
+          <ul class="mass-times" id="sundayMassDisplay">
+            <li><span class="t">06:00</span></li>
+            <li><span class="t">08:00</span></li>
+            <li><span class="t">09:30</span><span class="tag">청소년</span></li>
+            <li><span class="t">11:00</span></li>
+            <li><span class="t">18:00</span><span class="tag">청년</span></li>
+            <li><span class="t">20:00</span></li>
+          </ul>
+        </div>
+        <div class="mass-section">
+          <h3 class="mass-day">평일 미사</h3>
+          <ul class="mass-times" id="weekdayMassDisplay">
+            <li><span class="t">06:00</span></li>
+            <li><span class="t">10:00</span></li>
+            <li><span class="t">19:00</span></li>
+          </ul>
+        </div>
+        <div class="confession-info" id="confessionDisplay">
+          <span>고해성사</span> 주일 미사 30분 전 · 평일 미사 20분 전
+        </div>
+      </div>
+
+      <!-- 공지사항 -->
+      <div class="info-card" id="notice">
+        <div class="info-card-header">
+          <span class="info-icon">📢</span>
+          <h2>공지사항</h2>
+        </div>
+        <ul class="notice-list" id="noticeList">
+          <li class="notice-row">
+            <span class="notice-badge">공지</span>
+            <span class="notice-title">2024년 부활절 미사 안내</span>
+            <span class="notice-date">03.15</span>
+          </li>
+          <li class="notice-row">
+            <span class="notice-badge event">행사</span>
+            <span class="notice-title">본당 창립기념 행사 안내</span>
+            <span class="notice-date">03.10</span>
+          </li>
+          <li class="notice-row">
+            <span class="notice-badge book">주보</span>
+            <span class="notice-title">이번 주 주보 (3월 셋째 주)</span>
+            <span class="notice-date">03.17</span>
+          </li>
+          <li class="notice-row">
+            <span class="notice-badge">공지</span>
+            <span class="notice-title">사순 시기 특별 프로그램 안내</span>
+            <span class="notice-date">03.05</span>
+          </li>
+          <li class="notice-row">
+            <span class="notice-badge event">행사</span>
+            <span class="notice-title">청년부 피정 안내</span>
+            <span class="notice-date">03.01</span>
+          </li>
+        </ul>
+        <a href="#" class="more-link">더보기 →</a>
+      </div>
+
+      <!-- 연락처 + 오시는 길 -->
+      <div class="info-card" id="map">
+        <div class="info-card-header">
+          <span class="info-icon">📍</span>
+          <h2>오시는 길</h2>
+        </div>
+        <div class="map-embed" id="mapEmbed">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3158.3636084050436!2d127.05118997647065!3d37.664163072013515!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357cb93a251ce9d5%3A0x1b78f6a89d8a0cf7!2z7LKc7KO86rWQIOuFuOybkCDshLHri7k!5e0!3m2!1sko!2skr!4v1773900682625!5m2!1sko!2skr" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <ul class="contact-list">
+          <li>
+            <span class="contact-icon">📞</span>
+            <div>
+              <span class="contact-label">전화</span>
+              <span class="contact-value" data-phone>02-933-9981</span>
+            </div>
+          </li>
+          <li>
+            <span class="contact-icon">📠</span>
+            <div>
+              <span class="contact-label">팩스</span>
+              <span class="contact-value" data-fax>02-933-9986</span>
+            </div>
+          </li>
+          <li>
+            <span class="contact-icon">🚇</span>
+            <div>
+              <span class="contact-label">지하철</span>
+              <span class="contact-value" id="subwayInfo">7호선 노원역 도보 5분</span>
+            </div>
+          </li>
+          <li>
+            <span class="contact-icon">📌</span>
+            <div>
+              <span class="contact-label">주소</span>
+              <span class="contact-value" id="addressInfo">서울특별시 노원구</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ③ 갤러리 (스크롤 시) -->
+  <section class="gallery-section" id="gallery">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Gallery</span>
+        <h2 class="section-title">갤러리</h2>
+      </div>
+      <div class="gallery-grid" id="galleryGrid">
+        <div class="gallery-item placeholder"><div class="gallery-ph"><span>✝</span><p>사진 준비 중</p></div></div>
+        <div class="gallery-item placeholder"><div class="gallery-ph"><span>✝</span><p>사진 준비 중</p></div></div>
+        <div class="gallery-item placeholder"><div class="gallery-ph"><span>✝</span><p>사진 준비 중</p></div></div>
+        <div class="gallery-item placeholder"><div class="gallery-ph"><span>✝</span><p>사진 준비 중</p></div></div>
+        <div class="gallery-item placeholder"><div class="gallery-ph"><span>✝</span><p>사진 준비 중</p></div></div>
+        <div class="gallery-item placeholder"><div class="gallery-ph"><span>✝</span><p>사진 준비 중</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 푸터 -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="footer-cross">✝</span>
+          <div>
+            <h3>천주교 노원성당</h3>
+            <p>천주교 서울대교구 5지구장</p>
+          </div>
+        </div>
+        <div class="footer-info">
+          <p>📞 <span data-phone>02-933-9981</span> &nbsp;|&nbsp; 📠 <span data-fax>02-933-9986</span></p>
+          <p id="footerAddress">서울특별시 노원구</p>
+        </div>
+        <a href="admin/" class="admin-link">관리자</a>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 천주교 노원성당. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>성경공부모임 - 천주교 노원성당</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/style.css" />
+  <style>
+    .study-card {
+      border: 1px solid #dde5f0;
+      border-radius: 10px;
+      padding: 1.5rem;
+      background: #f7f9fd;
+      margin-bottom: 1rem;
+      border-left: 5px solid var(--navy);
+    }
+    .study-card.gold { border-left-color: var(--gold); }
+    .study-card h4 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 0 0 0.6rem;
+    }
+    .study-card p { font-size: 0.92rem; color: var(--text); line-height: 1.7; margin: 0.2rem 0; }
+  </style>
+</head>
+<body>
+  <header id="header">
+    <div class="header-inner">
+      <div class="logo">
+        <a href="../../index.html">
+          <span class="logo-cross">✝</span>
+          <div class="logo-text">
+            <span class="logo-main">노원성당</span>
+            <span class="logo-sub">천주교 서울대교구 5지구장</span>
+          </div>
+        </a>
+      </div>
+      <nav id="nav">
+        <ul>
+          <li class="has-dropdown">
+            <a href="#">노원본당 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/nowon/saint.html">주보성인</a></li>
+              <li><a href="../../pages/nowon/greeting.html">주임신부 인사말</a></li>
+              <li><a href="../../pages/nowon/guideline.html">본당 사목지침</a></li>
+              <li><a href="../../pages/nowon/father.html">본당사제단</a></li>
+              <li><a href="../../pages/nowon/sister.html">수녀님</a></li>
+              <li><a href="../../pages/nowon/father_history.html">역대 본당 신부</a></li>
+              <li><a href="../../pages/nowon/conference.html">사목협의회</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">사목안내 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/business/guide.html">업무안내</a></li>
+              <li><a href="../../pages/business/location.html">찾아오시는 길</a></li>
+              <li><a href="../../pages/business/office.html">사무실 안내</a></li>
+              <li><a href="../../pages/business/faq.html">자주하는 질문</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">본당소식 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/board/notice.html">공지사항</a></li>
+              <li><a href="../../pages/board/free.html">자유게시판</a></li>
+              <li><a href="../../pages/board/bulletin.html">본당주보</a></li>
+              <li><a href="../../pages/board/volunteer.html">전례 봉사자</a></li>
+              <li><a href="../../pages/board/recruit.html">단체모집</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">자료실 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/dataroom/photo.html">사진자료실</a></li>
+              <li><a href="../../pages/dataroom/video.html">동영상자료실</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">미사와 성사 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/info/mass.html">미사 안내</a></li>
+              <li><a href="../../pages/info/baptism.html">세례성사</a></li>
+              <li><a href="../../pages/info/eucharist.html">성체성사</a></li>
+              <li><a href="../../pages/info/confirmation.html">견진성사</a></li>
+              <li><a href="../../pages/info/confession.html">고해성사</a></li>
+              <li><a href="../../pages/info/marriage.html">혼인성사</a></li>
+              <li><a href="../../pages/info/anointing.html">병자성사</a></li>
+              <li><a href="../../pages/info/funeral.html">장례안내</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">가톨릭 안내 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/catholic/intro.html">가톨릭 첫걸음</a></li>
+              <li><a href="../../pages/catholic/doctrine.html">기본교리</a></li>
+              <li><a href="../../pages/catholic/history.html">한국천주교회사</a></li>
+              <li><a href="../../pages/catholic/class.html">예비신자교리반</a></li>
+              <li><a href="../../pages/catholic/study.html">성경공부모임</a></li>
+              <li><a href="../../pages/catholic/prayer.html">기도문</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 서브페이지 배너 -->
+  <div class="sub-banner">
+    <div class="sub-banner-inner">
+      <p class="breadcrumb"><a href="../../index.html">홈</a> <span>›</span> 가톨릭 안내 <span>›</span> 성경공부모임</p>
+      <h1>성경공부모임</h1>
+    </div>
+  </div>
+
+  <!-- 본문 -->
+  <main class="sub-main">
+    <div class="container">
+      <div class="sub-layout">
+        <!-- 사이드 메뉴 -->
+        <aside class="sub-sidebar">
+          <div class="sidebar-menu">
+            <h3 class="sidebar-title">가톨릭 안내</h3>
+            <ul>
+              <li><a href="intro.html">가톨릭 첫걸음</a></li>
+              <li><a href="doctrine.html">기본교리</a></li>
+              <li><a href="history.html">한국천주교회사</a></li>
+              <li><a href="class.html">예비신자교리반</a></li>
+              <li class="active"><a href="study.html">성경공부모임</a></li>
+              <li><a href="prayer.html">기도문</a></li>
+            </ul>
+          </div>
+        </aside>
+
+        <!-- 본문 콘텐츠 -->
+        <section class="sub-content">
+          <div class="content-header">
+            <h2>성경공부모임</h2>
+          </div>
+
+          <div class="content-body">
+
+            <!-- 소개 배너 -->
+            <div style="background: linear-gradient(135deg, #1a2c4e, #253d68); color: white; border-radius: 12px; padding: 1.5rem 2rem; margin-bottom: 2rem; text-align: center;">
+              <div style="font-family: 'Noto Serif KR', serif; font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 0.4rem; line-height: 1.7;">
+                "하느님의 말씀은 살아 있고 힘이 있습니다."<br>
+                <span style="font-size: 0.82rem; font-weight: 400; color: rgba(255,255,255,0.6);">(히브 4,12)</span>
+              </div>
+            </div>
+
+            <h3>소개</h3>
+            <p>성경공부모임은 <strong>성경 말씀을 함께 읽고 묵상하며 신앙을 성장시키는 모임</strong>입니다. 개인 묵상에서 그치지 않고, 함께 나누는 공동 독서와 나눔을 통해 하느님의 말씀이 우리 삶에 더 깊이 뿌리내릴 수 있도록 돕습니다.</p>
+
+            <p>성경은 하느님의 살아있는 말씀입니다. 성경공부를 통해 신앙이 더욱 깊어지고, 삶 안에서 하느님의 뜻을 더 잘 이해하게 되기를 바랍니다. 세례를 받은 신자라면 누구나 참여하실 수 있습니다.</p>
+
+            <h3>모임 일정</h3>
+
+            <div class="study-card">
+              <h4>신약 성경반</h4>
+              <p>📅 매주 목요일 오전 10:00 ~ 12:00</p>
+              <p>👥 대상: 주부 및 오전 참여 가능한 신자 누구나</p>
+              <p>📖 내용: 신약 성경 (복음서, 사도행전, 서간 등) 단계적 공부</p>
+              <p>📍 장소: 노원성당 소성당 또는 교육관</p>
+            </div>
+
+            <div class="study-card gold">
+              <h4>구약 성경반</h4>
+              <p>📅 매주 목요일 저녁 7:30 ~ 9:00</p>
+              <p>👥 대상: 직장인 및 저녁 참여 가능한 신자 누구나</p>
+              <p>📖 내용: 구약 성경 (창세기, 역사서, 예언서, 시편 등) 단계적 공부</p>
+              <p>📍 장소: 노원성당 소성당 또는 교육관</p>
+            </div>
+
+            <h3>교재 및 진행 방식</h3>
+            <table class="info-table">
+              <tbody>
+                <tr>
+                  <td style="width: 130px;"><strong>사용 교재</strong></td>
+                  <td>한국천주교주교회의 발행 성경공부 교재 및 보조 자료</td>
+                </tr>
+                <tr>
+                  <td><strong>진행 방식</strong></td>
+                  <td>말씀 봉독 → 해설 → 나눔 → 기도 순으로 진행</td>
+                </tr>
+                <tr>
+                  <td><strong>지도</strong></td>
+                  <td>담당 수녀님 및 교리 담당자 지도</td>
+                </tr>
+                <tr>
+                  <td><strong>준비물</strong></td>
+                  <td>성경 (한국천주교주교회의 공인 번역본), 필기구</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h3>참여 대상 및 등록</h3>
+            <ul>
+              <li><strong>대상:</strong> 세례받은 가톨릭 신자 누구나</li>
+              <li><strong>등록:</strong> 사무실 방문 또는 담당 수녀님께 직접 문의</li>
+              <li><strong>비용:</strong> 교재비 실비 (담당자 문의)</li>
+            </ul>
+
+            <div style="background: #f0f4fa; border-radius: 10px; padding: 1.25rem 1.5rem; border-left: 4px solid var(--gold); margin: 1.5rem 0;">
+              <p style="font-weight: 700; color: var(--navy); margin-bottom: 0.5rem;">💡 이런 분들께 추천합니다</p>
+              <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.92rem; line-height: 1.9; color: var(--text);">
+                <li>세례는 받았지만 성경을 잘 모르는 분</li>
+                <li>미사 독서와 복음의 의미를 더 깊이 이해하고 싶은 분</li>
+                <li>신앙을 더 체계적으로 성장시키고 싶은 분</li>
+                <li>함께 말씀을 나누며 공동체 안에서 성장하고 싶은 분</li>
+              </ul>
+            </div>
+
+            <div class="contact-box">
+              <h4>✝ 등록 및 문의</h4>
+              <p style="font-size: 0.95rem; color: var(--text); line-height: 1.8;">
+                성경공부모임 참여 문의<br>
+                📞 <strong>02-933-9981</strong> &nbsp;|&nbsp; 평일 09:00~18:00<br>
+                담당 수녀님께 직접 문의하셔도 됩니다.
+              </p>
+            </div>
+
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="footer-cross">✝</span>
+          <div>
+            <h3>천주교 노원성당</h3>
+            <p>천주교 서울대교구 5지구장</p>
+          </div>
+        </div>
+        <div class="footer-info">
+          <p>📞 02-933-9981 &nbsp;|&nbsp; 📠 02-933-9986</p>
+          <p>서울특별시 노원구 한글비석로 585</p>
+        </div>
+        <a href="../../admin/" class="admin-link">관리자</a>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 천주교 노원성당. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="../../js/sub.js"></script>
+</body>
+</html>
