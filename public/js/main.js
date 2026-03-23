@@ -150,7 +150,7 @@ function applyAdminData() {
     const parts = [];
     if (confession.sunday)  parts.push(`주일 ${confession.sunday}`);
     if (confession.weekday) parts.push(`평일 ${confession.weekday}`);
-    if (parts.length) confEl.innerHTML = `<span>고해성사</span> ${parts.join(' · ')}`;
+    if (parts.length) confEl.innerHTML = `<span>고해성사</span><br>${parts.join(' · ')}`;
   }
 }
 

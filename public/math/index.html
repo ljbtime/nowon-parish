@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>중1 수학 1학기 학습</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>📐 중1 수학 1학기</h1>
+    <p>개념 설명과 단계별 풀이로 쉽게 배우기</p>
+  </header>
+
+  <nav class="unit-nav" id="unit-nav"></nav>
+
+  <main id="main-content"></main>
+
+  <!-- Difficulty Modal -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <h3>🔄 새 문제 받기</h3>
+      <p>원하는 난이도를 선택하세요</p>
+      <div class="difficulty-options">
+        <button class="diff-btn easy-btn" data-diff="easy" onclick="selectDifficulty('easy')">
+          <span class="diff-icon">😊</span>
+          <div class="diff-info">
+            <strong>더 쉽게</strong>
+            <span>기본 개념 확인용 문제</span>
+          </div>
+        </button>
+        <button class="diff-btn medium-btn" data-diff="medium" onclick="selectDifficulty('medium')">
+          <span class="diff-icon">📘</span>
+          <div class="diff-info">
+            <strong>현재와 같이</strong>
+            <span>표준 난이도 문제</span>
+          </div>
+        </button>
+        <button class="diff-btn hard-btn" data-diff="hard" onclick="selectDifficulty('hard')">
+          <span class="diff-icon">💪</span>
+          <div class="diff-info">
+            <strong>더 어렵게</strong>
+            <span>심화 응용 문제</span>
+          </div>
+        </button>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModal()">취소</button>
+        <button class="btn-confirm" onclick="confirmRefill()">이 난이도로 새 문제 받기</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
