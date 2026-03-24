@@ -9,11 +9,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../../css/style.css" />
   <style>
+    .board-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
     .board-search {
       display: flex;
       gap: 0.5rem;
-      margin-bottom: 1.5rem;
-      justify-content: flex-end;
     }
     .board-search input {
       padding: 0.5rem 1rem;
@@ -38,13 +44,29 @@
       transition: background 0.2s;
     }
     .board-search button:hover { background: var(--navy-light); }
+    .btn-write {
+      padding: 0.5rem 1.3rem;
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-write:hover { background: var(--gold-light); }
     .pagination {
       display: flex;
       justify-content: center;
       gap: 0.35rem;
       margin-top: 1.75rem;
     }
-    .pagination a {
+    .pagination button {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -54,12 +76,19 @@
       font-size: 0.9rem;
       border: 1.5px solid var(--border);
       color: var(--text);
+      background: white;
+      cursor: pointer;
+      font-family: inherit;
       transition: all 0.15s;
     }
-    .pagination a:hover { border-color: var(--navy); color: var(--navy); }
-    .pagination a.active { background: var(--navy); color: white; border-color: var(--navy); font-weight: 700; }
+    .pagination button:hover { border-color: var(--navy); color: var(--navy); }
+    .pagination button.active { background: var(--navy); color: white; border-color: var(--navy); font-weight: 700; }
+    .pagination button:disabled { opacity: 0.3; cursor: default; }
     .board-pinned td { background: #f0f4fa !important; }
     .pin-icon { color: var(--gold); font-size: 0.9rem; margin-right: 0.3rem; }
+    .board-table tbody tr { cursor: pointer; }
+    .board-table tbody tr:hover td { background: #f8f9ff !important; }
+    .loading-row td { text-align: center; color: var(--text-sub); padding: 3rem; }
   </style>
 </head>
 <body>
@@ -146,7 +175,6 @@
     </div>
   </header>
 
-  <!-- 서브페이지 배너 -->
   <div class="sub-banner">
     <div class="sub-banner-inner">
       <p class="breadcrumb"><a href="../../index.html">홈</a> <span>›</span> 본당소식 <span>›</span> 공지사항</p>
@@ -154,11 +182,9 @@
     </div>
   </div>
 
-  <!-- 본문 -->
   <main class="sub-main">
     <div class="container">
       <div class="sub-layout">
-        <!-- 사이드 메뉴 -->
         <aside class="sub-sidebar">
           <div class="sidebar-menu">
             <h3 class="sidebar-title">본당소식</h3>
@@ -172,15 +198,17 @@
           </div>
         </aside>
 
-        <!-- 본문 콘텐츠 -->
         <section class="sub-content">
           <div class="content-header">
             <h2>공지사항</h2>
           </div>
 
-          <div class="board-search">
-            <input type="text" placeholder="검색어를 입력하세요" />
-            <button>검색</button>
+          <div class="board-toolbar">
+            <div class="board-search">
+              <input type="text" id="searchInput" placeholder="검색어를 입력하세요" />
+              <button onclick="doSearch()">검색</button>
+            </div>
+            <a href="write.html?type=notice" class="btn-write" id="btnWrite" style="display:none">✏ 글쓰기</a>
           </div>
 
           <table class="board-table">
@@ -192,93 +220,12 @@
                 <th class="col-date">날짜</th>
               </tr>
             </thead>
-            <tbody>
-              <!-- 고정 공지 -->
-              <tr class="board-pinned">
-                <td class="col-num"><span class="pin-icon">📌</span></td>
-                <td class="col-badge"><span class="board-badge notice">공지</span></td>
-                <td class="col-title">2024년 본당 사목 방향 및 주요 일정 안내</td>
-                <td class="col-date">2024.01.07</td>
-              </tr>
-              <tr class="board-pinned">
-                <td class="col-num"><span class="pin-icon">📌</span></td>
-                <td class="col-badge"><span class="board-badge notice">공지</span></td>
-                <td class="col-title">미사 및 성당 이용 안내 (코로나19 이후 정상화)</td>
-                <td class="col-date">2023.06.01</td>
-              </tr>
-              <!-- 일반 게시글 -->
-              <tr>
-                <td class="col-num">10</td>
-                <td class="col-badge"><span class="board-badge event">행사</span></td>
-                <td class="col-title">2024년 성탄 미사 및 행사 안내</td>
-                <td class="col-date">2024.12.10</td>
-              </tr>
-              <tr>
-                <td class="col-num">9</td>
-                <td class="col-badge"><span class="board-badge">일반</span></td>
-                <td class="col-title">본당 창립기념 행사 안내 (12월 셋째 주)</td>
-                <td class="col-date">2024.12.05</td>
-              </tr>
-              <tr>
-                <td class="col-num">8</td>
-                <td class="col-badge"><span class="board-badge event">행사</span></td>
-                <td class="col-title">사순 시기 특별 프로그램 안내 (2025년)</td>
-                <td class="col-date">2024.11.28</td>
-              </tr>
-              <tr>
-                <td class="col-num">7</td>
-                <td class="col-badge"><span class="board-badge">일반</span></td>
-                <td class="col-title">2024년 예비신자 교리반 가을학기 등록 안내</td>
-                <td class="col-date">2024.08.20</td>
-              </tr>
-              <tr>
-                <td class="col-num">6</td>
-                <td class="col-badge"><span class="board-badge event">행사</span></td>
-                <td class="col-title">성 마태오 축일 기념 특별 미사 및 행사 안내</td>
-                <td class="col-date">2024.09.10</td>
-              </tr>
-              <tr>
-                <td class="col-num">5</td>
-                <td class="col-badge"><span class="board-badge">일반</span></td>
-                <td class="col-title">청년부 피정 안내 (1박 2일)</td>
-                <td class="col-date">2024.08.01</td>
-              </tr>
-              <tr>
-                <td class="col-num">4</td>
-                <td class="col-badge"><span class="board-badge notice">공지</span></td>
-                <td class="col-title">성당 내부 보수공사 일정 안내 (7월 중순)</td>
-                <td class="col-date">2024.07.05</td>
-              </tr>
-              <tr>
-                <td class="col-num">3</td>
-                <td class="col-badge"><span class="board-badge event">행사</span></td>
-                <td class="col-title">성체성혈대축일 행사 및 성체 행렬 안내</td>
-                <td class="col-date">2024.06.10</td>
-              </tr>
-              <tr>
-                <td class="col-num">2</td>
-                <td class="col-badge">일반</td>
-                <td class="col-title">2024년 부활절 미사 안내 및 부활 성야 일정</td>
-                <td class="col-date">2024.03.15</td>
-              </tr>
-              <tr>
-                <td class="col-num">1</td>
-                <td class="col-badge"><span class="board-badge">일반</span></td>
-                <td class="col-title">레지오 마리애 단원 모집 안내</td>
-                <td class="col-date">2024.02.10</td>
-              </tr>
+            <tbody id="boardBody">
+              <tr class="loading-row"><td colspan="4">불러오는 중...</td></tr>
             </tbody>
           </table>
 
-          <!-- 페이지네이션 -->
-          <div class="pagination">
-            <a href="#">&laquo;</a>
-            <a href="#" class="active">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">&raquo;</a>
-          </div>
-
+          <div class="pagination" id="pagination"></div>
         </section>
       </div>
     </div>
@@ -307,5 +254,140 @@
   </footer>
 
   <script src="../../js/sub.js"></script>
+  <script type="module">
+    import { auth, db } from '../../js/firebase-config.js';
+    import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+    import {
+      collection, query, where, orderBy, getDocs, getDoc, doc,
+      limit, startAfter, getCountFromServer
+    } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+    import '../../js/auth-header.js';
+
+    const PAGE_SIZE = 10;
+    const col = collection(db, 'notices');
+
+    let allDocs = [];
+    let filteredDocs = [];
+    let currentPage = 1;
+    let isAdmin = false;
+    let searchKeyword = '';
+
+    // 관리자 여부 확인
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const tokenResult = await user.getIdTokenResult();
+        isAdmin = !!tokenResult.claims.admin;
+        if (isAdmin) document.getElementById('btnWrite').style.display = 'inline-block';
+      }
+    });
+
+    // 전체 목록 로드
+    async function loadAll() {
+      const q = query(col, orderBy('createdAt', 'desc'));
+      const snap = await getDocs(q);
+      allDocs = snap.docs;
+      filteredDocs = allDocs;
+      currentPage = 1;
+      renderPage();
+    }
+
+    window.doSearch = function() {
+      searchKeyword = document.getElementById('searchInput').value.trim().toLowerCase();
+      if (searchKeyword) {
+        filteredDocs = allDocs.filter(d => {
+          const data = d.data();
+          return data.title?.toLowerCase().includes(searchKeyword) ||
+                 data.content?.toLowerCase().includes(searchKeyword);
+        });
+      } else {
+        filteredDocs = allDocs;
+      }
+      currentPage = 1;
+      renderPage();
+    };
+
+    document.getElementById('searchInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') doSearch();
+    });
+
+    function formatDate(ts) {
+      if (!ts) return '';
+      const d = ts.toDate ? ts.toDate() : new Date(ts);
+      return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
+    }
+
+    function categoryBadge(cat) {
+      const map = { '공지': 'notice', '행사': 'event' };
+      const cls = map[cat] || '';
+      return `<span class="board-badge ${cls}">${cat || '일반'}</span>`;
+    }
+
+    function renderPage() {
+      const tbody = document.getElementById('boardBody');
+
+      // 고정 공지
+      const pinned = filteredDocs.filter(d => d.data().pinned);
+      // 일반 게시글 페이지네이션
+      const normal = filteredDocs.filter(d => !d.data().pinned);
+      const totalPages = Math.max(1, Math.ceil(normal.length / PAGE_SIZE));
+      if (currentPage > totalPages) currentPage = totalPages;
+
+      const start = (currentPage - 1) * PAGE_SIZE;
+      const pageDocs = normal.slice(start, start + PAGE_SIZE);
+      const totalNormal = normal.length;
+
+      let html = '';
+
+      // 고정 공지 (검색 시 첫 페이지에만 표시)
+      if (currentPage === 1) {
+        pinned.forEach(d => {
+          const data = d.data();
+          html += `<tr class="board-pinned" onclick="viewPost('${d.id}')">
+            <td class="col-num"><span class="pin-icon">📌</span></td>
+            <td class="col-badge">${categoryBadge(data.category)}</td>
+            <td class="col-title">${data.title || ''}</td>
+            <td class="col-date">${formatDate(data.createdAt)}</td>
+          </tr>`;
+        });
+      }
+
+      if (pageDocs.length === 0 && pinned.length === 0) {
+        html += `<tr><td colspan="4" style="text-align:center;padding:3rem;color:var(--text-sub)">등록된 공지사항이 없습니다.</td></tr>`;
+      }
+
+      pageDocs.forEach((d, i) => {
+        const data = d.data();
+        const num = totalNormal - start - i;
+        html += `<tr onclick="viewPost('${d.id}')">
+          <td class="col-num">${num}</td>
+          <td class="col-badge">${categoryBadge(data.category)}</td>
+          <td class="col-title">${data.title || ''}</td>
+          <td class="col-date">${formatDate(data.createdAt)}</td>
+        </tr>`;
+      });
+
+      tbody.innerHTML = html;
+      renderPagination(totalPages);
+    }
+
+    function renderPagination(totalPages) {
+      const el = document.getElementById('pagination');
+      if (totalPages <= 1) { el.innerHTML = ''; return; }
+      let html = `<button onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>‹</button>`;
+      for (let i = 1; i <= totalPages; i++) {
+        html += `<button class="${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
+      }
+      html += `<button onclick="goPage(${currentPage+1})" ${currentPage===totalPages?'disabled':''}>›</button>`;
+      el.innerHTML = html;
+    }
+
+    window.goPage = function(p) { currentPage = p; renderPage(); window.scrollTo(0,0); };
+
+    window.viewPost = function(id) {
+      window.location.href = `view.html?type=notice&id=${id}`;
+    };
+
+    loadAll();
+  </script>
 </body>
 </html>

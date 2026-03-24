@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>글쓰기 - 천주교 노원성당</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/style.css" />
+  <style>
+    .write-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .write-form {
+      background: white;
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+    }
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-sub);
+      margin-bottom: 0.4rem;
+    }
+    .form-group input[type="text"],
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+      background: white;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--navy); }
+    .form-group textarea {
+      min-height: 320px;
+      resize: vertical;
+      line-height: 1.7;
+    }
+
+    /* 이미지 업로드 */
+    .img-upload-area {
+      border: 2px dashed var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .img-upload-area:hover { border-color: var(--navy); background: #f8f9ff; }
+    .img-upload-area input { display: none; }
+    .img-upload-area .upload-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+    .img-upload-area p { font-size: 0.88rem; color: var(--text-sub); }
+
+    .img-preview-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    .img-preview-item {
+      position: relative;
+      width: 100px;
+      height: 100px;
+    }
+    .img-preview-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1.5px solid var(--border);
+    }
+    .img-preview-item .remove-img {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #e53e3e;
+      color: white;
+      border: none;
+      font-size: 0.75rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    .upload-progress {
+      margin-top: 0.5rem;
+      font-size: 0.82rem;
+      color: var(--navy);
+    }
+
+    /* 버튼 */
+    .btn-row {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: flex-end;
+      margin-top: 1.5rem;
+    }
+    .btn-cancel {
+      padding: 0.75rem 1.5rem;
+      background: white;
+      color: var(--text-sub);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-cancel:hover { border-color: var(--navy); color: var(--navy); }
+    .btn-submit {
+      padding: 0.75rem 2rem;
+      background: var(--navy);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-submit:hover { background: var(--navy-light); }
+    .btn-submit:disabled { background: #aaa; cursor: not-allowed; }
+
+    .alert {
+      padding: 0.9rem 1rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    .alert.error { background: #fff5f5; color: #c53030; border: 1px solid #feb2b2; }
+  </style>
+</head>
+<body>
+  <header id="header">
+    <div class="header-inner">
+      <div class="logo">
+        <a href="../../index.html">
+          <span class="logo-cross">✝</span>
+          <div class="logo-text">
+            <span class="logo-main">노원성당</span>
+            <span class="logo-sub">천주교 서울대교구 5지구장</span>
+          </div>
+        </a>
+      </div>
+      <nav id="nav">
+        <ul>
+          <li class="has-dropdown">
+            <a href="#">노원본당 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/nowon/saint.html">주보성인</a></li>
+              <li><a href="../../pages/nowon/greeting.html">주임신부 인사말</a></li>
+              <li><a href="../../pages/nowon/guideline.html">본당 사목지침</a></li>
+              <li><a href="../../pages/nowon/father.html">본당사제단</a></li>
+              <li><a href="../../pages/nowon/sister.html">수녀님</a></li>
+              <li><a href="../../pages/nowon/father_history.html">역대 본당 신부</a></li>
+              <li><a href="../../pages/nowon/conference.html">사목협의회</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">사목안내 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/business/guide.html">업무안내</a></li>
+              <li><a href="../../pages/business/location.html">찾아오시는 길</a></li>
+              <li><a href="../../pages/business/office.html">사무실 안내</a></li>
+              <li><a href="../../pages/business/faq.html">자주하는 질문</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">본당소식 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/board/notice.html">공지사항</a></li>
+              <li><a href="../../pages/board/free.html">자유게시판</a></li>
+              <li><a href="../../pages/board/bulletin.html">본당주보</a></li>
+              <li><a href="../../pages/board/volunteer.html">전례 봉사자</a></li>
+              <li><a href="../../pages/board/recruit.html">단체모집</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">자료실 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/dataroom/photo.html">사진자료실</a></li>
+              <li><a href="../../pages/dataroom/video.html">동영상자료실</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">미사와 성사 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/info/mass.html">미사 안내</a></li>
+              <li><a href="../../pages/info/baptism.html">세례성사</a></li>
+              <li><a href="../../pages/info/eucharist.html">성체성사</a></li>
+              <li><a href="../../pages/info/confirmation.html">견진성사</a></li>
+              <li><a href="../../pages/info/confession.html">고해성사</a></li>
+              <li><a href="../../pages/info/marriage.html">혼인성사</a></li>
+              <li><a href="../../pages/info/anointing.html">병자성사</a></li>
+              <li><a href="../../pages/info/funeral.html">장례안내</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">가톨릭 안내 ▾</a>
+            <ul class="dropdown">
+              <li><a href="../../pages/catholic/intro.html">가톨릭 첫걸음</a></li>
+              <li><a href="../../pages/catholic/doctrine.html">기본교리</a></li>
+              <li><a href="../../pages/catholic/history.html">한국천주교회사</a></li>
+              <li><a href="../../pages/catholic/class.html">예비신자교리반</a></li>
+              <li><a href="../../pages/catholic/study.html">성경공부모임</a></li>
+              <li><a href="../../pages/catholic/prayer.html">기도문</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="sub-banner">
+    <div class="sub-banner-inner">
+      <p class="breadcrumb" id="breadcrumb"></p>
+      <h1 id="pageTitle">글쓰기</h1>
+    </div>
+  </div>
+
+  <main class="sub-main">
+    <div class="container">
+      <div class="write-wrap">
+        <div class="alert error" id="alertError"></div>
+
+        <div class="write-form">
+          <!-- 공지 분류 (공지사항만) -->
+          <div class="form-group" id="categoryGroup" style="display:none">
+            <label>분류</label>
+            <select id="category">
+              <option value="일반">일반</option>
+              <option value="공지">공지</option>
+              <option value="행사">행사</option>
+            </select>
+          </div>
+
+          <!-- 고정 여부 (공지사항만) -->
+          <div class="form-group" id="pinnedGroup" style="display:none">
+            <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer">
+              <input type="checkbox" id="pinned" style="width:auto" />
+              상단 고정
+            </label>
+          </div>
+
+          <div class="form-group">
+            <label>제목 <span style="color:#e53e3e">*</span></label>
+            <input type="text" id="title" placeholder="제목을 입력하세요" maxlength="100" />
+          </div>
+
+          <div class="form-group">
+            <label>내용 <span style="color:#e53e3e">*</span></label>
+            <textarea id="content" placeholder="내용을 입력하세요"></textarea>
+          </div>
+
+          <!-- 이미지 업로드 -->
+          <div class="form-group">
+            <label>이미지 첨부 <span style="color:#aaa;font-weight:400">(최대 5장)</span></label>
+            <div class="img-upload-area" onclick="document.getElementById('imgInput').click()">
+              <div class="upload-icon">📷</div>
+              <p>클릭하여 이미지를 선택하거나 여기로 끌어다 놓으세요</p>
+              <p style="margin-top:0.3rem;font-size:0.8rem">JPG, PNG, GIF · 파일당 최대 5MB</p>
+              <input type="file" id="imgInput" accept="image/*" multiple />
+            </div>
+            <div class="img-preview-list" id="imgPreviewList"></div>
+            <div class="upload-progress" id="uploadProgress"></div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn-cancel" id="btnCancel">취소</button>
+            <button class="btn-submit" id="btnSubmit" onclick="submitPost()">등록하기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="footer-cross">✝</span>
+          <div>
+            <h3>천주교 노원성당</h3>
+            <p>천주교 서울대교구 5지구장</p>
+          </div>
+        </div>
+        <div class="footer-info">
+          <p>📞 02-933-9981 &nbsp;|&nbsp; 📠 02-933-9986</p>
+          <p>서울특별시 노원구 한글비석로 585</p>
+        </div>
+        <a href="../../admin/" class="admin-link">관리자</a>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 천주교 노원성당. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../js/sub.js"></script>
+  <script type="module">
+    import { auth, db } from '../../js/firebase-config.js';
+    import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+    import {
+      collection, addDoc, serverTimestamp
+    } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+    import { getStorage, ref, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js';
+    import '../../js/auth-header.js';
+
+    const params = new URLSearchParams(location.search);
+    const type = params.get('type') || 'free';
+    const isNotice = type === 'notice';
+    const colName = isNotice ? 'notices' : 'posts';
+    const backUrl = isNotice ? 'notice.html' : 'free.html';
+    const storage = getStorage();
+
+    // 브레드크럼·타이틀
+    document.getElementById('breadcrumb').innerHTML =
+      `<a href="../../index.html">홈</a> <span>›</span> 본당소식 <span>›</span>
+       <a href="${backUrl}">${isNotice ? '공지사항' : '자유게시판'}</a> <span>›</span> 글쓰기`;
+    document.getElementById('pageTitle').textContent = isNotice ? '공지사항 글쓰기' : '자유게시판 글쓰기';
+    document.getElementById('btnCancel').onclick = () => history.back();
+
+    // 공지사항이면 분류/고정 표시
+    if (isNotice) {
+      document.getElementById('categoryGroup').style.display = '';
+      document.getElementById('pinnedGroup').style.display = '';
+    }
+
+    let currentUser = null;
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        alert('로그인이 필요합니다.');
+        window.location.href = `../member/login.html?redirect=${encodeURIComponent(location.href)}`;
+        return;
+      }
+      currentUser = user;
+    });
+
+    // 이미지 미리보기
+    let selectedFiles = [];
+    document.getElementById('imgInput').addEventListener('change', handleFiles);
+
+    const uploadArea = document.querySelector('.img-upload-area');
+    uploadArea.addEventListener('dragover', (e) => { e.preventDefault(); uploadArea.style.borderColor = 'var(--navy)'; });
+    uploadArea.addEventListener('dragleave', () => { uploadArea.style.borderColor = ''; });
+    uploadArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadArea.style.borderColor = '';
+      const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+      addFiles(files);
+    });
+
+    function handleFiles(e) {
+      addFiles(Array.from(e.target.files));
+      e.target.value = '';
+    }
+
+    function addFiles(files) {
+      files.forEach(file => {
+        if (selectedFiles.length >= 5) { alert('이미지는 최대 5장까지 첨부할 수 있습니다.'); return; }
+        if (file.size > 5 * 1024 * 1024) { alert(`${file.name}: 5MB를 초과하는 파일입니다.`); return; }
+        selectedFiles.push(file);
+      });
+      renderPreviews();
+    }
+
+    function renderPreviews() {
+      const list = document.getElementById('imgPreviewList');
+      list.innerHTML = '';
+      selectedFiles.forEach((file, i) => {
+        const item = document.createElement('div');
+        item.className = 'img-preview-item';
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(file);
+        const btn = document.createElement('button');
+        btn.className = 'remove-img';
+        btn.textContent = '✕';
+        btn.onclick = () => { selectedFiles.splice(i, 1); renderPreviews(); };
+        item.appendChild(img);
+        item.appendChild(btn);
+        list.appendChild(item);
+      });
+    }
+
+    // 제출
+    window.submitPost = async function() {
+      if (!currentUser) { alert('로그인이 필요합니다.'); return; }
+      const title = document.getElementById('title').value.trim();
+      const content = document.getElementById('content').value.trim();
+      const errEl = document.getElementById('alertError');
+      errEl.style.display = 'none';
+
+      if (!title) { errEl.textContent = '제목을 입력해주세요.'; errEl.style.display = 'block'; return; }
+      if (!content) { errEl.textContent = '내용을 입력해주세요.'; errEl.style.display = 'block'; return; }
+
+      const btn = document.getElementById('btnSubmit');
+      btn.disabled = true;
+      btn.textContent = '등록 중...';
+
+      try {
+        // 이미지 업로드
+        const imageUrls = [];
+        const progEl = document.getElementById('uploadProgress');
+        for (let i = 0; i < selectedFiles.length; i++) {
+          progEl.textContent = `이미지 업로드 중... (${i+1}/${selectedFiles.length})`;
+          const file = selectedFiles[i];
+          const path = `${colName}/${currentUser.uid}_${Date.now()}_${file.name}`;
+          const storageRef = ref(storage, path);
+          await uploadBytes(storageRef, file);
+          const url = await getDownloadURL(storageRef);
+          imageUrls.push(url);
+        }
+        progEl.textContent = '';
+
+        const postData = {
+          title,
+          content,
+          authorName: currentUser.displayName || '',
+          authorUid: currentUser.uid,
+          createdAt: serverTimestamp(),
+          views: 0,
+          images: imageUrls,
+        };
+
+        if (isNotice) {
+          postData.category = document.getElementById('category').value;
+          postData.pinned = document.getElementById('pinned').checked;
+        }
+
+        const docRef = await addDoc(collection(db, colName), postData);
+        window.location.href = `view.html?type=${type}&id=${docRef.id}`;
+
+      } catch (err) {
+        console.error(err);
+        errEl.textContent = '등록 중 오류가 발생했습니다: ' + err.message;
+        errEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = '등록하기';
+      }
+    };
+  </script>
+</body>
+</html>

@@ -9,11 +9,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../../css/style.css" />
   <style>
+    .board-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
     .board-search {
       display: flex;
       gap: 0.5rem;
-      margin-bottom: 1.5rem;
-      justify-content: flex-end;
     }
     .board-search input {
       padding: 0.5rem 1rem;
@@ -38,32 +44,50 @@
       transition: background 0.2s;
     }
     .board-search button:hover { background: var(--navy-light); }
-    .login-notice {
-      background: #f0f4fa;
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      padding: 3rem 2rem;
-      text-align: center;
-    }
-    .login-notice .lock-icon { font-size: 3rem; margin-bottom: 1rem; }
-    .login-notice h3 {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 1.15rem;
+    .btn-write {
+      padding: 0.5rem 1.3rem;
+      background: var(--gold);
       color: var(--navy);
-      margin-bottom: 0.5rem;
-    }
-    .login-notice p { font-size: 0.92rem; color: var(--text-sub); margin-bottom: 1.25rem; }
-    .login-btn {
-      display: inline-block;
-      padding: 0.65rem 2rem;
-      background: var(--navy);
-      color: white;
+      border: none;
       border-radius: 8px;
-      font-size: 0.95rem;
-      font-weight: 600;
+      font-size: 0.9rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
       transition: background 0.2s;
+      white-space: nowrap;
+      text-decoration: none;
+      display: inline-block;
     }
-    .login-btn:hover { background: var(--navy-light); color: white; }
+    .btn-write:hover { background: var(--gold-light); }
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 0.35rem;
+      margin-top: 1.75rem;
+    }
+    .pagination button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      border: 1.5px solid var(--border);
+      color: var(--text);
+      background: white;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+    .pagination button:hover { border-color: var(--navy); color: var(--navy); }
+    .pagination button.active { background: var(--navy); color: white; border-color: var(--navy); font-weight: 700; }
+    .pagination button:disabled { opacity: 0.3; cursor: default; }
+    .board-table tbody tr { cursor: pointer; }
+    .board-table tbody tr:hover td { background: #f8f9ff !important; }
+    .img-icon { font-size: 0.85rem; margin-left: 0.3rem; color: var(--navy-light); }
+    .author-col { font-size: 0.82rem; color: var(--text-sub); }
   </style>
 </head>
 <body>
@@ -150,7 +174,6 @@
     </div>
   </header>
 
-  <!-- 서브페이지 배너 -->
   <div class="sub-banner">
     <div class="sub-banner-inner">
       <p class="breadcrumb"><a href="../../index.html">홈</a> <span>›</span> 본당소식 <span>›</span> 자유게시판</p>
@@ -158,11 +181,9 @@
     </div>
   </div>
 
-  <!-- 본문 -->
   <main class="sub-main">
     <div class="container">
       <div class="sub-layout">
-        <!-- 사이드 메뉴 -->
         <aside class="sub-sidebar">
           <div class="sidebar-menu">
             <h3 class="sidebar-title">본당소식</h3>
@@ -176,34 +197,34 @@
           </div>
         </aside>
 
-        <!-- 본문 콘텐츠 -->
         <section class="sub-content">
           <div class="content-header">
             <h2>자유게시판</h2>
           </div>
 
-          <div class="board-search">
-            <input type="text" placeholder="검색어를 입력하세요" />
-            <button>검색</button>
+          <div class="board-toolbar">
+            <div class="board-search">
+              <input type="text" id="searchInput" placeholder="검색어를 입력하세요" />
+              <button onclick="doSearch()">검색</button>
+            </div>
+            <a href="write.html?type=free" class="btn-write" id="btnWrite" style="display:none">✏ 글쓰기</a>
           </div>
 
-          <!-- 로그인 필요 안내 -->
-          <div class="login-notice">
-            <div class="lock-icon">🔒</div>
-            <h3>로그인이 필요합니다</h3>
-            <p>자유게시판은 로그인 후 이용하실 수 있습니다.<br>노원성당 신자 여러분의 소중한 이야기를 나눠주세요.</p>
-            <a href="../../admin/" class="login-btn">로그인하기</a>
-          </div>
+          <table class="board-table">
+            <thead>
+              <tr>
+                <th class="col-num">번호</th>
+                <th class="col-title">제목</th>
+                <th class="col-date" style="width:80px">작성자</th>
+                <th class="col-date">날짜</th>
+              </tr>
+            </thead>
+            <tbody id="boardBody">
+              <tr><td colspan="4" style="text-align:center;padding:3rem;color:var(--text-sub)">불러오는 중...</td></tr>
+            </tbody>
+          </table>
 
-          <div style="margin-top: 1.5rem; padding: 1rem 1.25rem; background: #faf8f4; border-radius: 8px; border-left: 3px solid var(--gold);">
-            <p style="font-size: 0.88rem; color: var(--text-sub); line-height: 1.8; margin: 0;">
-              <strong style="color: var(--navy);">게시판 이용 안내</strong><br>
-              · 본 게시판은 노원성당 신자 여러분이 자유롭게 의견을 나누는 공간입니다.<br>
-              · 타인을 비방하거나 불쾌감을 주는 내용은 관리자에 의해 삭제될 수 있습니다.<br>
-              · 성당 관련 문의는 사무실(02-933-9981)로 직접 연락해 주시기 바랍니다.
-            </p>
-          </div>
-
+          <div class="pagination" id="pagination"></div>
         </section>
       </div>
     </div>
@@ -232,5 +253,105 @@
   </footer>
 
   <script src="../../js/sub.js"></script>
+  <script type="module">
+    import { auth, db } from '../../js/firebase-config.js';
+    import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+    import {
+      collection, query, orderBy, getDocs
+    } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+    import '../../js/auth-header.js';
+
+    const PAGE_SIZE = 15;
+    const col = collection(db, 'posts');
+
+    let allDocs = [];
+    let filteredDocs = [];
+    let currentPage = 1;
+
+    // 로그인 시 글쓰기 버튼 표시
+    onAuthStateChanged(auth, (user) => {
+      if (user) document.getElementById('btnWrite').style.display = 'inline-block';
+    });
+
+    async function loadAll() {
+      const q = query(col, orderBy('createdAt', 'desc'));
+      const snap = await getDocs(q);
+      allDocs = snap.docs;
+      filteredDocs = allDocs;
+      renderPage();
+    }
+
+    window.doSearch = function() {
+      const kw = document.getElementById('searchInput').value.trim().toLowerCase();
+      if (kw) {
+        filteredDocs = allDocs.filter(d => {
+          const data = d.data();
+          return data.title?.toLowerCase().includes(kw) ||
+                 data.content?.toLowerCase().includes(kw) ||
+                 data.authorName?.toLowerCase().includes(kw);
+        });
+      } else {
+        filteredDocs = allDocs;
+      }
+      currentPage = 1;
+      renderPage();
+    };
+
+    document.getElementById('searchInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') doSearch();
+    });
+
+    function formatDate(ts) {
+      if (!ts) return '';
+      const d = ts.toDate ? ts.toDate() : new Date(ts);
+      return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
+    }
+
+    function renderPage() {
+      const tbody = document.getElementById('boardBody');
+      const totalPages = Math.max(1, Math.ceil(filteredDocs.length / PAGE_SIZE));
+      if (currentPage > totalPages) currentPage = totalPages;
+
+      const start = (currentPage - 1) * PAGE_SIZE;
+      const pageDocs = filteredDocs.slice(start, start + PAGE_SIZE);
+      const total = filteredDocs.length;
+
+      let html = '';
+      if (pageDocs.length === 0) {
+        html = `<tr><td colspan="4" style="text-align:center;padding:3rem;color:var(--text-sub)">등록된 게시글이 없습니다.</td></tr>`;
+      }
+
+      pageDocs.forEach((d, i) => {
+        const data = d.data();
+        const num = total - start - i;
+        const imgIcon = data.images?.length ? '<span class="img-icon">🖼</span>' : '';
+        html += `<tr onclick="viewPost('${d.id}')">
+          <td class="col-num">${num}</td>
+          <td class="col-title">${data.title || ''}${imgIcon}</td>
+          <td class="author-col" style="text-align:center">${data.authorName || ''}</td>
+          <td class="col-date">${formatDate(data.createdAt)}</td>
+        </tr>`;
+      });
+
+      tbody.innerHTML = html;
+      renderPagination(totalPages);
+    }
+
+    function renderPagination(totalPages) {
+      const el = document.getElementById('pagination');
+      if (totalPages <= 1) { el.innerHTML = ''; return; }
+      let html = `<button onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>‹</button>`;
+      for (let i = 1; i <= totalPages; i++) {
+        html += `<button class="${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
+      }
+      html += `<button onclick="goPage(${currentPage+1})" ${currentPage===totalPages?'disabled':''}>›</button>`;
+      el.innerHTML = html;
+    }
+
+    window.goPage = function(p) { currentPage = p; renderPage(); window.scrollTo(0,0); };
+    window.viewPost = function(id) { window.location.href = `view.html?type=free&id=${id}`; };
+
+    loadAll();
+  </script>
 </body>
 </html>
