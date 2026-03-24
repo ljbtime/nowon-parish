@@ -93,6 +93,12 @@
           </li>
         </ul>
       </nav>
+      <div class="header-auth" id="headerAuth">
+        <a href="pages/member/login.html" class="btn-login" id="btnLoginLink">로그인</a>
+        <a href="pages/member/join.html" class="btn-join" id="btnJoinLink">회원가입</a>
+        <span class="user-greeting" id="userGreeting" style="display:none"></span>
+        <button class="btn-logout" id="btnLogout" style="display:none" onclick="doLogout()">로그아웃</button>
+      </div>
       <button class="hamburger" id="hamburger" aria-label="메뉴">
         <span></span><span></span><span></span>
       </button>
@@ -288,6 +294,34 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script type="module">
+    import { auth } from 'js/firebase-config.js';
+    import { onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+
+    const btnLogin   = document.getElementById('btnLoginLink');
+    const btnJoin    = document.getElementById('btnJoinLink');
+    const greeting   = document.getElementById('userGreeting');
+    const btnLogout  = document.getElementById('btnLogout');
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        btnLogin.style.display  = 'none';
+        btnJoin.style.display   = 'none';
+        greeting.style.display  = 'inline';
+        btnLogout.style.display = 'inline';
+        greeting.textContent    = `✝ ${user.displayName || ''}님`;
+      } else {
+        btnLogin.style.display  = '';
+        btnJoin.style.display   = '';
+        greeting.style.display  = 'none';
+        btnLogout.style.display = 'none';
+      }
+    });
+
+    window.doLogout = async function() {
+      await signOut(auth);
+    };
+  </script>
 </body>
 
 </html>

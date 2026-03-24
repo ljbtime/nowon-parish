@@ -157,6 +157,61 @@ ul { list-style: none; }
   pointer-events: auto;
 }
 
+/* 헤더 로그인/회원가입 버튼 */
+.header-auth {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 1.5rem;
+  flex-shrink: 0;
+}
+
+.btn-login, .btn-join {
+  padding: 0.35rem 0.9rem;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-login {
+  color: rgba(255,255,255,0.85);
+  border: 1px solid rgba(255,255,255,0.4);
+  background: transparent;
+}
+.btn-login:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+.btn-join {
+  color: var(--navy);
+  background: var(--gold-light);
+  border: 1px solid var(--gold-light);
+}
+.btn-join:hover { background: var(--gold); border-color: var(--gold); }
+
+.user-greeting {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+.btn-logout {
+  padding: 0.35rem 0.9rem;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  color: rgba(255,255,255,0.7);
+  border: 1px solid rgba(255,255,255,0.3);
+  background: transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.btn-logout:hover { color: #fff; border-color: rgba(255,255,255,0.6); }
+
 .hamburger {
   display: none;
   flex-direction: column;

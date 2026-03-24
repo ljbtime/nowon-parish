@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로그인 – 천주교 노원성당</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #f5f6fa;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+    .wrap { width: 100%; max-width: 420px; }
+
+    .logo-area {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .logo-area .cross { font-size: 2rem; color: #b8953a; }
+    .logo-area h1 { font-size: 1.3rem; font-weight: 700; color: #1a2c4e; margin-top: 0.3rem; }
+    .logo-area p { font-size: 0.82rem; color: #999; margin-top: 0.2rem; }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-bottom: 1rem;
+    }
+    label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #555;
+    }
+    input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: #333;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus { border-color: #1a2c4e; }
+
+    .btn-submit {
+      width: 100%;
+      padding: 1rem;
+      background: #1a2c4e;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.2s;
+    }
+    .btn-submit:hover { background: #253d68; }
+    .btn-submit:disabled { background: #aaa; cursor: not-allowed; }
+
+    .alert {
+      padding: 0.9rem 1rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    .alert.error { background: #fff5f5; color: #c53030; border: 1px solid #feb2b2; }
+    .alert.success { background: #f0fff4; color: #276749; border: 1px solid #9ae6b4; }
+
+    .links {
+      text-align: center;
+      margin-top: 1.2rem;
+      font-size: 0.82rem;
+      color: #999;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .links a { color: #1a2c4e; font-weight: 600; text-decoration: none; }
+    .links a:hover { text-decoration: underline; }
+
+    .divider {
+      color: #ddd;
+    }
+
+    .home-link {
+      display: block;
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.8rem;
+      color: #aaa;
+      text-decoration: none;
+    }
+    .home-link:hover { color: #1a2c4e; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="logo-area">
+      <div class="cross">✝</div>
+      <h1>천주교 노원성당</h1>
+      <p>로그인</p>
+    </div>
+
+    <div class="card">
+      <div class="alert error" id="alertError"></div>
+      <div class="alert success" id="alertSuccess"></div>
+
+      <div class="form-group">
+        <label>아이디</label>
+        <input type="text" id="userId" placeholder="아이디 입력" autocomplete="username" />
+      </div>
+
+      <div class="form-group">
+        <label>비밀번호</label>
+        <input type="password" id="password" placeholder="비밀번호 입력" autocomplete="current-password" />
+      </div>
+
+      <button class="btn-submit" id="btnLogin" onclick="doLogin()">로그인</button>
+
+      <div class="links">
+        <a href="join.html">회원가입</a>
+        <span class="divider">|</span>
+        <a href="#" onclick="findPw()">비밀번호 찾기</a>
+      </div>
+    </div>
+
+    <a class="home-link" href="../../index.html">← 홈으로 돌아가기</a>
+  </div>
+
+  <script type="module">
+    import { auth, db } from '../../js/firebase-config.js';
+    import {
+      signInWithEmailAndPassword,
+      sendPasswordResetEmail
+    } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+    import {
+      collection, query, where, getDocs
+    } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+    const errEl  = document.getElementById('alertError');
+    const succEl = document.getElementById('alertSuccess');
+
+    const showErr  = (msg) => { errEl.textContent = msg; errEl.style.display = 'block'; succEl.style.display = 'none'; };
+    const showSucc = (msg) => { succEl.textContent = msg; succEl.style.display = 'block'; errEl.style.display = 'none'; };
+
+    // 엔터키 로그인
+    document.getElementById('password').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') doLogin();
+    });
+    document.getElementById('userId').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') document.getElementById('password').focus();
+    });
+
+    window.doLogin = async function() {
+      const userId   = document.getElementById('userId').value.trim();
+      const password = document.getElementById('password').value;
+      errEl.style.display = 'none';
+      succEl.style.display = 'none';
+
+      if (!userId)   return showErr('아이디를 입력해주세요.');
+      if (!password) return showErr('비밀번호를 입력해주세요.');
+
+      const btn = document.getElementById('btnLogin');
+      btn.disabled = true;
+      btn.textContent = '로그인 중...';
+
+      try {
+        // userId → email 조회
+        const snap = await getDocs(query(collection(db, 'users'), where('userId', '==', userId)));
+        if (snap.empty) {
+          showErr('아이디 또는 비밀번호가 올바르지 않습니다.');
+          btn.disabled = false; btn.textContent = '로그인';
+          return;
+        }
+        const email = snap.docs[0].data().email;
+
+        await signInWithEmailAndPassword(auth, email, password);
+        showSucc('로그인 성공! 홈으로 이동합니다.');
+        setTimeout(() => { window.location.href = '../../index.html'; }, 1500);
+
+      } catch (err) {
+        let msg = '로그인 중 오류가 발생했습니다.';
+        if (err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential')
+          msg = '아이디 또는 비밀번호가 올바르지 않습니다.';
+        if (err.code === 'auth/too-many-requests')
+          msg = '로그인 시도가 너무 많습니다. 잠시 후 다시 시도해주세요.';
+        showErr(msg);
+        btn.disabled = false;
+        btn.textContent = '로그인';
+      }
+    };
+
+    window.findPw = async function() {
+      const userId = document.getElementById('userId').value.trim();
+      if (!userId) {
+        showErr('비밀번호를 찾으려면 아이디를 먼저 입력해주세요.');
+        return;
+      }
+      const snap = await getDocs(query(collection(db, 'users'), where('userId', '==', userId)));
+      if (snap.empty) {
+        showErr('해당 아이디로 등록된 계정이 없습니다.');
+        return;
+      }
+      const email = snap.docs[0].data().email;
+      try {
+        await sendPasswordResetEmail(auth, email);
+        showSucc(`${email} 로 비밀번호 재설정 이메일을 발송했습니다.`);
+      } catch {
+        showErr('이메일 발송에 실패했습니다. 다시 시도해주세요.');
+      }
+    };
+  </script>
+</body>
+</html>
