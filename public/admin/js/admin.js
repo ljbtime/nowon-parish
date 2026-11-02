@@ -50,8 +50,9 @@ $('sidebarToggle').addEventListener('click', () => {
   document.getElementById('sidebar').classList.toggle('open');
 });
 
-$('logoutBtn').addEventListener('click', () => {
+$('logoutBtn').addEventListener('click', async () => {
   sessionStorage.removeItem('adminLoggedIn');
+  if (window.adminSignOut) await window.adminSignOut();
   window.location.href = 'index.html';
 });
 
