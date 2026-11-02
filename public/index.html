@@ -107,23 +107,28 @@
     </div>
   </header>
 
-  <!-- ① 첫 화면: 환영 문구 + 오늘의 미사 -->
-  <section class="hero">
+  <!-- ① 오늘: 전례일·전례색·오늘의 말씀 + 오늘의 미사 -->
+  <section class="hero" id="today" data-lit="green">
     <div class="hero-inner">
       <div class="hero-text">
-        <p class="hero-eyebrow">천주교 서울대교구 · 주보성인 성 마태오 사도</p>
-        <h1>미사로 시작되는 신앙,<br>미사로 하나되는 공동체</h1>
-        <p class="hero-desc">천주교 노원성당에 오신 것을 환영합니다.</p>
+        <h1 class="sr-only">천주교 노원성당</h1>
+        <p class="hero-date" id="todayDate"></p>
+        <h2 class="lit-name">
+          <span class="lit-dot" aria-hidden="true"></span>
+          <span id="litName">오늘의 전례</span>
+        </h2>
+        <p class="lit-meta" id="litMeta"></p>
         <div class="hero-actions">
-          <a class="btn-primary" href="#mass">미사 시간 보기</a>
-          <a class="btn-ghost" href="#visit">오시는 길</a>
+          <a class="btn-primary" id="readingsLink" href="https://maria.catholic.or.kr/mi_pr/missa/missa.asp"
+            target="_blank" rel="noopener">오늘의 독서·복음 읽기 <span aria-hidden="true">↗</span></a>
+          <a class="btn-ghost" href="#mass">미사 시간표</a>
         </div>
+        <p class="hero-motto">미사로 시작되는 신앙, 미사로 하나되는 공동체 · 노원성당</p>
       </div>
 
       <aside class="today-card" aria-label="오늘의 미사">
         <div class="today-head">
-          <span class="today-label">오늘의 미사</span>
-          <span class="today-date" id="todayDate"></span>
+          <span class="today-label" id="todayMassLabel">오늘의 미사</span>
         </div>
         <ul class="today-list" id="todayMasses"></ul>
         <p class="today-note">고해성사 · 미사 20분 전 (주일 30분 전)</p>

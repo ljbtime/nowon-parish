@@ -1,7 +1,8 @@
-// 첫 화면: 미사 시간표·오늘의 미사·최근 공지
+// 첫 화면: 오늘의 전례·오늘의 미사·미사 시간표·최근 공지·앨범
 import { db } from './firebase-config.js';
 import { collection, query, orderBy, limit, getDocs }
   from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { liturgicalDay, readingsUrl } from './liturgy.js';
 
 // ===========================
 // 미사 시간 (pages/info/mass.html 기준) — 시간표와 '오늘의 미사'가 함께 사용
@@ -55,7 +56,7 @@ function renderToday() {
   const listEl = document.getElementById('todayMasses');
   if (!listEl) return;
 
-  dateEl.textContent = `${now.getMonth() + 1}월 ${now.getDate()}일 (${DAY_NAMES[day]})`;
+  dateEl.textContent = `${now.getMonth() + 1}월 ${now.getDate()}일 ${DAY_NAMES[day]}요일`;
 
   const massesOn = d => MASSES.filter(m => m.days.includes(d))
     .sort((a, b) => a.time.localeCompare(b.time));
@@ -64,9 +65,12 @@ function renderToday() {
   const toMin = t => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
   const next = today.find(m => toMin(m.time) > nowMin);
 
-  // 오늘 미사가 모두 끝났거나 없으면 내일 첫 미사 안내
+  // 토요일엔 내일 주일 미사 전체, 그 외엔 오늘 미사가 끝났을 때 내일 첫 미사 안내
   const tomorrowLine = () => {
     const d = (day + 1) % 7;
+    if (d === 0) {
+      return `<li class="today-tomorrow">내일 주일 미사 <strong>${massesOn(0).map(m => m.time).join(' · ')}</strong></li>`;
+    }
     const first = massesOn(d)[0];
     return first
       ? `<li class="today-tomorrow">오늘 미사는 모두 끝났습니다 · 내일(${DAY_NAMES[d]}) 첫 미사 <strong>${first.time}</strong></li>`
@@ -86,7 +90,18 @@ function renderToday() {
       <span class="today-n">${[label, m.note].filter(Boolean).join(' · ')}</span>
       ${m === next ? '<span class="today-badge">다음 미사</span>' : ''}
     </li>`;
-  }).join('') + (next ? '' : tomorrowLine());
+  }).join('') + (next && day !== 6 ? '' : tomorrowLine());
+}
+
+// 오늘의 전례: 전례일 이름·전례색, 굿뉴스 매일미사 연결
+function renderLiturgy() {
+  const now = new Date();
+  const lit = liturgicalDay(now);
+  document.getElementById('today')?.setAttribute('data-lit', lit.color);
+  document.getElementById('litName').textContent = lit.name;
+  document.getElementById('litMeta').textContent =
+    [lit.note, `전례색 ${lit.colorName}`, `${lit.season} 시기`].filter(Boolean).join(' · ');
+  document.getElementById('readingsLink').href = readingsUrl(now);
 }
 
 async function renderNotices() {
@@ -133,6 +148,7 @@ async function renderGallery() {
 }
 
 renderMassTable();
+renderLiturgy();
 renderToday();
 renderNotices();
 renderGallery();
