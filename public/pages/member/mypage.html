@@ -23,7 +23,10 @@
   <header class="m-top">
     <div class="m-top-inner">
       <a class="m-brand" href="../../index.html"><span>✝</span>노원성당</a>
-      <nav class="m-nav"><a href="mypage.html" class="active">내 정보</a></nav>
+      <nav class="m-nav">
+        <a href="mypage.html" class="active">내 정보</a>
+        <a href="../../admin/dashboard.html" id="adminLink" hidden>관리 화면</a>
+      </nav>
       <button type="button" class="edit-btn" id="logout">로그아웃</button>
     </div>
   </header>
@@ -113,7 +116,7 @@
     } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
     import { doc, getDoc, updateDoc, deleteDoc, serverTimestamp }
       from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
-    import { getRole } from '../../js/roles.js';
+    import { getRole, canEdit } from '../../js/roles.js';
 
     const $ = id => document.getElementById(id);
     const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
@@ -142,6 +145,7 @@
     $('phone').value = me.phone || '';
     document.querySelectorAll('.js-username').forEach(i => { i.value = user.email; });
     document.body.classList.remove('is-guarding');
+    getRole(user).then(r => { $('adminLink').hidden = !canEdit(r); });
 
     $('logout').addEventListener('click', async () => { await signOut(auth); location.href = '../../index.html'; });
 
