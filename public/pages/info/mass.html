@@ -9,66 +9,53 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../../css/style.css?v=3" />
   <style>
-    .mass-block {
-      margin-bottom: 2rem;
-    }
+    /* 미사 시간표: 첫 화면과 같은 톤 (제목 글자 + 1px 선 카드, 꼬리표 한 가지 색) */
+    .mass-block { margin-bottom: 32px; }
     .mass-block-title {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 1rem;
+      font-size: 1.125rem;
       font-weight: 700;
-      color: var(--white);
-      background: var(--navy);
-      padding: 0.65rem 1rem;
-      border-radius: 8px 8px 0 0;
-      letter-spacing: 0.03em;
+      color: var(--ink);
+      margin-bottom: 10px;
     }
     .mass-rows {
-      border: 1px solid var(--border);
-      border-top: none;
-      border-radius: 0 0 8px 8px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
       overflow: hidden;
     }
     .mass-row {
       display: flex;
       align-items: center;
-      padding: 0.75rem 1rem;
-      border-bottom: 1px solid var(--border);
-      gap: 1rem;
+      gap: 16px;
+      min-height: 52px;
+      padding: 0 20px;
     }
-    .mass-row:last-child { border-bottom: none; }
-    .mass-row:nth-child(even) { background: var(--bg); }
+    .mass-row + .mass-row { border-top: 1px solid var(--line); }
     .mass-time-big {
-      font-size: 1.15rem;
+      font-size: 1.125rem;
       font-weight: 700;
-      color: var(--navy);
+      color: var(--ink);
       font-variant-numeric: tabular-nums;
-      min-width: 70px;
+      min-width: 64px;
     }
-    .mass-desc {
-      font-size: 0.92rem;
-      color: var(--text);
-      flex: 1;
-    }
+    .mass-desc { font-size: 0.95rem; color: var(--sub); flex: 1; }
     .mass-tag {
-      font-size: 0.72rem;
+      font-size: 0.8rem;
       font-weight: 700;
-      background: var(--gold);
-      color: white;
-      border-radius: 20px;
-      padding: 0.1rem 0.55rem;
+      background: var(--sky);
+      color: var(--navy);
+      border-radius: 6px;
+      padding: 2px 8px;
       white-space: nowrap;
     }
-    .mass-tag.blue { background: #3d7dd4; }
-    .mass-tag.green { background: #2d7a46; }
-    .mass-tag.red { background: #c0392b; }
     .special-table {
       width: 100%;
       border-collapse: collapse;
       font-size: 0.92rem;
     }
     .special-table th {
-      background: var(--navy);
-      color: white;
+      background: var(--surface);
+      color: var(--ink);
+      border-bottom: 1px solid var(--line);
       padding: 0.65rem 1rem;
       text-align: left;
       font-weight: 600;
@@ -346,7 +333,7 @@
           </div>
         </div>
         <div class="footer-info">
-          <p>📞 02-933-9981 &nbsp;|&nbsp; 📠 02-933-9986</p>
+          <p>전화 02-933-9981 &nbsp;·&nbsp; 팩스 02-933-9986</p>
           <p>서울특별시 노원구 한글비석로 585</p>
         </div>
         <a href="../../admin/" class="admin-link">관리자</a>

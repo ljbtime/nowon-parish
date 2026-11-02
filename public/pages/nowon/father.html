@@ -12,13 +12,13 @@
     .clergy-list { display: flex; flex-direction: column; gap: 2.5rem; }
     .priest-card {
       background: #fff;
-      border: 1px solid #e8e8e8;
-      border-radius: 12px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
     }
     .priest-card-header {
-      background: linear-gradient(135deg, #3a6aab 0%, #5584c2 100%);
+      background: var(--surface);
+      border-bottom: 1px solid var(--line);
       padding: 1.5rem 2rem;
       display: flex;
       align-items: center;
@@ -27,31 +27,30 @@
     .priest-photo-wrap {
       width: 90px; height: 90px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.15);
-      border: 3px solid rgba(212,175,90,0.6);
+      background: var(--white);
+      border: 1px solid var(--line);
       display: flex; align-items: center; justify-content: center;
       font-size: 2.2rem; color: #d4af5a;
       overflow: hidden; flex-shrink: 0;
     }
     .priest-photo-wrap img { width: 100%; height: 100%; object-fit: cover; }
-    .priest-header-info { color: #fff; }
+    .priest-header-info { color: var(--ink); }
     .priest-role-badge {
       display: inline-block;
-      background: rgba(212,175,90,0.3);
-      border: 1px solid rgba(212,175,90,0.6);
-      color: #d4af5a;
+      background: var(--sky);
+      color: var(--navy);
       font-size: 0.75rem; font-weight: 700;
       letter-spacing: 0.08em;
       padding: 0.2rem 0.7rem; border-radius: 20px;
       margin-bottom: 0.4rem;
     }
     .priest-name {
-      font-family: 'Noto Serif KR', serif;
+      
       font-size: 1.35rem; font-weight: 700;
-      color: #fff; margin: 0 0 0.2rem 0;
+      color: var(--ink); margin: 0 0 0.2rem 0; white-space: nowrap;
     }
     .priest-baptismal {
-      font-size: 0.95rem; color: rgba(255,255,255,0.85);
+      font-size: 0.95rem; color: var(--sub);
       font-weight: 400; margin: 0;
       letter-spacing: 0.03em;
     }
@@ -64,7 +63,7 @@
     .history-title {
       font-size: 0.82rem; font-weight: 700; color: #2f5d9b;
       letter-spacing: 0.06em; text-transform: uppercase;
-      border-left: 3px solid #b8953a; padding-left: 0.5rem;
+      padding-left: 0;
       margin: 1.2rem 0 0.8rem;
     }
     .history-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
@@ -236,7 +235,7 @@
           </div>
         </div>
         <div class="footer-info">
-          <p>📞 02-933-9981 &nbsp;|&nbsp; 📠 02-933-9986</p>
+          <p>전화 02-933-9981 &nbsp;·&nbsp; 팩스 02-933-9986</p>
           <p>서울특별시 노원구 한글비석로 585</p>
         </div>
         <a href="../../admin/" class="admin-link">관리자</a>

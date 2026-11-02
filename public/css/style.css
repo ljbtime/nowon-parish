@@ -1,3 +1,5 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+
 /* ===========================
    기본 설정
 =========================== */
@@ -23,16 +25,21 @@
   --shadow-lg: 0 8px 30px rgba(40,60,90,0.12);
   --header-h: 64px;
   --banner-h: 42vh;
+  /* 정돈 규칙 (첫 화면과 공통): 선·면·보조 글자색 */
+  --line: #e6ebf1;
+  --surface: #f6f8fb;
+  --sub: #6b7684;
 }
 
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: 'Pretendard Variable', Pretendard, 'Noto Sans KR', sans-serif;
   color: var(--text);
   background: var(--bg);
   font-size: 16px;         /* 어르신 기본 폰트 크기 */
   line-height: 1.6;
+  letter-spacing: -0.01em;
 }
 
 a { text-decoration: none; color: inherit; }
@@ -84,7 +91,6 @@ ul { list-style: none; }
 }
 
 .logo-main {
-  font-family: 'Noto Serif KR', serif;
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--ink);
@@ -275,7 +281,6 @@ ul { list-style: none; }
 }
 
 .banner-content h1 {
-  font-family: 'Noto Serif KR', serif;
   font-size: clamp(2.8rem, 7vw, 5rem);
   font-weight: 700;
   line-height: 1.1;
@@ -325,7 +330,6 @@ ul { list-style: none; }
 .info-icon { font-size: 1.3rem; }
 
 .info-card-header h2 {
-  font-family: 'Noto Serif KR', serif;
   font-size: 1.2rem;
   font-weight: 700;
   color: var(--navy);
@@ -547,7 +551,6 @@ ul { list-style: none; }
 }
 
 .section-title {
-  font-family: 'Noto Serif KR', serif;
   font-size: 1.8rem;
   color: var(--navy);
 }
@@ -592,9 +595,9 @@ ul { list-style: none; }
    푸터
 =========================== */
 .footer {
-  background: var(--cream);
-  color: var(--text-sub);
-  border-top: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--sub);
+  border-top: 1px solid var(--line);
   padding: 2rem 0 0;
 }
 
@@ -738,145 +741,112 @@ ul { list-style: none; }
 /* ===========================
    서브페이지 공통
 =========================== */
+/* 규칙: 첫 화면과 같은 폭(1140px, 좌우 24px)에 맞추고,
+        왼쪽 사이드바 대신 제목 아래 탭, 본문은 카드 한 장 */
 .sub-banner {
   margin-top: var(--header-h);
-  background: var(--sky);
-  background-image: linear-gradient(120deg, #e6f0fb 0%, #f4f7fb 50%, #fbf5e9 100%);
-  border-bottom: 1px solid var(--border);
-  padding: 3rem 1.5rem;
-  position: relative;
-  overflow: hidden;
-}
-
-.sub-banner::before {
-  content: '✝';
-  position: absolute;
-  font-size: 18rem;
-  color: rgba(184,149,58,0.10);
-  right: 5%;
-  top: 50%;
-  transform: translateY(-50%);
-  font-family: serif;
-  pointer-events: none;
+  background: linear-gradient(180deg, #f1f5fa 0%, #f8fafc 100%);
+  border-bottom: 1px solid var(--line);
+  padding: 40px 0 32px;
 }
 
 .sub-banner-inner {
   max-width: 1140px;
   margin: 0 auto;
+  padding: 0 24px;
 }
 
 .breadcrumb {
-  font-size: 0.82rem;
-  color: var(--text-sub);
-  margin-bottom: 0.75rem;
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 6px;
+  margin-bottom: 8px;
+  font-size: 0.875rem;
+  color: var(--sub);
 }
-
-.breadcrumb a { color: var(--text-sub); transition: color 0.2s; }
+.breadcrumb a { color: var(--sub); transition: color 0.2s; }
 .breadcrumb a:hover { color: var(--navy); }
-.breadcrumb span { color: var(--gold); }
+.breadcrumb span { color: var(--faint, #b3bac4); }
 
 .sub-banner h1 {
-  font-family: 'Noto Serif KR', serif;
-  font-size: clamp(1.6rem, 4vw, 2.2rem);
-  font-weight: 700;
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
   color: var(--ink);
 }
 
 .sub-main {
-  padding: 3rem 0 4rem;
+  padding: 24px 0 64px;
+  background: var(--white);
   min-height: calc(100vh - var(--header-h) - 200px);
 }
 
 .sub-layout {
   display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: 2.5rem;
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
 }
 
-/* 사이드바 */
-.sub-sidebar {
-  position: sticky;
-  top: calc(var(--header-h) + 1.5rem);
+/* 사이드바 → 가로 탭 */
+.sub-sidebar { position: static; }
+.sidebar-title { display: none; }
+.sidebar-menu ul {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
-
-.sidebar-menu {
-  background: var(--white);
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
-}
-
-.sidebar-title {
-  font-family: 'Noto Serif KR', serif;
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--navy);
-  background: var(--sky);
-  border-bottom: 2px solid var(--gold-light);
-  padding: 0.9rem 1.2rem;
-  letter-spacing: 0.03em;
-}
-
+.sidebar-menu ul::-webkit-scrollbar { display: none; }
+.sidebar-menu ul li { flex-shrink: 0; }
 .sidebar-menu ul li a {
   display: block;
-  padding: 0.75rem 1.2rem;
-  font-size: 0.92rem;
-  color: var(--text);
-  border-bottom: 1px solid var(--border);
-  transition: all 0.15s;
+  padding: 8px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: var(--white);
+  white-space: nowrap;
+  transition: border-color 0.15s, color 0.15s;
 }
-
-.sidebar-menu ul li:last-child a { border-bottom: none; }
-.sidebar-menu ul li a:hover { background: var(--bg); color: var(--navy); }
+.sidebar-menu ul li a:hover { border-color: var(--navy); color: var(--navy); }
 .sidebar-menu ul li.active a {
-  background: var(--sky);
-  color: var(--navy);
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--white);
   font-weight: 700;
-  border-left: 3px solid var(--gold);
 }
 
-/* 본문 콘텐츠 */
+/* 본문 카드 */
 .sub-content {
   background: var(--white);
-  border-radius: var(--radius);
-  padding: 2.5rem 2.5rem;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 40px 48px;
+  min-width: 0;
 }
 
-.content-header {
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 2.5px solid var(--gold);
-}
-
-.content-header h2 {
-  font-family: 'Noto Serif KR', serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--navy);
-}
+/* 제목은 위 배너에 이미 있으므로 본문에서는 숨김 */
+.content-header { display: none; }
 
 .content-body {
-  line-height: 1.9;
-  font-size: 1rem;
+  line-height: 1.85;
+  font-size: 1.0625rem;
   color: var(--text);
 }
+.content-body > :first-child { margin-top: 0; }
+/* 글 문단만 읽기 좋은 줄 길이로 제한 (카드·표는 전체 폭) */
+.content-body > p, .content-body > ul, .content-body > ol, .content-body > h3 { max-width: 820px; }
 
 .content-body h3 {
-  font-family: 'Noto Serif KR', serif;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   font-weight: 700;
-  color: var(--navy);
-  margin: 2rem 0 0.75rem;
-  padding-left: 0.75rem;
-  border-left: 3px solid var(--gold);
+  color: var(--ink);
+  margin: 40px 0 12px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
 }
+.content-body > h3:first-child { padding-top: 0; border-top: none; }
 
 .content-body p { margin-bottom: 1rem; }
 
@@ -904,9 +874,9 @@ ul { list-style: none; }
 }
 
 .info-table th {
-  background: var(--sky);
+  background: var(--surface);
   color: var(--ink);
-  border-bottom: 2px solid #c9d8ec;
+  border-bottom: 1px solid var(--line);
   padding: 0.75rem 1rem;
   text-align: left;
   font-weight: 600;
@@ -923,11 +893,10 @@ ul { list-style: none; }
 
 /* 연락처 박스 */
 .contact-box {
-  background: var(--bg);
-  border-radius: 10px;
-  padding: 1.5rem;
-  margin-top: 2rem;
-  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 24px;
+  margin-top: 40px;
 }
 
 .contact-box h4 {
@@ -944,9 +913,10 @@ ul { list-style: none; }
 }
 
 .board-table thead tr {
-  background: var(--sky);
+  background: var(--surface);
   color: var(--ink);
-  border-top: 2px solid var(--navy);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
 .board-table th {
@@ -957,7 +927,7 @@ ul { list-style: none; }
 
 .board-table td {
   padding: 0.85rem 0.75rem;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--line);
   vertical-align: middle;
 }
 
@@ -1048,7 +1018,6 @@ ul { list-style: none; }
 }
 
 .priest-info h3 {
-  font-family: 'Noto Serif KR', serif;
   font-size: 1.2rem;
   font-weight: 700;
   color: var(--navy);
@@ -1085,22 +1054,14 @@ ul { list-style: none; }
 
 /* 반응형 서브페이지 */
 @media (max-width: 768px) {
-  .sub-layout {
-    grid-template-columns: 1fr;
-  }
+  .sub-banner { padding: 28px 0 24px; }
+  .sub-banner-inner { padding: 0 16px; }
+  .sub-main .container { padding: 0 16px; }
+  /* 탭은 한 줄 가로 스크롤 (화면 끝까지) */
+  .sidebar-menu { margin: 0 -16px; }
+  .sidebar-menu ul { padding: 0 16px; }
 
-  .sub-sidebar {
-    position: static;
-  }
-
-  .sidebar-menu ul {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .sidebar-menu ul li { flex: 1; min-width: 120px; }
-
-  .sub-content { padding: 1.5rem 1.25rem; }
+  .sub-content { padding: 24px 20px; }
 
   .photo-grid { grid-template-columns: repeat(2, 1fr); }
 
