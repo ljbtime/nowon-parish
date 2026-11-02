@@ -5,15 +5,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>천주교 노원성당</title>
+  <meta name="description" content="천주교 서울대교구 노원성당 — 미사 시간, 공지사항, 본당 주보, 오시는 길" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/home.css" />
 </head>
 
-<body>
+<body class="home">
 
   <!-- 헤더 -->
   <header id="header">
@@ -51,7 +53,7 @@
             </ul>
           </li>
           <li class="has-dropdown">
-            <a href="#notice">본당소식 ▾</a>
+            <a href="#">본당소식 ▾</a>
             <ul class="dropdown">
               <li><a href="pages/board/notice.html">공지사항</a></li>
               <li><a href="pages/board/free.html">자유게시판</a></li>
@@ -68,7 +70,7 @@
             </ul>
           </li>
           <li class="has-dropdown">
-            <a href="#mass">미사와 성사 ▾</a>
+            <a href="#">미사와 성사 ▾</a>
             <ul class="dropdown">
               <li><a href="pages/info/mass.html">미사 안내</a></li>
               <li><a href="pages/info/baptism.html">세례성사</a></li>
@@ -105,167 +107,109 @@
     </div>
   </header>
 
-  <!-- ① 배너 이미지 -->
-  <section class="banner" id="banner">
-    <img class="banner-bg" src="images/banner.jpg" alt="">
-    <div class="banner-overlay" id="bannerOverlay"></div>
+  <!-- ① 첫 화면: 환영 문구 + 오늘의 미사 -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <p class="hero-eyebrow">천주교 서울대교구 · 주보성인 성 마태오 사도</p>
+        <h1>미사로 시작되는 신앙,<br>미사로 하나되는 공동체</h1>
+        <p class="hero-desc">천주교 노원성당에 오신 것을 환영합니다.</p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="#mass">미사 시간 보기</a>
+          <a class="btn-ghost" href="#visit">오시는 길</a>
+        </div>
+      </div>
+
+      <aside class="today-card" aria-label="오늘의 미사">
+        <div class="today-head">
+          <span class="today-label">오늘의 미사</span>
+          <span class="today-date" id="todayDate"></span>
+        </div>
+        <ul class="today-list" id="todayMasses"></ul>
+        <p class="today-note">고해성사 · 미사 20분 전 (주일 30분 전)</p>
+      </aside>
+    </div>
   </section>
 
-  <!-- ② 한눈에 보는 핵심 정보 (한 화면) -->
-  <section class="info-screen" id="info">
-    <div class="info-grid">
+  <!-- ② 바로가기 -->
+  <nav class="quick" aria-label="바로가기">
+    <a class="quick-item" href="#mass">
+      <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span class="quick-title">미사 시간</span>
+      <span class="quick-sub">주일 · 특전 · 평일</span>
+    </a>
+    <a class="quick-item" href="pages/board/bulletin.html">
+      <svg class="ico" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      <span class="quick-title">본당 주보</span>
+      <span class="quick-sub">이번 주 소식</span>
+    </a>
+    <a class="quick-item" href="pages/board/notice.html">
+      <svg class="ico" viewBox="0 0 24 24"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+      <span class="quick-title">공지사항</span>
+      <span class="quick-sub">본당 알림</span>
+    </a>
+    <a class="quick-item" href="#visit">
+      <svg class="ico" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+      <span class="quick-title">오시는 길</span>
+      <span class="quick-sub">마들역 5번 출구</span>
+    </a>
+  </nav>
 
-      <!-- 미사 시간 -->
-      <div class="info-card mass-card-main" id="mass">
-        <div class="info-card-header">
-          <span class="info-icon">🕐</span>
+  <!-- ③ 미사 시간 + 공지사항 -->
+  <section class="home-section">
+    <div class="home-grid">
+
+      <div class="panel" id="mass">
+        <div class="panel-head">
           <h2>미사 시간</h2>
+          <a class="panel-more" href="pages/info/mass.html">자세히 ›</a>
         </div>
-        <div class="mass-section">
-          <h3 class="mass-day">주일 미사</h3>
-          <ul class="mass-times" id="sundayMassDisplay">
-            <li><span class="t">06:00</span></li>
-            <li><span class="t">08:00</span></li>
-            <li><span class="t">10:30</span><span class="tag">청소년</span></li>
-            <li><span class="t">11:00</span></li>
-            <li><span class="t">18:00</span><span class="tag">청년</span></li>
-            <li><span class="t">20:00</span></li>
-          </ul>
-        </div>
-        <div class="mass-section">
-          <h3 class="mass-day">평일 미사</h3>
-          <ul class="mass-times" id="weekdayMassDisplay">
-            <li><span class="t">06:00</span></li>
-            <li><span class="t">10:00</span></li>
-            <li><span class="t">19:00</span></li>
-          </ul>
-        </div>
-        <div class="confession-info" id="confessionDisplay">
-
-          <span>고해성사</span><br>주일 미사 30분 전 · 평일 미사 20분 전
-        </div>
+        <div class="mass-cols" id="massTable"></div>
+        <p class="panel-foot">성시간 · 매월 첫째 목요일 19:30 대성당</p>
       </div>
 
-      <!-- 공지사항 -->
-      <div class="info-card" id="notice">
-        <div class="info-card-header">
-          <span class="info-icon">📢</span>
+      <div class="panel" id="notice">
+        <div class="panel-head">
           <h2>공지사항</h2>
+          <a class="panel-more" href="pages/board/notice.html">전체 보기 ›</a>
         </div>
-        <ul class="notice-list" id="noticeList">
-          <li class="notice-row">
-            <span class="notice-badge">공지</span>
-            <span class="notice-title">2024년 부활절 미사 안내</span>
-            <span class="notice-date">03.15</span>
-          </li>
-          <li class="notice-row">
-            <span class="notice-badge event">행사</span>
-            <span class="notice-title">본당 창립기념 행사 안내</span>
-            <span class="notice-date">03.10</span>
-          </li>
-          <li class="notice-row">
-            <span class="notice-badge book">주보</span>
-            <span class="notice-title">이번 주 주보 (3월 셋째 주)</span>
-            <span class="notice-date">03.17</span>
-          </li>
-          <li class="notice-row">
-            <span class="notice-badge">공지</span>
-            <span class="notice-title">사순 시기 특별 프로그램 안내</span>
-            <span class="notice-date">03.05</span>
-          </li>
-          <li class="notice-row">
-            <span class="notice-badge event">행사</span>
-            <span class="notice-title">청년부 피정 안내</span>
-            <span class="notice-date">03.01</span>
-          </li>
-        </ul>
-        <a href="#" class="more-link">더보기 →</a>
-      </div>
-
-      <!-- 연락처 + 오시는 길 -->
-      <div class="info-card" id="map">
-        <div class="info-card-header">
-          <span class="info-icon">📍</span>
-          <h2>오시는 길</h2>
-        </div>
-        <div class="map-embed" id="mapEmbed">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3158.3636084050436!2d127.05118997647065!3d37.664163072013515!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357cb93a251ce9d5%3A0x1b78f6a89d8a0cf7!2z7LKc7KO86rWQIOuFuOybkCDshLHri7k!5e0!3m2!1sko!2skr!4v1773900682625!5m2!1sko!2skr"
-            allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
-        <ul class="contact-list">
-          <li>
-            <span class="contact-icon">📞</span>
-            <div>
-              <span class="contact-label">전화</span>
-              <span class="contact-value" data-phone>02-933-9981</span>
-            </div>
-          </li>
-          <li>
-            <span class="contact-icon">📠</span>
-            <div>
-              <span class="contact-label">팩스</span>
-              <span class="contact-value" data-fax>02-933-9986</span>
-            </div>
-          </li>
-          <li>
-            <span class="contact-icon">🚇</span>
-            <div>
-              <span class="contact-label">지하철</span>
-              <span class="contact-value" id="subwayInfo">7호선 노원역 도보 5분</span>
-            </div>
-          </li>
-          <li>
-            <span class="contact-icon">📌</span>
-            <div>
-              <span class="contact-label">주소</span>
-              <span class="contact-value" id="addressInfo">서울특별시 노원구</span>
-            </div>
-          </li>
+        <ul class="news-list" id="homeNotices">
+          <li class="news-empty">불러오는 중…</li>
         </ul>
       </div>
 
     </div>
   </section>
 
-  <!-- ③ 갤러리 (스크롤 시) -->
-  <section class="gallery-section" id="gallery">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">Gallery</span>
-        <h2 class="section-title">갤러리</h2>
+  <!-- ④ 오시는 길 -->
+  <section class="home-section visit" id="visit">
+    <div class="visit-grid">
+      <div class="visit-map">
+        <iframe title="노원성당 지도"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3158.3636084050436!2d127.05118997647065!3d37.664163072013515!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357cb93a251ce9d5%3A0x1b78f6a89d8a0cf7!2z7LKc7KO86rWQIOuFuOybkCDshLHri7k!5e0!3m2!1sko!2skr!4v1773900682625!5m2!1sko!2skr"
+          allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
-      <div class="gallery-grid" id="galleryGrid">
-        <div class="gallery-item placeholder">
-          <div class="gallery-ph"><span>✝</span>
-            <p>사진 준비 중</p>
-          </div>
-        </div>
-        <div class="gallery-item placeholder">
-          <div class="gallery-ph"><span>✝</span>
-            <p>사진 준비 중</p>
-          </div>
-        </div>
-        <div class="gallery-item placeholder">
-          <div class="gallery-ph"><span>✝</span>
-            <p>사진 준비 중</p>
-          </div>
-        </div>
-        <div class="gallery-item placeholder">
-          <div class="gallery-ph"><span>✝</span>
-            <p>사진 준비 중</p>
-          </div>
-        </div>
-        <div class="gallery-item placeholder">
-          <div class="gallery-ph"><span>✝</span>
-            <p>사진 준비 중</p>
-          </div>
-        </div>
-        <div class="gallery-item placeholder">
-          <div class="gallery-ph"><span>✝</span>
-            <p>사진 준비 중</p>
-          </div>
-        </div>
+      <div class="visit-info">
+        <h2>오시는 길</h2>
+        <ul class="visit-list">
+          <li>
+            <svg class="ico" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div><strong>서울특별시 노원구 한글비석로 585</strong><span>구 주소: 상계8동 856번지</span></div>
+          </li>
+          <li>
+            <svg class="ico" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="16" rx="2"/><path d="M4 11h16"/><path d="M12 3v8"/><path d="m8 19-2 3"/><path d="m18 22-2-3"/></svg>
+            <div><strong>7호선 마들역 5번 출구</strong><span>10·11단지 아파트길로 약 500m, 도보 7~8분</span></div>
+          </li>
+          <li>
+            <svg class="ico" viewBox="0 0 24 24"><path d="M8 6v6"/><path d="M15 6v6"/><path d="M2 12h19.6"/><path d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3"/><circle cx="7" cy="18" r="2"/><path d="M9 18h5"/><circle cx="16" cy="18" r="2"/></svg>
+            <div><strong>주공 11단지성당 정류장</strong><span>마을버스 노원08 · 11-885</span></div>
+          </li>
+          <li>
+            <svg class="ico" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <div><strong><a href="tel:02-933-9981">02-933-9981</a></strong><span>본당 사무실</span></div>
+          </li>
+        </ul>
+        <a class="panel-more" href="pages/business/location.html">버스 노선 전체 보기 ›</a>
       </div>
     </div>
   </section>
@@ -278,22 +222,21 @@
           <span class="footer-cross">✝</span>
           <div>
             <h3>천주교 노원성당</h3>
-            <p>천주교 서울대교구 5지구장</p>
+            <p>서울특별시 노원구 한글비석로 585</p>
           </div>
         </div>
         <div class="footer-info">
-          <p>📞 <span data-phone>02-933-9981</span> &nbsp;|&nbsp; 📠 <span data-fax>02-933-9986</span></p>
-          <p id="footerAddress">서울특별시 노원구</p>
+          <p>전화 <span data-phone>02-933-9981</span> &nbsp;·&nbsp; 팩스 <span data-fax>02-933-9986</span></p>
         </div>
-        <a href="admin/" class="admin-link">관리자</a>
       </div>
       <div class="footer-bottom">
-        <p>© 2024 천주교 노원성당. All rights reserved.</p>
+        <p>© 천주교 노원성당 · <a href="admin/" class="footer-admin">관리자</a></p>
       </div>
     </div>
   </footer>
 
   <script src="js/main.js"></script>
+  <script type="module" src="js/home.js"></script>
   <script type="module">
     import { auth } from './js/firebase-config.js';
     import { onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
