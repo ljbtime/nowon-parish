@@ -3,8 +3,8 @@
 =========================== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --navy: #1a2c4e;
-  --navy-light: #253d68;
+  --navy: #2f5d9b;
+  --navy-light: #244b82;
   --gold: #b8953a;
   --gold-light: #d4af5a;
   --white: #ffffff;
@@ -261,7 +261,7 @@ textarea { resize: vertical; }
   width: 100%;
   height: 180px;
   border-radius: 8px;
-  background: #1a2c4e;
+  background: #2f5d9b;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -296,7 +296,7 @@ textarea { resize: vertical; }
   width: 100%;
   height: 280px;
   border-radius: 10px;
-  background: linear-gradient(135deg, #0f1c30, #1a2c4e, #2a4070);
+  background: linear-gradient(135deg, #0f1c30, #2f5d9b, #2a4070);
   display: flex;
   align-items: center;
   justify-content: center;

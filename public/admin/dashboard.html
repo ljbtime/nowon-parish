@@ -510,8 +510,8 @@
           b.style.color = '#888';
           b.style.borderBottomColor = 'transparent';
         });
-        btn.style.color = '#1a2c4e';
-        btn.style.borderBottomColor = '#1a2c4e';
+        btn.style.color = '#2f5d9b';
+        btn.style.borderBottomColor = '#2f5d9b';
         clergyTab = btn.dataset.tab;
         const isNun = clergyTab === 'nun';
         document.getElementById('cGrpCongregation').style.display = isNun ? '' : 'none';
@@ -576,7 +576,7 @@
           <td>${d.baptismalName||'-'}</td>
           <td>${d.appointedDate||'-'}</td>
           <td>
-            <button onclick="cEdit('${d.id}')" style="background:#1a2c4e;color:#fff;border:none;padding:0.3rem 0.7rem;border-radius:4px;font-size:0.8rem;cursor:pointer;">수정</button>
+            <button onclick="cEdit('${d.id}')" style="background:#2f5d9b;color:#fff;border:none;padding:0.3rem 0.7rem;border-radius:4px;font-size:0.8rem;cursor:pointer;">수정</button>
             <button onclick="cDelete('${d.id}','${d.name}')" style="background:#c0392b;color:#fff;border:none;padding:0.3rem 0.7rem;border-radius:4px;font-size:0.8rem;cursor:pointer;margin-left:0.3rem;">삭제</button>
           </td>
         </tr>
