@@ -308,10 +308,11 @@
     import { auth, db } from '../../js/firebase-config.js';
     import {
       createUserWithEmailAndPassword,
-      updateProfile
+      updateProfile,
+      deleteUser
     } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
     import {
-      doc, setDoc, getDoc, collection, query, where, getDocs
+      doc, setDoc, getDoc
     } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
     // ── 전역 상태 ──────────────────────────────
@@ -352,8 +353,8 @@
         idChecked = false;
         return;
       }
-      const snap = await getDocs(query(collection(db, 'users'), where('userId', '==', userId)));
-      if (!snap.empty) {
+      const snap = await getDoc(doc(db, 'usernames', userId));
+      if (snap.exists()) {
         msg.textContent = '이미 사용 중인 아이디입니다.';
         msg.className = 'field-msg error';
         idChecked = false;
@@ -435,6 +436,16 @@
       try {
         // Firebase Auth로 계정 생성 (이메일+비밀번호)
         const cred = await createUserWithEmailAndPassword(auth, email, password);
+
+        // 아이디 선점 (그 사이 다른 사람이 가져갔으면 방금 만든 계정을 지우고 안내)
+        try {
+          await setDoc(doc(db, 'usernames', userId), { uid: cred.user.uid, email });
+        } catch (e) {
+          await deleteUser(cred.user).catch(() => {});
+          idChecked = false;
+          throw { code: 'username-taken' };
+        }
+
         await updateProfile(cred.user, { displayName: name });
 
         // Firestore에 추가 정보 저장
@@ -461,6 +472,7 @@
         let msg = '가입 중 오류가 발생했습니다.';
         if (err.code === 'auth/email-already-in-use') msg = '이미 사용 중인 이메일입니다.';
         if (err.code === 'auth/invalid-email')        msg = '이메일 형식이 올바르지 않습니다.';
+        if (err.code === 'username-taken')            msg = '방금 다른 분이 같은 아이디로 가입했습니다. 다른 아이디로 중복확인 해주세요.';
         showErr(msg);
         btn.disabled = false;
         btn.textContent = '가입하기';
