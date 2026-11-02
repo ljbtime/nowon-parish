@@ -8,6 +8,88 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../../css/style.css" />
+  <style>
+    .clergy-list { display: flex; flex-direction: column; gap: 2.5rem; }
+    .priest-card {
+      background: #fff;
+      border: 1px solid #e8e8e8;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .priest-card-header {
+      background: linear-gradient(135deg, #1a2c4e 0%, #253d68 100%);
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .priest-photo-wrap {
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      border: 3px solid rgba(212,175,90,0.6);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.2rem; color: #d4af5a;
+      overflow: hidden; flex-shrink: 0;
+    }
+    .priest-photo-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .priest-header-info { color: #fff; }
+    .priest-role-badge {
+      display: inline-block;
+      background: rgba(212,175,90,0.3);
+      border: 1px solid rgba(212,175,90,0.6);
+      color: #d4af5a;
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 0.2rem 0.7rem; border-radius: 20px;
+      margin-bottom: 0.4rem;
+    }
+    .priest-name {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.35rem; font-weight: 700;
+      color: #fff; margin: 0 0 0.2rem 0;
+    }
+    .priest-baptismal {
+      font-size: 0.95rem; color: rgba(255,255,255,0.85);
+      font-weight: 400; margin: 0;
+      letter-spacing: 0.03em;
+    }
+    .priest-card-body { padding: 1.5rem 2rem; }
+    .priest-meta { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1.2rem; }
+    .priest-meta-item { font-size: 0.88rem; }
+    .priest-meta-item .label { color: #1a2c4e; font-weight: 600; margin-right: 0.4rem; }
+    .priest-meta-item .value { color: #555; }
+    .priest-bio { font-size: 0.93rem; color: #444; line-height: 1.8; margin-bottom: 1rem; }
+    .history-title {
+      font-size: 0.82rem; font-weight: 700; color: #1a2c4e;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      border-left: 3px solid #b8953a; padding-left: 0.5rem;
+      margin: 1.2rem 0 0.8rem;
+    }
+    .history-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    .history-table tr { border-bottom: 1px solid #f0f0f0; }
+    .history-table td { padding: 0.45rem 0.5rem; color: #444; }
+    .history-table td:first-child { color: #1a2c4e; font-weight: 600; width: 110px; white-space: nowrap; }
+    .admin-edit-btn {
+      float: right;
+      background: none; border: 1px solid #b8953a;
+      color: #b8953a; font-size: 0.78rem;
+      padding: 0.3rem 0.8rem; border-radius: 4px;
+      cursor: pointer; text-decoration: none;
+    }
+    .admin-edit-btn:hover { background: #b8953a; color: #fff; }
+    .add-clergy-btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: #1a2c4e; color: #fff;
+      font-size: 0.88rem; font-weight: 600;
+      padding: 0.6rem 1.2rem; border-radius: 6px;
+      text-decoration: none; margin-bottom: 1.5rem;
+    }
+    .add-clergy-btn:hover { background: #253d68; }
+    .empty-msg { text-align: center; padding: 3rem 0; color: #999; font-size: 0.95rem; }
+    .loading-msg { text-align: center; padding: 3rem 0; color: #aaa; }
+  </style>
 </head>
 <body>
   <header id="header">
@@ -93,7 +175,6 @@
     </div>
   </header>
 
-  <!-- 서브페이지 배너 -->
   <div class="sub-banner">
     <div class="sub-banner-inner">
       <p class="breadcrumb"><a href="../../index.html">홈</a> <span>›</span> 노원본당 <span>›</span> 본당사제단</p>
@@ -101,11 +182,9 @@
     </div>
   </div>
 
-  <!-- 본문 -->
   <main class="sub-main">
     <div class="container">
       <div class="sub-layout">
-        <!-- 사이드 메뉴 -->
         <aside class="sub-sidebar">
           <div class="sidebar-menu">
             <h3 class="sidebar-title">노원본당</h3>
@@ -121,106 +200,25 @@
           </div>
         </aside>
 
-        <!-- 본문 콘텐츠 -->
         <section class="sub-content">
           <div class="content-header">
             <h2>본당사제단</h2>
           </div>
-
           <div class="content-body">
-
-            <!-- 주임신부 카드 -->
-            <div class="priest-card">
-              <div class="priest-photo">✝</div>
-              <div class="priest-info">
-                <h3>이윤헌 아우구스띠노 신부</h3>
-                <p class="priest-role">주임사제</p>
-                <div class="priest-details">
-                  <table class="info-table" style="margin-top: 0;">
-                    <tbody>
-                      <tr>
-                        <td style="width: 130px; font-weight: 600; color: var(--navy);">영명축일</td>
-                        <td>8월 28일 (성 아우구스티노)</td>
-                      </tr>
-                      <tr>
-                        <td style="font-weight: 600; color: var(--navy);">서품일자</td>
-                        <td>1996년 07월 05일</td>
-                      </tr>
-                      <tr>
-                        <td style="font-weight: 600; color: var(--navy);">부임일자</td>
-                        <td>2021년 08월 31일</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+            <div id="adminBar" style="display:none;">
+              <a href="../admin/clergy.html" class="add-clergy-btn">✎ 사제단 관리</a>
+            </div>
+            <div id="clergList" class="clergy-list">
+              <div class="loading-msg">불러오는 중...</div>
             </div>
 
-            <!-- 경력 섹션 -->
-            <h3>사제 경력</h3>
-            <table class="info-table">
-              <thead>
-                <tr>
-                  <th style="width: 130px;">기간</th>
-                  <th>내용</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1996. 08</td>
-                  <td>사제서품</td>
-                </tr>
-                <tr>
-                  <td>1996. 11</td>
-                  <td>개포동 보좌</td>
-                </tr>
-                <tr>
-                  <td>1998. 11</td>
-                  <td>해외선교</td>
-                </tr>
-                <tr>
-                  <td>2000. 02</td>
-                  <td>묵동 보좌</td>
-                </tr>
-                <tr>
-                  <td>2001. 12</td>
-                  <td>흑석동 보좌</td>
-                </tr>
-                <tr>
-                  <td>2003. 12</td>
-                  <td>신내동 부주임</td>
-                </tr>
-                <tr>
-                  <td>2007. 09</td>
-                  <td>목동 주임</td>
-                </tr>
-                <tr>
-                  <td>2012. 08</td>
-                  <td>중견사제연수</td>
-                </tr>
-                <tr>
-                  <td>2013. 02</td>
-                  <td>서울·여의도·부천성모병원 영성부원장</td>
-                </tr>
-                <tr>
-                  <td>2016. 08</td>
-                  <td>안식년</td>
-                </tr>
-                <tr>
-                  <td>2021. 08</td>
-                  <td><strong>노원성당 주임 (현재)</strong></td>
-                </tr>
-              </tbody>
-            </table>
-
-            <div class="contact-box">
+            <div class="contact-box" style="margin-top:2rem;">
               <h4>✝ 신부님과의 면담</h4>
-              <p style="font-size: 0.95rem; color: var(--text); line-height: 1.8;">
+              <p style="font-size:0.95rem; color:var(--text); line-height:1.8;">
                 신부님과 개인 면담을 원하시는 분은 본당 사무실로 먼저 연락하여 일정을 잡으시기 바랍니다.<br>
                 <strong>사무실 전화: 02-933-9981</strong>
               </p>
             </div>
-
           </div>
         </section>
       </div>
@@ -250,5 +248,96 @@
   </footer>
 
   <script src="../../js/sub.js"></script>
+  <script type="module">
+    import { auth, db } from '../../js/firebase-config.js';
+    import { onAuthStateChanged, getIdTokenResult } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+    import { collection, query, where, orderBy, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+    let isAdmin = false;
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const token = await getIdTokenResult(user);
+        isAdmin = !!token.claims.admin;
+        if (isAdmin) document.getElementById('adminBar').style.display = 'block';
+      }
+      loadPriests();
+    });
+
+    async function loadPriests() {
+      const container = document.getElementById('clergList');
+      try {
+        const q = query(
+          collection(db, 'clergy'),
+          where('type', '==', 'priest'),
+          orderBy('order', 'asc')
+        );
+        const snap = await getDocs(q);
+
+        if (snap.empty) {
+          container.innerHTML = '<div class="empty-msg">등록된 사제단 정보가 없습니다.</div>';
+          return;
+        }
+
+        container.innerHTML = '';
+        snap.forEach(docSnap => {
+          const d = docSnap.data();
+          container.appendChild(buildCard(docSnap.id, d));
+        });
+      } catch (e) {
+        console.error(e);
+        container.innerHTML = '<div class="empty-msg">정보를 불러오는 중 오류가 발생했습니다.</div>';
+      }
+    }
+
+    function buildCard(id, d) {
+      const card = document.createElement('div');
+      card.className = 'priest-card';
+
+      // 경력 파싱 (줄별로 "YYYY.MM. 내용" 형식)
+      let historyRows = '';
+      if (d.history) {
+        const lines = d.history.split('\n').filter(l => l.trim());
+        historyRows = lines.map(line => {
+          const m = line.match(/^(\d{4}\.\s*\d{2}\.?)\s+(.+)$/);
+          if (m) return `<tr><td>${m[1]}</td><td>${m[2]}</td></tr>`;
+          return `<tr><td colspan="2">${line}</td></tr>`;
+        }).join('');
+      }
+
+      const photoHtml = d.photo
+        ? `<img src="${d.photo}" alt="${d.name}" />`
+        : '✝';
+
+      const editBtn = isAdmin
+        ? `<a href="../admin/clergy.html?edit=${id}" class="admin-edit-btn">수정</a>`
+        : '';
+
+      card.innerHTML = `
+        <div class="priest-card-header">
+          <div class="priest-photo-wrap">${photoHtml}</div>
+          <div class="priest-header-info">
+            <div class="priest-role-badge">${d.role || ''}</div>
+            <h3 class="priest-name">${d.name || ''} 신부</h3>
+            ${d.baptismalName ? `<p class="priest-baptismal">${d.baptismalName}</p>` : ''}
+          </div>
+        </div>
+        <div class="priest-card-body">
+          ${editBtn}
+          <div class="priest-meta">
+            ${d.feastDay ? `<div class="priest-meta-item"><span class="label">영명축일</span><span class="value">${d.feastDay}</span></div>` : ''}
+            ${d.ordinationDate ? `<div class="priest-meta-item"><span class="label">서품일자</span><span class="value">${d.ordinationDate}</span></div>` : ''}
+            ${d.appointedDate ? `<div class="priest-meta-item"><span class="label">부임일자</span><span class="value">${d.appointedDate}</span></div>` : ''}
+          </div>
+          ${d.bio ? `<p class="priest-bio">${d.bio}</p>` : ''}
+          ${(d.role === '주임신부' && historyRows) ? `
+            <div class="history-title">사제 경력</div>
+            <table class="history-table"><tbody>${historyRows}</tbody></table>
+          ` : ''}
+        </div>
+      `;
+      return card;
+    }
+  </script>
 </body>
 </html>

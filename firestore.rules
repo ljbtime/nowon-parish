@@ -28,6 +28,12 @@ service cloud.firestore {
       allow write: if request.auth != null && request.auth.token.admin == true;
     }
 
+    // 사제단/수녀 - 누구나 읽기, 관리자만 쓰기
+    match /clergy/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+
     // 회원 정보 - 본인만 읽기/쓰기, 관리자는 전체 읽기
     match /users/{userId} {
       allow read: if request.auth != null &&

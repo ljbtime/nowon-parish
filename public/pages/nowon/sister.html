@@ -128,6 +128,10 @@
           </div>
 
           <div class="content-body">
+            <div id="adminBar" style="display:none; margin-bottom:1.5rem;">
+              <a href="../admin/clergy.html" style="display:inline-flex;align-items:center;gap:0.4rem;background:#1a2c4e;color:#fff;font-size:0.88rem;font-weight:600;padding:0.6rem 1.2rem;border-radius:6px;text-decoration:none;">✎ 수녀님 관리</a>
+            </div>
+            <div id="nunList"></div>
 
             <!-- 수도회 소개 배너 -->
             <div style="background: linear-gradient(135deg, #1a2c4e 0%, #253d68 100%); border-radius: 12px; padding: 1.5rem 2rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;">
@@ -228,5 +232,106 @@
     </div>
   </footer>
   <script src="../../js/sub.js"></script>
+  <style>
+    .nun-card {
+      background:#fff; border:1px solid #e8e8e8; border-radius:12px;
+      overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,0.06);
+      margin-bottom:1.5rem;
+    }
+    .nun-card-header {
+      background:linear-gradient(135deg,#2c4a2c 0%,#3d6b3d 100%);
+      padding:1.2rem 1.8rem; display:flex; align-items:center; gap:1.2rem;
+    }
+    .nun-photo-wrap {
+      width:80px; height:80px; border-radius:50%;
+      background:rgba(255,255,255,0.15); border:3px solid rgba(180,220,140,0.6);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.8rem; color:#b4dc8c; overflow:hidden; flex-shrink:0;
+    }
+    .nun-photo-wrap img { width:100%; height:100%; object-fit:cover; }
+    .nun-role-badge {
+      display:inline-block; background:rgba(180,220,140,0.25);
+      border:1px solid rgba(180,220,140,0.5);
+      color:#b4dc8c; font-size:0.75rem; font-weight:700;
+      padding:0.2rem 0.7rem; border-radius:20px; margin-bottom:0.3rem;
+    }
+    .nun-name { font-family:'Noto Serif KR',serif; font-size:1.2rem; font-weight:700; color:#fff; }
+    .nun-name .baptismal { font-size:0.85rem; color:rgba(255,255,255,0.7); font-weight:400; margin-left:0.4rem; }
+    .nun-card-body { padding:1.2rem 1.8rem; }
+    .nun-meta { display:flex; flex-wrap:wrap; gap:1.2rem; }
+    .nun-meta-item { font-size:0.88rem; }
+    .nun-meta-item .label { color:#2c4a2c; font-weight:600; margin-right:0.4rem; }
+    .nun-meta-item .value { color:#555; }
+    .nun-bio { font-size:0.92rem; color:#444; line-height:1.8; margin-top:0.8rem; }
+  </style>
+  <script type="module">
+    import { auth, db } from '../../js/firebase-config.js';
+    import { onAuthStateChanged, getIdTokenResult } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+    import { collection, query, where, orderBy, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+    let isAdmin = false;
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const token = await getIdTokenResult(user);
+        isAdmin = !!token.claims.admin;
+        if (isAdmin) document.getElementById('adminBar').style.display = 'block';
+      }
+      loadNuns();
+    });
+
+    async function loadNuns() {
+      const container = document.getElementById('nunList');
+      try {
+        const q = query(
+          collection(db, 'clergy'),
+          where('type', '==', 'nun'),
+          orderBy('order', 'asc')
+        );
+        const snap = await getDocs(q);
+
+        if (snap.empty) {
+          container.innerHTML = '<p style="color:#999;text-align:center;padding:2rem 0;">등록된 수녀님 정보가 없습니다.</p>';
+          return;
+        }
+
+        container.innerHTML = '';
+        snap.forEach(docSnap => {
+          const d = docSnap.data();
+          const editBtn = isAdmin
+            ? `<a href="../admin/clergy.html?edit=${docSnap.id}" style="float:right;border:1px solid #3d6b3d;color:#3d6b3d;font-size:0.78rem;padding:0.3rem 0.8rem;border-radius:4px;text-decoration:none;">수정</a>`
+            : '';
+          const photoHtml = d.photo ? `<img src="${d.photo}" alt="${d.name}" />` : '✝';
+          const card = document.createElement('div');
+          card.className = 'nun-card';
+          card.innerHTML = `
+            <div class="nun-card-header">
+              <div class="nun-photo-wrap">${photoHtml}</div>
+              <div>
+                <div class="nun-role-badge">${d.role || '수녀'}</div>
+                <div class="nun-name">
+                  ${d.name || ''} 수녀
+                  ${d.baptismalName ? `<span class="baptismal">${d.baptismalName}</span>` : ''}
+                </div>
+              </div>
+            </div>
+            <div class="nun-card-body">
+              ${editBtn}
+              <div class="nun-meta">
+                ${d.congregation ? `<div class="nun-meta-item"><span class="label">소속 수도회</span><span class="value">${d.congregation}</span></div>` : ''}
+                ${d.feastDay ? `<div class="nun-meta-item"><span class="label">영명축일</span><span class="value">${d.feastDay}</span></div>` : ''}
+                ${d.appointedDate ? `<div class="nun-meta-item"><span class="label">파견일자</span><span class="value">${d.appointedDate}</span></div>` : ''}
+              </div>
+              ${d.bio ? `<p class="nun-bio">${d.bio}</p>` : ''}
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      } catch (e) {
+        console.error(e);
+        container.innerHTML = '<p style="color:#999;text-align:center;padding:2rem 0;">정보를 불러오는 중 오류가 발생했습니다.</p>';
+      }
+    }
+  </script>
 </body>
 </html>

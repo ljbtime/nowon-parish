@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>사제단/수녀 관리 - 노원성당 관리자</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Sans KR', sans-serif; background: #f5f6fa; color: #222; }
+
+    /* 헤더 */
+    .admin-header {
+      background: #1a2c4e; color: #fff;
+      padding: 0.9rem 1.5rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .admin-header a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.85rem; }
+    .admin-header a:hover { color: #fff; }
+    .admin-header h1 { font-size: 1.1rem; font-weight: 700; }
+
+    .container { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+
+    /* 탭 */
+    .tabs { display: flex; gap: 0; margin-bottom: 1.5rem; border-bottom: 2px solid #ddd; }
+    .tab-btn {
+      padding: 0.7rem 1.5rem; background: none; border: none;
+      font-size: 0.95rem; font-weight: 600; color: #888; cursor: pointer;
+      border-bottom: 2px solid transparent; margin-bottom: -2px;
+    }
+    .tab-btn.active { color: #1a2c4e; border-bottom-color: #1a2c4e; }
+
+    /* 목록 */
+    .clergy-list-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.07); }
+    .clergy-list-table th { background: #1a2c4e; color: #fff; padding: 0.7rem 1rem; font-size: 0.85rem; text-align: left; }
+    .clergy-list-table td { padding: 0.75rem 1rem; border-bottom: 1px solid #f0f0f0; font-size: 0.9rem; vertical-align: middle; }
+    .clergy-list-table tr:last-child td { border-bottom: none; }
+    .btn-edit { background: #1a2c4e; color: #fff; border: none; padding: 0.35rem 0.8rem; border-radius: 4px; font-size: 0.8rem; cursor: pointer; }
+    .btn-delete { background: #c0392b; color: #fff; border: none; padding: 0.35rem 0.8rem; border-radius: 4px; font-size: 0.8rem; cursor: pointer; margin-left: 0.3rem; }
+    .btn-up, .btn-down { background: #888; color: #fff; border: none; padding: 0.35rem 0.5rem; border-radius: 4px; font-size: 0.8rem; cursor: pointer; }
+    .btn-up { margin-right: 0.2rem; }
+    .btn-add {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: #b8953a; color: #fff; border: none;
+      font-size: 0.9rem; font-weight: 700; padding: 0.65rem 1.3rem;
+      border-radius: 6px; cursor: pointer; margin-bottom: 1rem;
+    }
+
+    /* 폼 */
+    .form-card {
+      background: #fff; border-radius: 10px; padding: 1.8rem;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.08); margin-bottom: 2rem;
+    }
+    .form-card h3 { font-size: 1rem; font-weight: 700; color: #1a2c4e; margin-bottom: 1.2rem; padding-bottom: 0.6rem; border-bottom: 2px solid #e8e8e8; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 0.9rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.3rem; }
+    .form-group label { font-size: 0.8rem; font-weight: 600; color: #555; }
+    .form-group input, .form-group select, .form-group textarea {
+      padding: 0.55rem 0.8rem; border: 1px solid #ddd; border-radius: 6px;
+      font-size: 0.9rem; font-family: 'Noto Sans KR', sans-serif;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      outline: none; border-color: #1a2c4e;
+    }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-group .hint { font-size: 0.75rem; color: #999; }
+    .history-group { margin-bottom: 0.9rem; }
+    .history-group label { font-size: 0.8rem; font-weight: 600; color: #555; display: block; margin-bottom: 0.3rem; }
+    .history-group textarea { width: 100%; padding: 0.55rem 0.8rem; border: 1px solid #ddd; border-radius: 6px; font-size: 0.87rem; min-height: 160px; font-family: 'Noto Sans KR', sans-serif; }
+    .history-show { display: block; }
+    .history-hide { display: none; }
+    .form-actions { display: flex; gap: 0.8rem; margin-top: 1.2rem; }
+    .btn-submit { background: #1a2c4e; color: #fff; border: none; padding: 0.65rem 1.5rem; border-radius: 6px; font-size: 0.9rem; font-weight: 700; cursor: pointer; }
+    .btn-cancel { background: #e8e8e8; color: #555; border: none; padding: 0.65rem 1.2rem; border-radius: 6px; font-size: 0.9rem; cursor: pointer; }
+    .alert { padding: 0.8rem 1rem; border-radius: 6px; margin-bottom: 1rem; font-size: 0.88rem; display: none; }
+    .alert-ok { background: #d4edda; color: #155724; }
+    .alert-err { background: #f8d7da; color: #721c24; }
+    .loading { color: #aaa; text-align: center; padding: 2rem 0; }
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-header">
+    <a href="../../index.html">← 홈으로</a>
+    <span style="color:rgba(255,255,255,0.3)">|</span>
+    <h1>✝ 사제단 / 수녀님 관리</h1>
+  </div>
+
+  <div class="container">
+    <div id="alertOk" class="alert alert-ok"></div>
+    <div id="alertErr" class="alert alert-err"></div>
+
+    <!-- 탭 -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('priest')">⛪ 본당사제단</button>
+      <button class="tab-btn" onclick="switchTab('nun')">🕊 수녀님</button>
+    </div>
+
+    <!-- 추가/수정 폼 -->
+    <div class="form-card" id="formCard">
+      <h3 id="formTitle">새 항목 추가</h3>
+      <input type="hidden" id="editId" />
+      <input type="hidden" id="editType" />
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>직책 <span style="color:red">*</span></label>
+          <select id="fRole">
+            <option value="">-- 선택 --</option>
+            <optgroup label="신부님">
+              <option value="주임신부">주임신부</option>
+              <option value="부주임신부">부주임신부</option>
+              <option value="보좌신부">보좌신부</option>
+              <option value="협력사목사제">협력사목사제</option>
+              <option value="지구장">지구장</option>
+            </optgroup>
+            <optgroup label="수녀님">
+              <option value="수녀">수녀</option>
+              <option value="원장 수녀">원장 수녀</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>이름 <span style="color:red">*</span></label>
+          <input type="text" id="fName" placeholder="예: 이윤헌" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>세례명</label>
+          <input type="text" id="fBaptismal" placeholder="예: 아우구스띠노" />
+        </div>
+        <div class="form-group">
+          <label>영명축일</label>
+          <input type="text" id="fFeastDay" placeholder="예: 8월 28일 (성 아우구스티노)" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group" id="grpOrdination">
+          <label>서품일자</label>
+          <input type="text" id="fOrdinationDate" placeholder="예: 1996년 07월 05일" />
+        </div>
+        <div class="form-group">
+          <label id="labelAppointed">부임일자</label>
+          <input type="text" id="fAppointedDate" placeholder="예: 2021년 08월 31일" />
+        </div>
+      </div>
+
+      <div class="form-group" id="grpCongregation" style="margin-bottom:0.9rem; display:none;">
+        <label>소속 수도회</label>
+        <input type="text" id="fCongregation" placeholder="예: 성 바오로 딸 수도회" />
+      </div>
+
+      <div class="form-group" style="margin-bottom:0.9rem;">
+        <label>사진 URL</label>
+        <input type="text" id="fPhoto" placeholder="https://..." />
+        <span class="hint">이미지 URL 직접 입력 (Storage 업로드는 추후 지원)</span>
+      </div>
+
+      <div class="form-group" style="margin-bottom:0.9rem;">
+        <label>소개글</label>
+        <textarea id="fBio" placeholder="간단한 소개 문구를 입력하세요."></textarea>
+      </div>
+
+      <div class="history-group" id="grpHistory">
+        <label>사제 경력 <span style="color:#999; font-weight:400">(주임신부만 표시됩니다)</span></label>
+        <textarea id="fHistory" placeholder="한 줄에 하나씩 입력&#10;예:&#10;1996.08. 사제서품&#10;1996.11. 개포동 보좌&#10;2021.08. 노원성당 주임"></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn-submit" onclick="saveClergy()">저장</button>
+        <button class="btn-cancel" onclick="resetForm()">취소</button>
+      </div>
+    </div>
+
+    <!-- 목록 -->
+    <button class="btn-add" onclick="resetForm(); document.getElementById('formCard').scrollIntoView({behavior:'smooth'})">+ 새 항목 추가</button>
+    <div id="listWrap">
+      <div class="loading">불러오는 중...</div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { auth, db } from '../../js/firebase-config.js';
+    import { onAuthStateChanged, getIdTokenResult } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+    import {
+      collection, query, where, orderBy, getDocs,
+      addDoc, updateDoc, deleteDoc, doc, serverTimestamp
+    } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+    let currentTab = 'priest';
+    let allDocs = [];
+
+    // ── 권한 확인 ──────────────────────────────
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) { location.href = '../member/login.html'; return; }
+      const token = await getIdTokenResult(user);
+      if (!token.claims.admin) {
+        document.querySelector('.container').innerHTML = '<p style="text-align:center;padding:4rem;color:#c0392b;font-weight:700;">관리자만 접근할 수 있습니다.</p>';
+        return;
+      }
+      loadList();
+    });
+
+    // ── 탭 전환 ──────────────────────────────
+    window.switchTab = function(tab) {
+      currentTab = tab;
+      document.querySelectorAll('.tab-btn').forEach((b, i) => {
+        b.classList.toggle('active', (i === 0 && tab === 'priest') || (i === 1 && tab === 'nun'));
+      });
+      // 수녀 탭이면 소속수도회 표시, 서품일자 숨김
+      document.getElementById('grpCongregation').style.display = tab === 'nun' ? '' : 'none';
+      document.getElementById('grpOrdination').style.display = tab === 'nun' ? 'none' : '';
+      document.getElementById('labelAppointed').textContent = tab === 'nun' ? '파견일자' : '부임일자';
+      resetForm(false);
+      loadList();
+    };
+
+    // ── 목록 로드 ─────────────────────────────
+    async function loadList() {
+      const wrap = document.getElementById('listWrap');
+      wrap.innerHTML = '<div class="loading">불러오는 중...</div>';
+      try {
+        const q = query(collection(db, 'clergy'), where('type', '==', currentTab), orderBy('order', 'asc'));
+        const snap = await getDocs(q);
+        allDocs = [];
+        snap.forEach(d => allDocs.push({ id: d.id, ...d.data() }));
+        renderList();
+      } catch (e) {
+        wrap.innerHTML = `<p style="color:#c0392b;padding:1rem;">${e.message}</p>`;
+      }
+    }
+
+    function renderList() {
+      const wrap = document.getElementById('listWrap');
+      if (!allDocs.length) {
+        wrap.innerHTML = '<p style="color:#aaa;padding:1rem;">등록된 항목이 없습니다.</p>';
+        return;
+      }
+      const label = currentTab === 'priest' ? '신부' : '수녀';
+      wrap.innerHTML = `
+        <table class="clergy-list-table">
+          <thead>
+            <tr>
+              <th style="width:50px">순서</th>
+              <th>직책</th>
+              <th>이름</th>
+              <th>세례명</th>
+              <th>부임/파견일</th>
+              <th style="width:150px">관리</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      `;
+      const tbody = document.getElementById('tbody');
+      allDocs.forEach((d, idx) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="text-align:center">
+            ${idx > 0 ? `<button class="btn-up" onclick="moveOrder(${idx},-1)">▲</button>` : ''}
+            ${idx < allDocs.length - 1 ? `<button class="btn-down" onclick="moveOrder(${idx},1)">▼</button>` : ''}
+          </td>
+          <td>${d.role || '-'}</td>
+          <td><strong>${d.name || '-'}</strong> ${label}</td>
+          <td>${d.baptismalName || '-'}</td>
+          <td>${d.appointedDate || '-'}</td>
+          <td>
+            <button class="btn-edit" onclick="editItem('${d.id}')">수정</button>
+            <button class="btn-delete" onclick="deleteItem('${d.id}', '${d.name}')">삭제</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // ── 순서 변경 ─────────────────────────────
+    window.moveOrder = async function(idx, dir) {
+      const swapIdx = idx + dir;
+      if (swapIdx < 0 || swapIdx >= allDocs.length) return;
+      const a = allDocs[idx], b = allDocs[swapIdx];
+      const tmpOrder = a.order;
+      await updateDoc(doc(db, 'clergy', a.id), { order: b.order });
+      await updateDoc(doc(db, 'clergy', b.id), { order: tmpOrder });
+      loadList();
+    };
+
+    // ── 폼 초기화 ─────────────────────────────
+    window.resetForm = function(showAlert = false) {
+      document.getElementById('editId').value = '';
+      document.getElementById('editType').value = '';
+      document.getElementById('formTitle').textContent = '새 항목 추가';
+      ['fRole','fName','fBaptismal','fFeastDay','fOrdinationDate',
+       'fAppointedDate','fCongregation','fPhoto','fBio','fHistory'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+    };
+
+    // ── 수정 버튼 ─────────────────────────────
+    window.editItem = function(id) {
+      const d = allDocs.find(x => x.id === id);
+      if (!d) return;
+      document.getElementById('editId').value = id;
+      document.getElementById('editType').value = d.type;
+      document.getElementById('formTitle').textContent = `수정: ${d.name} ${d.type === 'priest' ? '신부' : '수녀'}`;
+      document.getElementById('fRole').value = d.role || '';
+      document.getElementById('fName').value = d.name || '';
+      document.getElementById('fBaptismal').value = d.baptismalName || '';
+      document.getElementById('fFeastDay').value = d.feastDay || '';
+      document.getElementById('fOrdinationDate').value = d.ordinationDate || '';
+      document.getElementById('fAppointedDate').value = d.appointedDate || '';
+      document.getElementById('fCongregation').value = d.congregation || '';
+      document.getElementById('fPhoto').value = d.photo || '';
+      document.getElementById('fBio').value = d.bio || '';
+      document.getElementById('fHistory').value = d.history || '';
+      document.getElementById('formCard').scrollIntoView({ behavior: 'smooth' });
+    };
+
+    // ── 저장 ─────────────────────────────────
+    window.saveClergy = async function() {
+      const editId = document.getElementById('editId').value;
+      const role = document.getElementById('fRole').value.trim();
+      const name = document.getElementById('fName').value.trim();
+      if (!role || !name) { showMsg('직책과 이름은 필수입니다.', false); return; }
+
+      const isNun = currentTab === 'nun';
+      const data = {
+        type: currentTab,
+        role,
+        name,
+        baptismalName: document.getElementById('fBaptismal').value.trim(),
+        feastDay: document.getElementById('fFeastDay').value.trim(),
+        ordinationDate: isNun ? '' : document.getElementById('fOrdinationDate').value.trim(),
+        appointedDate: document.getElementById('fAppointedDate').value.trim(),
+        congregation: isNun ? document.getElementById('fCongregation').value.trim() : '',
+        photo: document.getElementById('fPhoto').value.trim(),
+        bio: document.getElementById('fBio').value.trim(),
+        history: document.getElementById('fHistory').value.trim(),
+        updatedAt: serverTimestamp(),
+      };
+
+      try {
+        if (editId) {
+          await updateDoc(doc(db, 'clergy', editId), data);
+          showMsg('수정되었습니다.', true);
+        } else {
+          data.order = allDocs.length > 0 ? Math.max(...allDocs.map(d => d.order || 0)) + 1 : 1;
+          data.createdAt = serverTimestamp();
+          await addDoc(collection(db, 'clergy'), data);
+          showMsg('추가되었습니다.', true);
+        }
+        resetForm();
+        loadList();
+      } catch (e) {
+        showMsg('저장 중 오류: ' + e.message, false);
+      }
+    };
+
+    // ── 삭제 ─────────────────────────────────
+    window.deleteItem = async function(id, name) {
+      if (!confirm(`"${name}"을(를) 삭제하시겠습니까?`)) return;
+      try {
+        await deleteDoc(doc(db, 'clergy', id));
+        showMsg('삭제되었습니다.', true);
+        loadList();
+      } catch (e) {
+        showMsg('삭제 중 오류: ' + e.message, false);
+      }
+    };
+
+    function showMsg(msg, ok) {
+      const el = document.getElementById(ok ? 'alertOk' : 'alertErr');
+      const other = document.getElementById(ok ? 'alertErr' : 'alertOk');
+      other.style.display = 'none';
+      el.textContent = msg;
+      el.style.display = 'block';
+      setTimeout(() => el.style.display = 'none', 3000);
+    }
+
+    // URL 파라미터로 바로 수정 열기
+    const params = new URLSearchParams(location.search);
+    if (params.get('edit')) {
+      // 로드 후 해당 항목 편집 열기
+      const waitEdit = setInterval(() => {
+        const id = params.get('edit');
+        const d = allDocs.find(x => x.id === id);
+        if (d) { clearInterval(waitEdit); window.editItem(id); }
+      }, 500);
+    }
+  </script>
+</body>
+</html>
