@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>권한 관리 – 노원성당 관리</title>
+  <title>회원 관리 – 노원성당 관리</title>
   <link rel="stylesheet" href="../css/style.css?v=3" />
   <link rel="stylesheet" href="css/manage.css" />
 </head>
@@ -15,40 +15,51 @@
       <nav class="m-nav">
         <a href="dashboard.html">관리 홈</a>
         <a href="site.html">미사 시간·연락처</a>
-        <a href="roles.html" class="active" data-admin-only hidden>권한 관리</a>
-        <a href="../pages/member/mypage.html">내 정보</a>
+        <a href="members.html" class="active" data-admin-only hidden>회원 관리</a>
       </nav>
-      <span class="m-user" data-user-name></span>
+      <a class="m-user" href="../pages/member/mypage.html" data-user-name title="내 정보 · 비밀번호 변경"></a>
       <button type="button" class="edit-btn" data-logout>로그아웃</button>
     </div>
   </header>
 
   <main class="m-main">
     <div>
-      <h1 class="m-title">권한 관리</h1>
+      <h1 class="m-title">회원 관리</h1>
       <p class="m-lead">
-        회원가입한 분 가운데 홈페이지를 고칠 분을 <strong>편집자</strong>로 지정합니다.
-        편집자는 모든 페이지 글·미사 시간·연락처·사제단·공지를 고칠 수 있고,
-        <strong>관리자</strong>는 여기에 더해 권한을 주고 회수할 수 있습니다.
+        회원가입한 분들의 정보입니다. 개인정보이므로 <strong>관리자만</strong> 볼 수 있습니다.
+        오른쪽 <strong>역할</strong>에서 홈페이지를 고칠 분을 <strong>편집자</strong>로 지정할 수 있습니다
+        (편집자: 모든 페이지 글·미사 시간·연락처·사제단·공지 수정 / 관리자: 여기에 더해 회원 관리).
       </p>
     </div>
 
     <section class="m-card">
-      <div class="m-field" style="max-width:360px;">
-        <label for="q">회원 찾기</label>
-        <input class="m-input" id="q" placeholder="이름·세례명·아이디·이메일">
+      <div class="mem-top">
+        <p class="mem-count" id="count">불러오는 중…</p>
+        <input class="m-input" id="q" placeholder="이름·세례명·아이디·휴대폰·이메일 찾기" style="max-width:320px;width:100%;">
       </div>
-      <table class="m-table">
-        <thead>
-          <tr><th>이름</th><th class="hide-m">아이디 · 이메일</th><th>역할</th></tr>
-        </thead>
-        <tbody id="rows"><tr><td colspan="3">불러오는 중…</td></tr></tbody>
-      </table>
+      <div class="mem-scroll">
+        <table class="m-table">
+          <thead>
+            <tr><th>이름</th><th>아이디</th><th>휴대폰</th><th class="hide-m">이메일</th><th class="hide-m">생년월일</th><th class="hide-m">가입일</th><th>역할</th></tr>
+          </thead>
+          <tbody id="rows"><tr><td colspan="7">불러오는 중…</td></tr></tbody>
+        </table>
+      </div>
       <p class="m-help" style="margin:12px 0 0;">
         본인의 역할은 여기서 바꿀 수 없습니다 (관리자가 아무도 없게 되는 것을 막기 위해).
+        회원 본인은 홈페이지 위쪽 이름을 눌러 <strong>내 정보</strong>에서 세례명·연락처·비밀번호를 바꾸고 탈퇴할 수 있습니다.
       </p>
     </section>
   </main>
+
+  <style>
+    .mem-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+    .mem-count { font-size: 0.95rem; color: var(--ink); }
+    .mem-count strong { color: var(--navy); }
+    .mem-scroll { overflow-x: auto; }
+    .m-table td { white-space: nowrap; }
+    .m-table td a { color: var(--navy); }
+  </style>
 
   <script type="module">
     import { db } from '../js/firebase-config.js';
@@ -57,22 +68,39 @@
     import { guard } from '../js/admin-guard.js';
 
     const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+    const day = v => {
+      const d = v?.toDate ? v.toDate() : v ? new Date(v) : null;
+      return d && !isNaN(d) ? `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}` : '';
+    };
+    const GENDER = { M: '남', F: '여' };
     const { user: me } = await guard({ adminOnly: true });
 
     const [usersSnap, rolesSnap] = await Promise.all([getDocs(collection(db, 'users')), getDocs(collection(db, 'roles'))]);
     const roles = Object.fromEntries(rolesSnap.docs.map(d => [d.id, d.data().role]));
     const users = usersSnap.docs.map(d => ({ uid: d.id, ...d.data() }))
-      .sort((a, b) => (a.name || '').localeCompare(b.name || '', 'ko'));
+      .sort((a, b) => String(b.createdAt || '').localeCompare(String(a.createdAt || '')));   // 최근 가입 먼저
+
+    function renderCount() {
+      const n = r => Object.values(roles).filter(x => x === r).length;
+      document.getElementById('count').innerHTML =
+        `전체 회원 <strong>${users.length}</strong>명 · 편집자 <strong>${n('editor')}</strong>명 · 관리자 <strong>${n('admin')}</strong>명`;
+    }
 
     function render(filter = '') {
-      const f = filter.trim().toLowerCase();
-      const list = users.filter(u => !f || [u.name, u.baptismalName, u.userId, u.email].some(v => (v || '').toLowerCase().includes(f)));
+      const f = filter.trim().toLowerCase().replace(/-/g, '');
+      const list = users.filter(u => !f || [u.name, u.baptismalName, u.userId, u.email, u.mobile, u.phone]
+        .some(v => String(v || '').toLowerCase().replace(/-/g, '').includes(f)));
       document.getElementById('rows').innerHTML = list.length ? list.map(u => {
         const role = roles[u.uid] || '';
         const self = u.uid === me.uid;
+        const tel = u.mobile ? `<a href="tel:${esc(u.mobile)}">${esc(u.mobile)}</a>` : '';
         return `<tr>
           <td><strong>${esc(u.name)}</strong> ${u.baptismalName ? `<small>${esc(u.baptismalName)}</small>` : ''}${self ? ' <span class="m-badge">나</span>' : ''}</td>
-          <td class="hide-m"><small>${esc(u.userId)} · ${esc(u.email)}</small></td>
+          <td>${esc(u.userId)}</td>
+          <td>${tel}${u.phone ? `<br><small>${esc(u.phone)}</small>` : ''}</td>
+          <td class="hide-m"><small>${esc(u.email)}</small></td>
+          <td class="hide-m"><small>${esc(u.birthDate)}${u.gender ? ` · ${GENDER[u.gender] || esc(u.gender)}` : ''}</small></td>
+          <td class="hide-m"><small>${day(u.createdAt)}</small></td>
           <td>
             <select class="m-select" data-uid="${u.uid}" ${self ? 'disabled' : ''}>
               <option value="" ${role === '' ? 'selected' : ''}>일반 회원</option>
@@ -81,7 +109,7 @@
             </select>
           </td>
         </tr>`;
-      }).join('') : '<tr><td colspan="3">찾는 회원이 없습니다.</td></tr>';
+      }).join('') : '<tr><td colspan="7">찾는 회원이 없습니다.</td></tr>';
     }
 
     document.getElementById('rows').addEventListener('change', async e => {
@@ -103,6 +131,7 @@
           await deleteDoc(doc(db, 'roles', u.uid));
           delete roles[u.uid];
         }
+        renderCount();
       } catch (err) {
         alert(`바꾸지 못했습니다: ${err.message}`);
         sel.value = before;
@@ -111,6 +140,7 @@
     });
 
     document.getElementById('q').addEventListener('input', e => render(e.target.value));
+    renderCount();
     render();
   </script>
 </body>

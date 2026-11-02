@@ -30,7 +30,8 @@ body.is-guarding main { visibility: hidden; }
 }
 .m-nav a:hover { color: var(--navy); }
 .m-nav a.active { color: var(--navy); background: var(--sky); }
-.m-user { font-size: 0.875rem; color: var(--sub); white-space: nowrap; }
+.m-user { font-size: 0.875rem; color: var(--sub); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.m-user:hover { color: var(--navy); text-decoration: underline; }
 
 .m-main {
   max-width: 1040px;
@@ -129,7 +130,7 @@ body.is-guarding main { visibility: hidden; }
 @media (max-width: 680px) {
   .m-top-inner { padding: 0 16px; gap: 10px; }
   .m-nav { overflow-x: auto; }
-  .m-user { display: none; }
+  .m-user { max-width: 96px; }
   .m-main { padding: 24px 16px 48px; }
   .mass-edit-row { grid-template-columns: 1fr 1fr; }
   .m-now { grid-template-columns: 1fr; }
