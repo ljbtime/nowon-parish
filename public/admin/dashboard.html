@@ -30,6 +30,29 @@
     </div>
 
     <section class="m-card">
+      <h2>지금 홈페이지에 나가는 자료</h2>
+      <p class="m-help">방문자에게 지금 보이는 내용입니다. 고칠 곳의 <strong>고치기</strong>를 누르세요.</p>
+      <div class="m-now">
+        <div class="m-now-box">
+          <div class="m-now-head"><h3>미사 시간</h3><a class="edit-btn" href="site.html#mass">고치기</a></div>
+          <dl class="m-dl" id="nowMass"><dd>불러오는 중…</dd></dl>
+        </div>
+        <div class="m-now-box">
+          <div class="m-now-head"><h3>연락처·오시는 길</h3><a class="edit-btn" href="site.html#contact">고치기</a></div>
+          <dl class="m-dl" id="nowContact"><dd>불러오는 중…</dd></dl>
+        </div>
+        <div class="m-now-box">
+          <div class="m-now-head"><h3>최근 공지</h3><a class="edit-btn" href="../pages/board/write.html?type=notice">새 공지</a></div>
+          <ul class="m-list" id="nowNotices"><li>불러오는 중…</li></ul>
+        </div>
+        <div class="m-now-box">
+          <div class="m-now-head"><h3>사제단·수녀님</h3><a class="edit-btn" href="../pages/admin/clergy.html">고치기</a></div>
+          <ul class="m-list" id="nowClergy"><li>불러오는 중…</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="m-card">
       <h2>페이지 글 고치기</h2>
       <p class="m-help">
         아래 페이지를 열면 본문 위에 <strong>노란 편집 막대</strong>가 보입니다.
@@ -54,8 +77,10 @@
 
   <script type="module">
     import { db } from '../js/firebase-config.js';
-    import { collection, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+    import { collection, getDocs, query, orderBy, limit } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
     import { guard } from '../js/admin-guard.js';
+    import { loadSchedule, GROUPS, rangeText, sortByTime } from '../js/mass-data.js';
+    import { loadContact, CONTACT_FIELDS } from '../js/site-data.js';
 
     // 글로 고치는 페이지 (js/page-editor.js 가 붙은 페이지와 같아야 함)
     const MENUS = [
@@ -72,6 +97,44 @@
     };
 
     await guard();
+
+    // ── 지금 홈페이지에 나가는 자료 ──
+    const ampm = t => {
+      const [h, m] = t.split(':').map(Number);
+      return `${h < 12 ? '오전' : '오후'} ${h % 12 || 12}:${String(m).padStart(2, '0')}`;
+    };
+    loadSchedule().then(s => {
+      const rows = GROUPS.map(g => {
+        const list = sortByTime(s.masses.filter(x => x.group === g.key));
+        if (!list.length) return '';
+        const items = list.map(x => {
+          const extra = [g.key === 'weekday' ? rangeText(x.days) : '', x.note].filter(Boolean).join(' · ');
+          return `${ampm(x.time)}${extra ? ` <small>(${esc(extra)})</small>` : ''}`;
+        }).join(', ');
+        return `<dt>${g.title}</dt><dd>${items}</dd>`;
+      }).join('');
+      document.getElementById('nowMass').innerHTML = rows
+        + `<dt>고해성사</dt><dd>${esc(s.confession)}</dd><dt>성시간</dt><dd>${esc(s.holyHour)}</dd>`;
+    });
+    loadContact().then(c => {
+      document.getElementById('nowContact').innerHTML = CONTACT_FIELDS
+        .filter(f => c[f.key])
+        .map(f => `<dt>${f.label}</dt><dd>${esc(c[f.key])}</dd>`).join('');
+    });
+    getDocs(query(collection(db, 'notices'), orderBy('createdAt', 'desc'), limit(5))).then(snap => {
+      document.getElementById('nowNotices').innerHTML = snap.empty ? '<li>등록된 공지가 없습니다.</li>'
+        : snap.docs.map(d => {
+          const n = d.data();
+          return `<li><a href="../pages/board/view.html?type=notice&id=${encodeURIComponent(d.id)}" target="_blank" rel="noopener">${esc(n.title)}</a><small>${fmt(n.createdAt)}</small></li>`;
+        }).join('');
+    }).catch(() => { document.getElementById('nowNotices').innerHTML = '<li>공지를 불러오지 못했습니다.</li>'; });
+    getDocs(collection(db, 'clergy')).then(snap => {
+      const list = snap.docs.map(d => d.data())
+        .sort((a, b) => (a.type === b.type ? (a.order ?? 99) - (b.order ?? 99) : a.type === 'priest' ? -1 : 1));
+      document.getElementById('nowClergy').innerHTML = list.length ? list.map(p =>
+        `<li><span>${esc(p.name)} ${p.type === 'priest' ? '신부' : '수녀'}${p.baptismalName ? ` <small>${esc(p.baptismalName)}</small>` : ''}</span><small>${esc(p.role || '')}</small></li>`).join('')
+        : '<li>등록된 분이 없습니다.</li>';
+    }).catch(() => { document.getElementById('nowClergy').innerHTML = '<li>불러오지 못했습니다.</li>'; });
 
     let saved = {};
     try {
