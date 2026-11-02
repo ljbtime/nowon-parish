@@ -428,12 +428,17 @@
         const progEl = document.getElementById('uploadProgress');
         for (let i = 0; i < selectedFiles.length; i++) {
           progEl.textContent = `이미지 업로드 중... (${i+1}/${selectedFiles.length})`;
-          const file = selectedFiles[i];
-          const path = `${colName}/${currentUser.uid}_${Date.now()}_${file.name}`;
-          const storageRef = ref(storage, path);
-          await uploadBytes(storageRef, file);
-          const url = await getDownloadURL(storageRef);
-          imageUrls.push(url);
+          try {
+            const file = selectedFiles[i];
+            const path = `${colName}/${currentUser.uid}_${Date.now()}_${file.name}`;
+            const storageRef = ref(storage, path);
+            await uploadBytes(storageRef, file);
+            const url = await getDownloadURL(storageRef);
+            imageUrls.push(url);
+          } catch (uploadErr) {
+            console.warn('이미지 업로드 실패 (Storage 미설정):', uploadErr.message);
+            progEl.textContent = '이미지 업로드를 건너뜁니다 (Storage 미설정).';
+          }
         }
         progEl.textContent = '';
 
