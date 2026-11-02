@@ -301,6 +301,9 @@
       if (e.key === 'Enter') doSearch();
     });
 
+    // 사용자가 쓴 글자를 HTML 로 해석하지 않도록 (XSS 방지)
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+
     function formatDate(ts) {
       if (!ts) return '';
       const d = ts.toDate ? ts.toDate() : new Date(ts);
@@ -327,8 +330,8 @@
         const imgIcon = data.images?.length ? '<span class="img-icon">🖼</span>' : '';
         html += `<tr onclick="viewPost('${d.id}')">
           <td class="col-num">${num}</td>
-          <td class="col-title">${data.title || ''}${imgIcon}</td>
-          <td class="author-col" style="text-align:center">${data.authorName || ''}</td>
+          <td class="col-title">${esc(data.title)}${imgIcon}</td>
+          <td class="author-col" style="text-align:center">${esc(data.authorName)}</td>
           <td class="col-date">${formatDate(data.createdAt)}</td>
         </tr>`;
       });

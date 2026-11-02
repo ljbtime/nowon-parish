@@ -319,7 +319,12 @@
     function categoryBadge(cat) {
       const map = { '공지': 'notice', '행사': 'event' };
       const cls = map[cat] || '';
-      return `<span class="board-badge ${cls}">${cat || '일반'}</span>`;
+      return `<span class="board-badge ${cls}">${esc(cat || '일반')}</span>`;
+    }
+
+    // 저장된 글자를 HTML 로 해석하지 않도록 (XSS 방지)
+    function esc(s) {
+      return String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
     }
 
     function renderPage() {
@@ -345,7 +350,7 @@
           html += `<tr class="board-pinned" onclick="viewPost('${d.id}')">
             <td class="col-num"><span class="pin-icon">📌</span></td>
             <td class="col-badge">${categoryBadge(data.category)}</td>
-            <td class="col-title">${data.title || ''}</td>
+            <td class="col-title">${esc(data.title)}</td>
             <td class="col-date">${formatDate(data.createdAt)}</td>
           </tr>`;
         });
@@ -361,7 +366,7 @@
         html += `<tr onclick="viewPost('${d.id}')">
           <td class="col-num">${num}</td>
           <td class="col-badge">${categoryBadge(data.category)}</td>
-          <td class="col-title">${data.title || ''}</td>
+          <td class="col-title">${esc(data.title)}</td>
           <td class="col-date">${formatDate(data.createdAt)}</td>
         </tr>`;
       });
