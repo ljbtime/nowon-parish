@@ -22,9 +22,9 @@ const MASSES = [
 ];
 
 const GROUPS = [
-  { key: 'sunday',   title: '주일 미사',  sub: '일요일' },
-  { key: 'saturday', title: '토요 특전미사', sub: '토요일' },
-  { key: 'weekday',  title: '평일 미사',  sub: '월~토' },
+  { key: 'sunday',   title: '주일 미사' },
+  { key: 'saturday', title: '토요 특전미사' },
+  { key: 'weekday',  title: '평일 미사' },
 ];
 
 const DAY_NAMES = ['일', '월', '화', '수', '목', '금', '토'];
@@ -36,8 +36,8 @@ function renderMassTable() {
   if (!el) return;
   el.innerHTML = GROUPS.map(g => `
     <div class="mass-row">
-      <div class="mass-label"><h3>${g.title}</h3><span>${g.sub}</span></div>
-      <ul class="mass-times">
+      <h3>${g.title}</h3>
+      <ul class="mass-list">
         ${MASSES.filter(m => m.group === g.key).map(m => `
           <li>
             <span class="mass-t">${m.time}</span>
@@ -112,6 +112,27 @@ async function renderNotices() {
   }
 }
 
+// 갤러리: gallery 컬렉션 최근 6장 (필드: imageUrl, title, createdAt)
+async function renderGallery() {
+  const el = document.getElementById('homeGallery');
+  if (!el) return;
+  const empty = '<p class="album-empty">본당 행사 사진이 이곳에 소개됩니다.</p>';
+  try {
+    const snap = await getDocs(query(collection(db, 'gallery'), orderBy('createdAt', 'desc'), limit(6)));
+    const items = snap.docs.map(d => d.data()).filter(g => /^https:\/\//.test(g.imageUrl || ''));
+    el.innerHTML = items.length
+      ? items.map(g => `
+          <a class="album-item" href="pages/dataroom/photo.html">
+            <img src="${esc(g.imageUrl)}" alt="${esc(g.title)}" loading="lazy">
+            ${g.title ? `<span>${esc(g.title)}</span>` : ''}
+          </a>`).join('')
+      : empty;
+  } catch (e) {
+    el.innerHTML = empty;
+  }
+}
+
 renderMassTable();
 renderToday();
 renderNotices();
+renderGallery();

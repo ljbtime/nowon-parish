@@ -155,28 +155,40 @@
     </a>
   </nav>
 
-  <!-- ③ 미사 시간 + 공지사항 -->
+  <!-- ③ 공지사항·갤러리(넓게) + 미사 시간(좁게) -->
   <section class="home-section">
     <div class="home-grid">
 
-      <div class="panel" id="mass">
+      <div class="home-main">
+        <div class="panel" id="notice">
+          <div class="panel-head">
+            <h2>공지사항</h2>
+            <a class="panel-more" href="pages/board/notice.html">전체 보기 ›</a>
+          </div>
+          <ul class="news-list" id="homeNotices">
+            <li class="news-empty">불러오는 중…</li>
+          </ul>
+        </div>
+
+        <div class="panel" id="gallery">
+          <div class="panel-head">
+            <h2>본당 앨범</h2>
+            <a class="panel-more" href="pages/dataroom/photo.html">사진자료실 ›</a>
+          </div>
+          <div class="album-grid" id="homeGallery">
+            <p class="album-empty">불러오는 중…</p>
+          </div>
+        </div>
+      </div>
+
+      <aside class="panel mass-panel" id="mass">
         <div class="panel-head">
           <h2>미사 시간</h2>
           <a class="panel-more" href="pages/info/mass.html">자세히 ›</a>
         </div>
-        <div class="mass-cols" id="massTable"></div>
-        <p class="panel-foot">성시간 · 매월 첫째 목요일 19:30 대성당</p>
-      </div>
-
-      <div class="panel" id="notice">
-        <div class="panel-head">
-          <h2>공지사항</h2>
-          <a class="panel-more" href="pages/board/notice.html">전체 보기 ›</a>
-        </div>
-        <ul class="news-list" id="homeNotices">
-          <li class="news-empty">불러오는 중…</li>
-        </ul>
-      </div>
+        <div id="massTable"></div>
+        <p class="panel-foot">고해성사 · 미사 20분 전 (주일 30분 전)<br>성시간 · 매월 첫째 목요일 19:30</p>
+      </aside>
 
     </div>
   </section>

@@ -179,9 +179,11 @@ body.home .logo-main { font-family: inherit; font-weight: 800; }
 
 .home-grid {
   display: grid;
-  grid-template-columns: 1.45fr 1fr;
+  grid-template-columns: 1.75fr 1fr;
   gap: 2.5rem;
+  align-items: start;
 }
+.home-main { display: flex; flex-direction: column; gap: 3rem; min-width: 0; }
 
 .panel-head {
   display: flex;
@@ -201,37 +203,87 @@ body.home .logo-main { font-family: inherit; font-weight: 800; }
 .panel-more:hover { text-decoration: underline; }
 .panel-foot { margin-top: 1rem; font-size: 0.92rem; color: var(--text-sub); }
 
-/* 미사 시간표: 구분별 한 줄, 시간은 칸으로 */
-.mass-row {
-  display: grid;
-  grid-template-columns: 8.5rem 1fr;
-  gap: 1rem;
-  padding: 1.1rem 0;
-  border-bottom: 1px solid #eef1f5;
-}
-.mass-row:last-child { border-bottom: none; }
-.mass-label h3 { font-size: 1.02rem; font-weight: 700; color: var(--navy); }
-.mass-label span { font-size: 0.88rem; color: var(--text-sub); }
-.mass-times {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(108px, 1fr));
-  gap: 0.5rem;
-}
-.mass-times li {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+/* 미사 시간표 (오른쪽 좁은 카드): 시간 · 설명 한 줄씩 */
+.mass-panel {
   background: #f7f9fc;
-  border-radius: 10px;
-  padding: 0.55rem 0.8rem;
+  border-radius: 18px;
+  padding: 1.5rem 1.5rem 1.25rem;
+}
+.mass-panel .panel-head { border-bottom-width: 1px; border-bottom-color: #dfe5ee; }
+.mass-panel .panel-head h2 { font-size: 1.25rem; }
+.mass-row { padding: 0.9rem 0 0.4rem; }
+.mass-row h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 0.2rem;
+}
+.mass-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 0.75rem;
+}
+.mass-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.5rem;
+  padding: 0.3rem 0;
 }
 .mass-t {
-  font-size: 1.2rem;
+  font-size: 1.08rem;
   font-weight: 700;
   color: var(--ink);
   font-variant-numeric: tabular-nums;
+  min-width: 3.3rem;
 }
-.mass-n { font-size: 0.82rem; color: var(--text-sub); line-height: 1.35; }
+.mass-n { font-size: 0.88rem; color: var(--text-sub); }
+.mass-panel .panel-foot {
+  border-top: 1px solid #dfe5ee;
+  padding-top: 0.9rem;
+  line-height: 1.7;
+}
+
+/* 본당 앨범 */
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  padding-top: 1rem;
+}
+.album-item {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--sky);
+}
+.album-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+.album-item:hover img { transform: scale(1.04); }
+.album-item span {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 1.5rem 0.75rem 0.6rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--white);
+  background: linear-gradient(transparent, rgba(0,0,0,0.55));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.album-empty {
+  grid-column: 1 / -1;
+  padding: 2.25rem 1rem;
+  text-align: center;
+  color: var(--text-sub);
+  background: #f7f9fc;
+  border-radius: 12px;
+}
 
 .today-list li.today-tomorrow {
   display: block;
@@ -326,9 +378,8 @@ body.home .footer-brand h3 { font-family: inherit; }
   .quick-item { grid-template-columns: 1fr; padding: 1rem; row-gap: 0.5rem; }
   .quick-item .ico { grid-row: auto; }
   .home-section { padding: 3rem 1rem 0; }
-  .mass-row { grid-template-columns: 1fr; gap: 0.6rem; }
-  .mass-label { display: flex; align-items: baseline; gap: 0.5rem; }
-  .mass-times { grid-template-columns: repeat(3, 1fr); }
+  .mass-panel { padding: 1.25rem 1.1rem 1rem; }
+  .album-grid { grid-template-columns: repeat(2, 1fr); }
   .visit-grid { padding: 1rem; gap: 1.25rem; }
   .visit-map { min-height: 240px; }
 }
