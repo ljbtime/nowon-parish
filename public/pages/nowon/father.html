@@ -329,7 +329,7 @@
             ${d.appointedDate ? `<div class="priest-meta-item"><span class="label">부임일자</span><span class="value">${d.appointedDate}</span></div>` : ''}
           </div>
           ${d.bio ? `<p class="priest-bio">${d.bio}</p>` : ''}
-          ${(d.role === '주임신부' && historyRows) ? `
+          ${historyRows ? `
             <div class="history-title">사제 경력</div>
             <table class="history-table"><tbody>${historyRows}</tbody></table>
           ` : ''}
