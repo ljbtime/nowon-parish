@@ -128,7 +128,7 @@
             <h2>고해성사</h2>
           </div>
 
-          <div class="content-body">
+          <div class="content-body" data-editable>
 
             <div style="background: linear-gradient(135deg, #3a6aab 0%, #5584c2 100%); color: white; border-radius: 12px; padding: 1.5rem 2rem; margin-bottom: 2rem; font-size: 1.05rem; line-height: 1.8; text-align: center;">
               "너희가 누구의 죄든지 용서해 주면 그가 용서를 받을 것이고,<br>용서해 주지 않으면 용서받지 못한 채 남아 있을 것이다."<br>
@@ -222,8 +222,8 @@
           </div>
         </div>
         <div class="footer-info">
-          <p>전화 02-933-9981 &nbsp;·&nbsp; 팩스 02-933-9986</p>
-          <p>서울특별시 노원구 한글비석로 585</p>
+          <p>전화 <span data-site="phone">02-933-9981</span> &nbsp;·&nbsp; 팩스 <span data-site="fax">02-933-9986</span></p>
+          <p data-site="address">서울특별시 노원구 한글비석로 585</p>
         </div>
         <a href="../../admin/" class="admin-link">관리자</a>
       </div>
@@ -234,5 +234,7 @@
   </footer>
 
   <script src="../../js/sub.js"></script>
+  <script type="module" src="../../js/site-data.js"></script>
+  <script type="module" src="../../js/page-editor.js"></script>
 </body>
 </html>

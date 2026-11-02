@@ -3,52 +3,36 @@ import { db } from './firebase-config.js';
 import { collection, query, orderBy, limit, getDocs }
   from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 import { liturgicalDay, readingsUrl } from './liturgy.js';
-
-// ===========================
-// 미사 시간 (pages/info/mass.html 기준) — 시간표와 '오늘의 미사'가 함께 사용
-// days: 0=일 … 6=토
-// ===========================
-const MASSES = [
-  { group: 'sunday',   time: '06:00', days: [0] },
-  { group: 'sunday',   time: '08:00', days: [0] },
-  { group: 'sunday',   time: '09:30', days: [0], note: '중고등부' },
-  { group: 'sunday',   time: '11:00', days: [0], note: '교중미사' },
-  { group: 'sunday',   time: '18:00', days: [0], note: '청년' },
-  { group: 'sunday',   time: '20:00', days: [0] },
-  { group: 'saturday', time: '15:00', days: [6], note: '초등부 · 소성당' },
-  { group: 'saturday', time: '19:00', days: [6] },
-  { group: 'weekday',  time: '06:00', days: [1, 2, 3, 4, 5], range: '월~금' },
-  { group: 'weekday',  time: '10:00', days: [2, 3, 4, 5, 6], range: '화~토' },
-  { group: 'weekday',  time: '19:00', days: [2, 3, 4, 5],    range: '화~금' },
-];
-
-const GROUPS = [
-  { key: 'sunday',   title: '주일 미사' },
-  { key: 'saturday', title: '토요 특전미사' },
-  { key: 'weekday',  title: '평일 미사' },
-];
-
-const DAY_NAMES = ['일', '월', '화', '수', '목', '금', '토'];
+import { DEFAULT_SCHEDULE, GROUPS, DAY_NAMES, loadSchedule, rangeText, sortByTime } from './mass-data.js';
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 
-function renderMassTable() {
+// 미사 시간표 (평일은 요일 범위를 함께 표시)
+function renderMassTable(schedule) {
   const el = document.getElementById('massTable');
   if (!el) return;
-  el.innerHTML = GROUPS.map(g => `
+  el.innerHTML = GROUPS.map(g => {
+    const list = sortByTime(schedule.masses.filter(m => m.group === g.key));
+    if (!list.length) return '';
+    return `
     <div class="mass-row">
       <h3>${g.title}</h3>
       <ul class="mass-list">
-        ${MASSES.filter(m => m.group === g.key).map(m => `
+        ${list.map(m => `
           <li>
-            <span class="mass-t">${m.time}</span>
-            <span class="mass-n">${[m.range, m.note].filter(Boolean).join(' · ')}</span>
+            <span class="mass-t">${esc(m.time)}</span>
+            <span class="mass-n">${esc([g.key === 'weekday' ? rangeText(m.days) : '', m.note].filter(Boolean).join(' · '))}</span>
           </li>`).join('')}
       </ul>
-    </div>`).join('');
+    </div>`;
+  }).join('');
+  document.querySelectorAll('[data-mass]').forEach(e => {
+    const v = schedule[e.dataset.mass];
+    if (v) e.textContent = v;
+  });
 }
 
-function renderToday() {
+function renderToday(schedule) {
   const now = new Date();
   const day = now.getDay();
   const nowMin = now.getHours() * 60 + now.getMinutes();
@@ -58,8 +42,7 @@ function renderToday() {
 
   dateEl.textContent = `${now.getMonth() + 1}월 ${now.getDate()}일 ${DAY_NAMES[day]}요일`;
 
-  const massesOn = d => MASSES.filter(m => m.days.includes(d))
-    .sort((a, b) => a.time.localeCompare(b.time));
+  const massesOn = d => sortByTime(schedule.masses.filter(m => m.days.includes(d)));
   const today = massesOn(day);
   // 아직 시작 전인 첫 미사를 '다음 미사'로 강조
   const toMin = t => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
@@ -69,11 +52,11 @@ function renderToday() {
   const tomorrowLine = () => {
     const d = (day + 1) % 7;
     if (d === 0) {
-      return `<li class="today-tomorrow">내일 주일 미사 <strong>${massesOn(0).map(m => m.time).join(' · ')}</strong></li>`;
+      return `<li class="today-tomorrow">내일 주일 미사 <strong>${massesOn(0).map(m => esc(m.time)).join(' · ')}</strong></li>`;
     }
     const first = massesOn(d)[0];
     return first
-      ? `<li class="today-tomorrow">오늘 미사는 모두 끝났습니다 · 내일(${DAY_NAMES[d]}) 첫 미사 <strong>${first.time}</strong></li>`
+      ? `<li class="today-tomorrow">오늘 미사는 모두 끝났습니다 · 내일(${DAY_NAMES[d]}) 첫 미사 <strong>${esc(first.time)}</strong></li>`
       : '';
   };
 
@@ -86,11 +69,16 @@ function renderToday() {
     const cls = m === next ? 'is-next' : past ? 'is-past' : '';
     const label = day === 6 && m.group === 'saturday' ? '특전' : '';
     return `<li class="${cls}">
-      <span class="today-t">${m.time}</span>
-      <span class="today-n">${[label, m.note].filter(Boolean).join(' · ')}</span>
+      <span class="today-t">${esc(m.time)}</span>
+      <span class="today-n">${esc([label, m.note].filter(Boolean).join(' · '))}</span>
       ${m === next ? '<span class="today-badge">다음 미사</span>' : ''}
     </li>`;
   }).join('') + (next && day !== 6 ? '' : tomorrowLine());
+}
+
+function renderSchedule(schedule) {
+  renderMassTable(schedule);
+  renderToday(schedule);
 }
 
 // 오늘의 전례: 전례일 이름·전례색, 굿뉴스 매일미사 연결
@@ -147,8 +135,8 @@ async function renderGallery() {
   }
 }
 
-renderMassTable();
 renderLiturgy();
-renderToday();
+renderSchedule(DEFAULT_SCHEDULE);          // 기본값으로 먼저 그리고
+loadSchedule().then(renderSchedule);       // 편집자가 저장한 자료가 있으면 다시 그림
 renderNotices();
 renderGallery();

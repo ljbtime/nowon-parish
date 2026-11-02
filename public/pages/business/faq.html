@@ -187,7 +187,7 @@
             <h2>자주하는 질문</h2>
           </div>
 
-          <div class="content-body">
+          <div class="content-body" data-editable>
 
             <p>노원성당에 자주 문의하시는 질문들을 모았습니다. 아래에서 원하시는 항목을 클릭하시면 답변을 확인하실 수 있습니다. 추가 문의는 사무실(02-933-9981)로 연락 주십시오.</p>
 
@@ -321,8 +321,8 @@
           </div>
         </div>
         <div class="footer-info">
-          <p>전화 02-933-9981 &nbsp;·&nbsp; 팩스 02-933-9986</p>
-          <p>서울특별시 노원구 한글비석로 585</p>
+          <p>전화 <span data-site="phone">02-933-9981</span> &nbsp;·&nbsp; 팩스 <span data-site="fax">02-933-9986</span></p>
+          <p data-site="address">서울특별시 노원구 한글비석로 585</p>
         </div>
         <a href="../../admin/" class="admin-link">관리자</a>
       </div>
@@ -332,5 +332,7 @@
     </div>
   </footer>
   <script src="../../js/sub.js"></script>
+  <script type="module" src="../../js/site-data.js"></script>
+  <script type="module" src="../../js/page-editor.js"></script>
 </body>
 </html>

@@ -150,7 +150,7 @@
             <h2>가톨릭 첫걸음</h2>
           </div>
 
-          <div class="content-body">
+          <div class="content-body" data-editable>
 
             <h3>가톨릭이란?</h3>
             <p><strong>가톨릭(Catholic)</strong>이란 '보편적'이라는 뜻의 그리스어에서 유래한 말로, 예수 그리스도를 구세주로 믿고 따르는 그리스도교의 한 종파입니다. 가톨릭교회는 예수님으로부터 사도들에게 이어진 사도적 전통을 간직하며, 교황을 수장으로 하는 세계적 교회 공동체입니다.</p>
@@ -252,8 +252,8 @@
           </div>
         </div>
         <div class="footer-info">
-          <p>전화 02-933-9981 &nbsp;·&nbsp; 팩스 02-933-9986</p>
-          <p>서울특별시 노원구 한글비석로 585</p>
+          <p>전화 <span data-site="phone">02-933-9981</span> &nbsp;·&nbsp; 팩스 <span data-site="fax">02-933-9986</span></p>
+          <p data-site="address">서울특별시 노원구 한글비석로 585</p>
         </div>
         <a href="../../admin/" class="admin-link">관리자</a>
       </div>
@@ -264,5 +264,7 @@
   </footer>
 
   <script src="../../js/sub.js"></script>
+  <script type="module" src="../../js/site-data.js"></script>
+  <script type="module" src="../../js/page-editor.js"></script>
 </body>
 </html>

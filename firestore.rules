@@ -2,8 +2,20 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    // ── 권한 ─────────────────────────────────────
+    // 관리자: 기존 admin claim 이 있거나 roles/{uid}.role == 'admin'
+    // 편집자: roles/{uid}.role == 'editor' (관리자도 편집자 권한 포함)
+    function rolePath() {
+      return /databases/$(database)/documents/roles/$(request.auth.uid);
+    }
+    function hasRole(r) {
+      return request.auth != null && exists(rolePath()) && get(rolePath()).data.role == r;
+    }
     function isAdmin() {
-      return request.auth != null && request.auth.token.admin == true;
+      return request.auth != null && (request.auth.token.admin == true || hasRole('admin'));
+    }
+    function isEditor() {
+      return isAdmin() || hasRole('editor');
     }
 
     // 조회수만 1 올리는 수정 (로그인 없이도 허용)
@@ -12,11 +24,44 @@ service cloud.firestore {
           && request.resource.data.views == resource.data.get('views', 0) + 1;
     }
 
-    // 공지사항 - 누구나 읽기, 관리자만 쓰기
+    // 역할 - 본인 것은 본인이 읽기(편집 버튼 표시용), 지정·변경은 관리자만
+    match /roles/{uid} {
+      allow read: if request.auth != null && (request.auth.uid == uid || isAdmin());
+      allow create, update: if isAdmin()
+                    && request.resource.data.role in ['admin', 'editor'];
+      allow delete: if isAdmin();
+    }
+
+    // 페이지 본문 - 누구나 읽기, 편집자가 수정 (저장 즉시 게시)
+    match /pages/{pageId} {
+      allow read: if true;
+      allow create, update: if isEditor()
+                    && request.resource.data.keys().hasOnly(['html', 'updatedAt', 'updatedBy', 'updatedByName'])
+                    && request.resource.data.html is string
+                    && request.resource.data.html.size() < 300000
+                    && request.resource.data.updatedBy == request.auth.uid;
+      allow delete: if isAdmin();
+
+      // 수정 이력 - 편집자만 보기·추가, 지우기는 관리자만
+      match /revisions/{revId} {
+        allow read: if isEditor();
+        allow create: if isEditor()
+                      && request.resource.data.savedBy == request.auth.uid;
+        allow delete: if isAdmin();
+      }
+    }
+
+    // 사이트 정보(미사 시간·연락처) - 누구나 읽기, 편집자가 수정
+    match /site/{docId} {
+      allow read: if true;
+      allow write: if isEditor();
+    }
+
+    // 공지사항 - 누구나 읽기, 편집자가 쓰기
     match /notices/{docId} {
       allow read: if true;
-      allow create, delete: if isAdmin();
-      allow update: if isAdmin() || isViewIncrement();
+      allow create, delete: if isEditor();
+      allow update: if isEditor() || isViewIncrement();
     }
 
     // 자유게시판 - 누구나 읽기, 로그인 회원 작성(작성자는 본인으로만), 본인 또는 관리자만 수정/삭제
@@ -31,31 +76,31 @@ service cloud.firestore {
         (resource.data.authorUid == request.auth.uid || isAdmin());
     }
 
-    // 갤러리 - 누구나 읽기, 관리자만 쓰기
+    // 갤러리 - 누구나 읽기, 편집자가 쓰기
     match /gallery/{docId} {
       allow read: if true;
-      allow write: if request.auth != null && request.auth.token.admin == true;
+      allow write: if isEditor();
     }
 
-    // 미사 시간 - 누구나 읽기, 관리자만 쓰기
+    // (예전 관리 화면용, 현재 미사용) 미사 시간 - 관리자만 쓰기
     match /massSchedule/{docId} {
       allow read: if true;
-      allow write: if request.auth != null && request.auth.token.admin == true;
+      allow write: if isAdmin();
     }
 
-    // 사제단/수녀 - 누구나 읽기, 관리자만 쓰기
+    // 사제단/수녀 - 누구나 읽기, 편집자가 쓰기
     match /clergy/{docId} {
       allow read: if true;
-      allow write: if request.auth != null && request.auth.token.admin == true;
+      allow write: if isEditor();
     }
 
-    // 회원 정보 - 본인만 읽기/쓰기, 관리자는 전체 읽기
+    // 회원 정보 - 본인만 읽기/쓰기, 관리자는 전체 읽기(권한 관리 화면)
     match /users/{userId} {
       allow read: if request.auth != null &&
-                    (request.auth.uid == userId || request.auth.token.admin == true);
+                    (request.auth.uid == userId || isAdmin());
       allow create: if request.auth != null && request.auth.uid == userId;
       allow update: if request.auth != null && request.auth.uid == userId;
-      allow delete: if request.auth != null && request.auth.token.admin == true;
+      allow delete: if isAdmin();
     }
 
     // 아이디 → 이메일 연결 (로그인·아이디 중복확인용)
@@ -67,7 +112,7 @@ service cloud.firestore {
                     && request.resource.data.uid == request.auth.uid
                     && request.resource.data.keys().hasOnly(['uid', 'email']);
       allow delete: if request.auth != null &&
-        (resource.data.uid == request.auth.uid || request.auth.token.admin == true);
+        (resource.data.uid == request.auth.uid || isAdmin());
     }
   }
 }

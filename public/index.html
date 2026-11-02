@@ -125,7 +125,7 @@
       <aside class="card today-card span-2" aria-label="오늘의 미사">
         <div class="card-head">
           <h2>오늘의 미사</h2>
-          <span class="card-sub">고해성사 · 미사 20분 전 (주일 30분 전)</span>
+          <span class="card-sub">고해성사 · <span data-mass="confession">미사 20분 전 (주일 30분 전)</span></span>
         </div>
         <ul class="today-list" id="todayMasses"></ul>
       </aside>
@@ -174,7 +174,7 @@
           <a class="card-more" href="pages/info/mass.html">자세히 ›</a>
         </div>
         <div id="massTable"></div>
-        <p class="card-foot">성시간 · 매월 첫째 목요일 19:30 대성당</p>
+        <p class="card-foot">성시간 · <span data-mass="holyHour">매월 첫째 목요일 19:30 대성당</span></p>
       </div>
 
       <div class="card span-4" id="gallery">
@@ -205,19 +205,19 @@
         <ul class="visit-list">
           <li>
             <svg class="ico" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-            <div><strong>서울특별시 노원구 한글비석로 585</strong><span>구 주소: 상계8동 856번지</span></div>
+            <div><strong data-site="address">서울특별시 노원구 한글비석로 585</strong><span>구 주소: <span data-site="oldAddress">상계8동 856번지</span></span></div>
           </li>
           <li>
             <svg class="ico" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="16" rx="2"/><path d="M4 11h16"/><path d="M12 3v8"/><path d="m8 19-2 3"/><path d="m18 22-2-3"/></svg>
-            <div><strong>7호선 마들역 5번 출구</strong><span>10·11단지 아파트길로 약 500m, 도보 7~8분</span></div>
+            <div><strong data-site="subway">7호선 마들역 5번 출구</strong><span data-site="subwayDetail">10·11단지 아파트길로 약 500m, 도보 7~8분</span></div>
           </li>
           <li>
             <svg class="ico" viewBox="0 0 24 24"><path d="M8 6v6"/><path d="M15 6v6"/><path d="M2 12h19.6"/><path d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3"/><circle cx="7" cy="18" r="2"/><path d="M9 18h5"/><circle cx="16" cy="18" r="2"/></svg>
-            <div><strong>주공 11단지성당 정류장</strong><span>마을버스 노원08 · 11-885</span></div>
+            <div><strong data-site="bus">주공 11단지성당 정류장</strong><span data-site="busDetail">마을버스 노원08 · 11-885</span></div>
           </li>
           <li>
             <svg class="ico" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            <div><strong><a href="tel:02-933-9981">02-933-9981</a></strong><span>본당 사무실</span></div>
+            <div><strong><a href="tel:02-933-9981" data-site="phone">02-933-9981</a></strong><span>본당 사무실</span></div>
           </li>
         </ul>
       </div>
@@ -232,11 +232,11 @@
           <span class="footer-cross">✝</span>
           <div>
             <h3>천주교 노원성당</h3>
-            <p>서울특별시 노원구 한글비석로 585</p>
+            <p data-site="address">서울특별시 노원구 한글비석로 585</p>
           </div>
         </div>
         <div class="footer-info">
-          <p>전화 <span data-phone>02-933-9981</span> &nbsp;·&nbsp; 팩스 <span data-fax>02-933-9986</span></p>
+          <p>전화 <span data-site="phone">02-933-9981</span> &nbsp;·&nbsp; 팩스 <span data-site="fax">02-933-9986</span></p>
         </div>
       </div>
       <div class="footer-bottom">
@@ -246,7 +246,8 @@
   </footer>
 
   <script src="js/main.js"></script>
-  <script type="module" src="js/home.js?v=3"></script>
+  <script type="module" src="js/home.js?v=4"></script>
+  <script type="module" src="js/site-data.js"></script>
   <script type="module">
     import { auth } from './js/firebase-config.js';
     import { onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';

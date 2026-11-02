@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>권한 관리 – 노원성당 관리</title>
+  <link rel="stylesheet" href="../css/style.css?v=3" />
+  <link rel="stylesheet" href="css/manage.css" />
+</head>
+<body class="manage is-guarding">
+
+  <header class="m-top">
+    <div class="m-top-inner">
+      <a class="m-brand" href="dashboard.html"><span>✝</span>노원성당 관리</a>
+      <nav class="m-nav">
+        <a href="dashboard.html">관리 홈</a>
+        <a href="site.html">미사 시간·연락처</a>
+        <a href="roles.html" class="active" data-admin-only hidden>권한 관리</a>
+      </nav>
+      <span class="m-user" data-user-name></span>
+      <button type="button" class="edit-btn" data-logout>로그아웃</button>
+    </div>
+  </header>
+
+  <main class="m-main">
+    <div>
+      <h1 class="m-title">권한 관리</h1>
+      <p class="m-lead">
+        회원가입한 분 가운데 홈페이지를 고칠 분을 <strong>편집자</strong>로 지정합니다.
+        편집자는 모든 페이지 글·미사 시간·연락처·사제단·공지를 고칠 수 있고,
+        <strong>관리자</strong>는 여기에 더해 권한을 주고 회수할 수 있습니다.
+      </p>
+    </div>
+
+    <section class="m-card">
+      <div class="m-field" style="max-width:360px;">
+        <label for="q">회원 찾기</label>
+        <input class="m-input" id="q" placeholder="이름·세례명·아이디·이메일">
+      </div>
+      <table class="m-table">
+        <thead>
+          <tr><th>이름</th><th class="hide-m">아이디 · 이메일</th><th>역할</th></tr>
+        </thead>
+        <tbody id="rows"><tr><td colspan="3">불러오는 중…</td></tr></tbody>
+      </table>
+      <p class="m-help" style="margin:12px 0 0;">
+        본인의 역할은 여기서 바꿀 수 없습니다 (관리자가 아무도 없게 되는 것을 막기 위해).
+      </p>
+    </section>
+  </main>
+
+  <script type="module">
+    import { db } from '../js/firebase-config.js';
+    import { collection, getDocs, doc, setDoc, deleteDoc, serverTimestamp }
+      from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+    import { guard } from '../js/admin-guard.js';
+
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+    const { user: me } = await guard({ adminOnly: true });
+
+    const [usersSnap, rolesSnap] = await Promise.all([getDocs(collection(db, 'users')), getDocs(collection(db, 'roles'))]);
+    const roles = Object.fromEntries(rolesSnap.docs.map(d => [d.id, d.data().role]));
+    const users = usersSnap.docs.map(d => ({ uid: d.id, ...d.data() }))
+      .sort((a, b) => (a.name || '').localeCompare(b.name || '', 'ko'));
+
+    function render(filter = '') {
+      const f = filter.trim().toLowerCase();
+      const list = users.filter(u => !f || [u.name, u.baptismalName, u.userId, u.email].some(v => (v || '').toLowerCase().includes(f)));
+      document.getElementById('rows').innerHTML = list.length ? list.map(u => {
+        const role = roles[u.uid] || '';
+        const self = u.uid === me.uid;
+        return `<tr>
+          <td><strong>${esc(u.name)}</strong> ${u.baptismalName ? `<small>${esc(u.baptismalName)}</small>` : ''}${self ? ' <span class="m-badge">나</span>' : ''}</td>
+          <td class="hide-m"><small>${esc(u.userId)} · ${esc(u.email)}</small></td>
+          <td>
+            <select class="m-select" data-uid="${u.uid}" ${self ? 'disabled' : ''}>
+              <option value="" ${role === '' ? 'selected' : ''}>일반 회원</option>
+              <option value="editor" ${role === 'editor' ? 'selected' : ''}>편집자</option>
+              <option value="admin" ${role === 'admin' ? 'selected' : ''}>관리자</option>
+            </select>
+          </td>
+        </tr>`;
+      }).join('') : '<tr><td colspan="3">찾는 회원이 없습니다.</td></tr>';
+    }
+
+    document.getElementById('rows').addEventListener('change', async e => {
+      const sel = e.target.closest('select[data-uid]');
+      if (!sel) return;
+      const u = users.find(x => x.uid === sel.dataset.uid);
+      const before = roles[u.uid] || '';
+      const label = sel.options[sel.selectedIndex].text;
+      if (!confirm(`${u.name} 님을 '${label}'(으)로 바꿀까요?`)) { sel.value = before; return; }
+      sel.disabled = true;
+      try {
+        if (sel.value) {
+          await setDoc(doc(db, 'roles', u.uid), {
+            role: sel.value, name: u.name || '', email: u.email || '',
+            updatedAt: serverTimestamp(), updatedBy: me.uid,
+          });
+          roles[u.uid] = sel.value;
+        } else {
+          await deleteDoc(doc(db, 'roles', u.uid));
+          delete roles[u.uid];
+        }
+      } catch (err) {
+        alert(`바꾸지 못했습니다: ${err.message}`);
+        sel.value = before;
+      }
+      sel.disabled = false;
+    });
+
+    document.getElementById('q').addEventListener('input', e => render(e.target.value));
+    render();
+  </script>
+</body>
+</html>

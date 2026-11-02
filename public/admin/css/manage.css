@@ -1,0 +1,121 @@
+/* 관리 화면 공통 (dashboard·site·roles) — 홈페이지와 같은 색·글꼴·카드 규칙 */
+body.manage { background: var(--surface); font-size: 16px; }
+body.is-guarding main { visibility: hidden; }
+
+.m-top {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+}
+.m-top-inner {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.m-brand { font-weight: 800; color: var(--ink); }
+.m-brand span { color: var(--gold); margin-right: 6px; }
+.m-nav { display: flex; gap: 4px; flex: 1; }
+.m-nav a {
+  padding: 6px 12px;
+  border-radius: 8px;
+  color: var(--sub);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.m-nav a:hover { color: var(--navy); }
+.m-nav a.active { color: var(--navy); background: var(--sky); }
+.m-user { font-size: 0.875rem; color: var(--sub); white-space: nowrap; }
+
+.m-main {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+  display: grid;
+  gap: 24px;
+}
+.m-title { font-size: 1.5rem; font-weight: 800; color: var(--ink); }
+.m-lead { color: var(--sub); margin-top: 4px; }
+
+.m-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 24px;
+}
+.m-card h2 { font-size: 1.125rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.m-card .m-help { font-size: 0.9rem; color: var(--sub); margin-bottom: 16px; }
+
+.m-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.m-tile {
+  display: block;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--white);
+  transition: border-color 0.15s;
+}
+.m-tile:hover { border-color: var(--navy); }
+.m-tile strong { display: block; color: var(--ink); }
+.m-tile span { font-size: 0.875rem; color: var(--sub); }
+
+/* 폼 */
+.m-field { display: grid; gap: 6px; margin-bottom: 14px; }
+.m-field label { font-size: 0.9rem; font-weight: 600; color: var(--ink); }
+.m-input, .m-select {
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font: inherit;
+  color: var(--ink);
+  background: var(--white);
+  min-width: 0;
+}
+.m-input:focus, .m-select:focus { outline: 2px solid var(--sky); border-color: var(--navy); }
+.m-actions { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; margin-top: 8px; }
+.m-msg { font-size: 0.9rem; color: #2d7a46; align-self: center; margin-right: auto; }
+.m-msg.err { color: #c0392b; }
+
+/* 미사 시간 행 */
+.mass-group + .mass-group { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--line); }
+.mass-group h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+.mass-edit-row {
+  display: grid;
+  grid-template-columns: 160px 1fr 1fr auto;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.mass-days { grid-column: 1 / -1; display: flex; gap: 6px; flex-wrap: wrap; margin: -2px 0 6px; }
+.mass-days label {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+.mass-days input:checked + span { color: var(--navy); font-weight: 700; }
+
+/* 표 */
+.m-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.m-table th, .m-table td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); }
+.m-table th { color: var(--sub); font-weight: 600; font-size: 0.875rem; }
+.m-table td small { color: var(--sub); }
+.m-badge { font-size: 0.8rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: var(--sky); color: var(--navy); }
+.m-badge.admin { background: #fff3d6; color: #8a6d1f; }
+
+@media (max-width: 680px) {
+  .m-top-inner { padding: 0 16px; gap: 10px; }
+  .m-nav { overflow-x: auto; }
+  .m-user { display: none; }
+  .m-main { padding: 24px 16px 48px; }
+  .mass-edit-row { grid-template-columns: 1fr 1fr; }
+  .m-table .hide-m { display: none; }
+}

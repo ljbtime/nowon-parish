@@ -242,8 +242,8 @@
           </div>
         </div>
         <div class="footer-info">
-          <p>전화 02-933-9981 &nbsp;·&nbsp; 팩스 02-933-9986</p>
-          <p>서울특별시 노원구 한글비석로 585</p>
+          <p>전화 <span data-site="phone">02-933-9981</span> &nbsp;·&nbsp; 팩스 <span data-site="fax">02-933-9986</span></p>
+          <p data-site="address">서울특별시 노원구 한글비석로 585</p>
         </div>
         <a href="../../admin/" class="admin-link">관리자</a>
       </div>
@@ -256,6 +256,7 @@
   <script src="../../js/sub.js"></script>
   <script type="module">
     import { auth, db } from '../../js/firebase-config.js';
+    import { getRole, canEdit } from '../../js/roles.js';
     import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
     import {
       collection, query, where, orderBy, getDocs, getDoc, doc,
@@ -275,8 +276,7 @@
     // 관리자 여부 확인
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const tokenResult = await user.getIdTokenResult();
-        isAdmin = !!tokenResult.claims.admin;
+        isAdmin = canEdit(await getRole(user));   // 관리자·편집자
         if (isAdmin) document.getElementById('btnWrite').style.display = 'inline-block';
       }
     });
@@ -394,5 +394,6 @@
 
     loadAll();
   </script>
+  <script type="module" src="../../js/site-data.js"></script>
 </body>
 </html>

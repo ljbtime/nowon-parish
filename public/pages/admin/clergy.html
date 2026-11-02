@@ -188,6 +188,7 @@
 
   <script type="module">
     import { auth, db } from '../../js/firebase-config.js';
+    import { getRole, canEdit } from '../../js/roles.js';
     import { onAuthStateChanged, getIdTokenResult } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
     import {
       collection, query, where, orderBy, getDocs,
@@ -200,9 +201,8 @@
     // ── 권한 확인 ──────────────────────────────
     onAuthStateChanged(auth, async (user) => {
       if (!user) { location.href = '../member/login.html'; return; }
-      const token = await getIdTokenResult(user);
-      if (!token.claims.admin) {
-        document.querySelector('.container').innerHTML = '<p style="text-align:center;padding:4rem;color:#c0392b;font-weight:700;">관리자만 접근할 수 있습니다.</p>';
+      if (!canEdit(await getRole(user))) {
+        document.querySelector('.container').innerHTML = '<p style="text-align:center;padding:4rem;color:#c0392b;font-weight:700;">관리자·편집자만 접근할 수 있습니다.</p>';
         return;
       }
       loadList();

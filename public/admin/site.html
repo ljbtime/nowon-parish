@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>미사 시간·연락처 – 노원성당 관리</title>
+  <link rel="stylesheet" href="../css/style.css?v=3" />
+  <link rel="stylesheet" href="css/manage.css" />
+</head>
+<body class="manage is-guarding">
+
+  <header class="m-top">
+    <div class="m-top-inner">
+      <a class="m-brand" href="dashboard.html"><span>✝</span>노원성당 관리</a>
+      <nav class="m-nav">
+        <a href="dashboard.html">관리 홈</a>
+        <a href="site.html" class="active">미사 시간·연락처</a>
+        <a href="roles.html" data-admin-only hidden>권한 관리</a>
+      </nav>
+      <span class="m-user" data-user-name></span>
+      <button type="button" class="edit-btn" data-logout>로그아웃</button>
+    </div>
+  </header>
+
+  <main class="m-main">
+    <div>
+      <h1 class="m-title">미사 시간·연락처</h1>
+      <p class="m-lead">저장하면 첫 화면, 미사 안내, 모든 페이지 하단에 바로 반영됩니다.</p>
+    </div>
+
+    <!-- 미사 시간 -->
+    <section class="m-card" id="mass">
+      <h2>미사 시간</h2>
+      <p class="m-help">시간·장소·설명(예: 청년, 교중미사)을 고치고, 줄을 추가하거나 지울 수 있습니다. 평일 미사는 해당 요일을 고르세요.</p>
+      <div id="massGroups"></div>
+      <div class="m-field" style="margin-top:20px;">
+        <label for="confession">고해성사 안내</label>
+        <input class="m-input" id="confession" />
+      </div>
+      <div class="m-field">
+        <label for="holyHour">성시간 안내</label>
+        <input class="m-input" id="holyHour" />
+      </div>
+      <div class="m-actions">
+        <span class="m-msg" id="massMsg"></span>
+        <a class="edit-btn" href="../pages/info/mass.html" target="_blank" rel="noopener">미사 안내 페이지 보기</a>
+        <button type="button" class="edit-btn primary" id="saveMass">미사 시간 저장</button>
+      </div>
+    </section>
+
+    <!-- 연락처 -->
+    <section class="m-card" id="contact">
+      <h2>연락처·오시는 길</h2>
+      <p class="m-help">첫 화면 '오시는 길'과 모든 페이지 하단에 쓰입니다. ('찾아오시는 길' 페이지의 자세한 글은 그 페이지에서 직접 고칩니다.)</p>
+      <div id="contactFields"></div>
+      <div class="m-actions">
+        <span class="m-msg" id="contactMsg"></span>
+        <button type="button" class="edit-btn primary" id="saveContact">연락처 저장</button>
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { db } from '../js/firebase-config.js';
+    import { doc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+    import { guard } from '../js/admin-guard.js';
+    import { loadSchedule, GROUPS, DAY_NAMES, sortByTime } from '../js/mass-data.js';
+    import { loadContact, CONTACT_FIELDS } from '../js/site-data.js';
+
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+    const $ = id => document.getElementById(id);
+    const say = (el, text, ok = true) => { el.textContent = text; el.classList.toggle('err', !ok); };
+
+    const { user } = await guard();
+    const editorName = user.displayName || user.email;
+
+    // ── 미사 시간 ──────────────────────────────
+    function rowHtml(groupKey, m = { time: '', place: '', note: '', days: [] }) {
+      const days = groupKey === 'weekday' ? `
+        <div class="mass-days">${[1, 2, 3, 4, 5, 6, 0].map(d => `
+          <label><input type="checkbox" value="${d}" ${m.days.includes(d) ? 'checked' : ''}><span>${DAY_NAMES[d]}</span></label>`).join('')}
+        </div>` : '';
+      return `<div class="mass-edit-row" data-group="${groupKey}">
+        <input class="m-input" type="time" value="${esc(m.time)}" aria-label="시간" data-k="time">
+        <input class="m-input" value="${esc(m.place)}" placeholder="장소 (예: 대성당)" aria-label="장소" data-k="place">
+        <input class="m-input" value="${esc(m.note)}" placeholder="설명 (예: 청년)" aria-label="설명" data-k="note">
+        <button type="button" class="edit-btn" data-remove aria-label="이 줄 지우기">지우기</button>
+        ${days}
+      </div>`;
+    }
+
+    function renderMass(schedule) {
+      $('massGroups').innerHTML = GROUPS.map(g => `
+        <div class="mass-group" data-group-box="${g.key}">
+          <h3>${g.title}</h3>
+          <div class="rows">${sortByTime(schedule.masses.filter(m => m.group === g.key)).map(m => rowHtml(g.key, m)).join('')}</div>
+          <button type="button" class="edit-btn" data-add="${g.key}">+ ${g.title} 추가</button>
+        </div>`).join('');
+      $('confession').value = schedule.confession || '';
+      $('holyHour').value = schedule.holyHour || '';
+    }
+
+    $('massGroups').addEventListener('click', e => {
+      if (e.target.dataset.add) {
+        const box = document.querySelector(`[data-group-box="${e.target.dataset.add}"] .rows`);
+        box.insertAdjacentHTML('beforeend', rowHtml(e.target.dataset.add));
+        box.lastElementChild.querySelector('input').focus();
+      }
+      if (e.target.hasAttribute('data-remove')) e.target.closest('.mass-edit-row').remove();
+    });
+
+    function collectMass() {
+      const masses = [];
+      for (const row of document.querySelectorAll('.mass-edit-row')) {
+        const g = GROUPS.find(x => x.key === row.dataset.group);
+        const get = k => row.querySelector(`[data-k="${k}"]`).value.trim();
+        const time = get('time');
+        if (!/^\d{2}:\d{2}$/.test(time)) throw new Error(`${g.title}에 시간이 비어 있거나 잘못된 줄이 있습니다.`);
+        const days = g.days || [...row.querySelectorAll('.mass-days input:checked')].map(i => Number(i.value));
+        if (!days.length) throw new Error(`${g.title} ${time} 미사의 요일을 하나 이상 고르세요.`);
+        masses.push({ group: g.key, time, days, place: get('place'), note: get('note') });
+      }
+      if (!masses.length) throw new Error('미사 시간이 하나도 없습니다.');
+      return masses;
+    }
+
+    $('saveMass').addEventListener('click', async () => {
+      const msg = $('massMsg');
+      try {
+        const masses = collectMass();
+        await setDoc(doc(db, 'site', 'massSchedule'), {
+          masses,
+          confession: $('confession').value.trim(),
+          holyHour: $('holyHour').value.trim(),
+          updatedAt: serverTimestamp(),
+          updatedByName: editorName,
+        });
+        say(msg, '저장되었습니다. 홈페이지에 바로 반영되었습니다.');
+      } catch (e) {
+        say(msg, e.message, false);
+      }
+    });
+
+    // ── 연락처 ────────────────────────────────
+    function renderContact(c) {
+      $('contactFields').innerHTML = CONTACT_FIELDS.map(f => `
+        <div class="m-field">
+          <label for="c-${f.key}">${f.label}</label>
+          <input class="m-input" id="c-${f.key}" value="${esc(c[f.key])}">
+        </div>`).join('');
+    }
+
+    $('saveContact').addEventListener('click', async () => {
+      const msg = $('contactMsg');
+      const data = Object.fromEntries(CONTACT_FIELDS.map(f => [f.key, $(`c-${f.key}`).value.trim()]));
+      if (!data.phone || !data.address) { say(msg, '전화와 주소는 비워 둘 수 없습니다.', false); return; }
+      try {
+        await setDoc(doc(db, 'site', 'contact'), { ...data, updatedAt: serverTimestamp(), updatedByName: editorName });
+        say(msg, '저장되었습니다. 홈페이지에 바로 반영되었습니다.');
+      } catch (e) {
+        say(msg, `저장하지 못했습니다: ${e.message}`, false);
+      }
+    });
+
+    renderMass(await loadSchedule());
+    renderContact(await loadContact());
+    if (location.hash) document.querySelector(location.hash)?.scrollIntoView();
+  </script>
+</body>
+</html>

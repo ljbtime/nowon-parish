@@ -187,6 +187,8 @@
             <h2>미사 안내</h2>
           </div>
 
+          <!-- 미사 시간표: js/mass-data.js 자료로 다시 그림 (아래는 자료를 못 읽을 때 보이는 기본 내용) -->
+          <div id="massBlocks" data-edit-link="../../admin/site.html#mass" data-edit-label="미사 시간 수정">
           <!-- 주일미사 -->
           <div class="mass-block">
             <div class="mass-block-title">주일미사 (일요일)</div>
@@ -263,10 +265,11 @@
             </div>
           </div>
 
-          <!-- 특별 일정 -->
-          <div class="content-body">
-            <h3>특별 일정 안내</h3>
           </div>
+
+          <!-- 특별 일정 -->
+          <div class="content-body" data-editable>
+            <h3>특별 일정 안내</h3>
           <table class="special-table" style="margin-bottom: 2rem;">
             <thead>
               <tr>
@@ -317,6 +320,7 @@
             </p>
           </div>
 
+          </div>
         </section>
       </div>
     </div>
@@ -333,8 +337,8 @@
           </div>
         </div>
         <div class="footer-info">
-          <p>전화 02-933-9981 &nbsp;·&nbsp; 팩스 02-933-9986</p>
-          <p>서울특별시 노원구 한글비석로 585</p>
+          <p>전화 <span data-site="phone">02-933-9981</span> &nbsp;·&nbsp; 팩스 <span data-site="fax">02-933-9986</span></p>
+          <p data-site="address">서울특별시 노원구 한글비석로 585</p>
         </div>
         <a href="../../admin/" class="admin-link">관리자</a>
       </div>
@@ -345,5 +349,26 @@
   </footer>
 
   <script src="../../js/sub.js"></script>
+  <script type="module" src="../../js/site-data.js"></script>
+  <script type="module">
+    import { loadSchedule, GROUPS, rangeText, sortByTime } from '../../js/mass-data.js';
+    const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+    const schedule = await loadSchedule();
+    document.getElementById('massBlocks').innerHTML = GROUPS.map(g => {
+      const list = sortByTime(schedule.masses.filter(m => m.group === g.key));
+      if (!list.length) return '';
+      return `<div class="mass-block">
+        <div class="mass-block-title">${g.long}</div>
+        <div class="mass-rows">${list.map(m => `
+          <div class="mass-row">
+            <span class="mass-time-big">${esc(m.time)}</span>
+            <span class="mass-desc">${esc([g.key === 'weekday' ? rangeText(m.days, true) : '', m.place].filter(Boolean).join(' · '))}</span>
+            <span class="mass-tag">${esc(m.note || '일반')}</span>
+          </div>`).join('')}
+        </div>
+      </div>`;
+    }).join('');
+  </script>
+  <script type="module" src="../../js/page-editor.js"></script>
 </body>
 </html>

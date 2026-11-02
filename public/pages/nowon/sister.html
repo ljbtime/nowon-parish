@@ -221,8 +221,8 @@
           </div>
         </div>
         <div class="footer-info">
-          <p>전화 02-933-9981 &nbsp;·&nbsp; 팩스 02-933-9986</p>
-          <p>서울특별시 노원구 한글비석로 585</p>
+          <p>전화 <span data-site="phone">02-933-9981</span> &nbsp;·&nbsp; 팩스 <span data-site="fax">02-933-9986</span></p>
+          <p data-site="address">서울특별시 노원구 한글비석로 585</p>
         </div>
         <a href="../../admin/" class="admin-link">관리자</a>
       </div>
@@ -266,16 +266,16 @@
   </style>
   <script type="module">
     import { auth, db } from '../../js/firebase-config.js';
+    import { getRole, canEdit } from '../../js/roles.js';
     import { onAuthStateChanged, getIdTokenResult } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
     import { collection, query, where, orderBy, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
-    let isAdmin = false;
+    let canManage = false;
 
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const token = await getIdTokenResult(user);
-        isAdmin = !!token.claims.admin;
-        if (isAdmin) document.getElementById('adminBar').style.display = 'block';
+        canManage = canEdit(await getRole(user));   // 관리자·편집자
+        if (canManage) document.getElementById('adminBar').style.display = 'block';
       }
       loadNuns();
     });
@@ -298,7 +298,7 @@
         container.innerHTML = '';
         snap.forEach(docSnap => {
           const d = docSnap.data();
-          const editBtn = isAdmin
+          const editBtn = canManage
             ? `<a href="../admin/clergy.html?edit=${docSnap.id}" style="float:right;border:1px solid #3d6b3d;color:#3d6b3d;font-size:0.78rem;padding:0.3rem 0.8rem;border-radius:4px;text-decoration:none;">수정</a>`
             : '';
           const photoHtml = d.photo ? `<img src="${d.photo}" alt="${d.name}" />` : '✝';
@@ -333,5 +333,6 @@
       }
     }
   </script>
+  <script type="module" src="../../js/site-data.js"></script>
 </body>
 </html>
