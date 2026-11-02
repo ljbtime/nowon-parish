@@ -15,7 +15,7 @@ const MASSES = [
   { group: 'sunday',   time: '11:00', days: [0], note: '교중미사' },
   { group: 'sunday',   time: '18:00', days: [0], note: '청년' },
   { group: 'sunday',   time: '20:00', days: [0] },
-  { group: 'saturday', time: '15:00', days: [6], note: '초등 3~6학년 · 소성당' },
+  { group: 'saturday', time: '15:00', days: [6], note: '초등부 · 소성당' },
   { group: 'saturday', time: '19:00', days: [6] },
   { group: 'weekday',  time: '06:00', days: [1, 2, 3, 4, 5], range: '월~금' },
   { group: 'weekday',  time: '10:00', days: [2, 3, 4, 5, 6], range: '화~토' },
