@@ -235,17 +235,18 @@ ul { list-style: none; }
 .banner {
   position: relative;
   margin-top: var(--header-h);
-  background-color: #2D220C;
-  text-align: center;
+  background-color: #1a2c4e;
   overflow: hidden;
+  height: clamp(200px, 45vw, 480px);
 }
 
 .banner-bg {
-  display: block;
+  position: absolute;
+  inset: 0;
   width: 100%;
-  max-width: 1140px;
-  height: auto;
-  margin: 0 auto;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .banner::before {
