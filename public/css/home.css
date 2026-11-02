@@ -252,7 +252,7 @@ body.home .footer-brand h3 { font-family: inherit; }
   display: flex;
   align-items: center;
   gap: 10px;
-  min-height: 52px;
+  min-height: 44px;
 }
 .news-list a:hover .news-title { color: var(--navy); text-decoration: underline; }
 .news-cat {
@@ -274,36 +274,28 @@ body.home .footer-brand h3 { font-family: inherit; }
 }
 .news-date { flex-shrink: 0; font-size: 0.875rem; color: var(--sub); font-variant-numeric: tabular-nums; }
 
-/* 미사 시간표: 구분마다 3칸 시간표 */
-.mass-row + .mass-row { margin-top: 12px; }
+/* 미사 시간표: 구분마다 한 줄 (구분 이름 | 시간 칩들) */
+.mass-row {
+  display: grid;
+  grid-template-columns: 84px 1fr;
+  gap: 12px;
+  align-items: baseline;
+  padding: 8px 0;
+}
+.mass-row + .mass-row { border-top: 1px solid var(--line); }
 .mass-row h3 {
   font-size: 0.875rem;
   font-weight: 700;
   color: var(--navy);
-  margin-bottom: 6px;
 }
 .mass-list {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 6px;
-}
-.mass-list li {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 56px;
-  padding: 6px 12px;
-  border-radius: 10px;
-  background: var(--surface);
+  flex-wrap: wrap;
+  gap: 4px 14px;
 }
-.mass-t { font-size: 1.05rem; font-weight: 700; font-variant-numeric: tabular-nums; }
-.mass-n {
-  font-size: 0.78rem;
-  color: var(--sub);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+.mass-list li { display: inline-flex; align-items: baseline; gap: 4px; white-space: nowrap; }
+.mass-t { font-size: 1rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.mass-n { font-size: 0.78rem; color: var(--sub); }
 
 /* 앨범: 6장 한 줄 */
 .album-grid {

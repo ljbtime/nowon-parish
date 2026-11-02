@@ -18,11 +18,10 @@ function renderMassTable(schedule) {
     <div class="mass-row">
       <h3>${g.title}</h3>
       <ul class="mass-list">
-        ${list.map(m => `
-          <li>
-            <span class="mass-t">${esc(m.time)}</span>
-            <span class="mass-n">${esc([g.key === 'weekday' ? rangeText(m.days) : '', m.note].filter(Boolean).join(' · '))}</span>
-          </li>`).join('')}
+        ${list.map(m => {
+          const note = [g.key === 'weekday' ? rangeText(m.days) : '', m.note].filter(Boolean).join(' · ');
+          return `<li><span class="mass-t">${esc(m.time)}</span>${note ? `<span class="mass-n">${esc(note)}</span>` : ''}</li>`;
+        }).join('')}
       </ul>
     </div>`;
   }).join('');
