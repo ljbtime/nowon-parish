@@ -99,8 +99,12 @@ service cloud.firestore {
       allow read: if request.auth != null &&
                     (request.auth.uid == userId || isAdmin());
       allow create: if request.auth != null && request.auth.uid == userId;
-      allow update: if request.auth != null && request.auth.uid == userId;
-      allow delete: if isAdmin();
+      // 본인은 세례명·연락처만 고칠 수 있음 (아이디·이메일·이름은 그대로)
+      allow update: if request.auth != null && request.auth.uid == userId
+                    && request.resource.data.diff(resource.data).affectedKeys()
+                         .hasOnly(['baptismalName', 'phone', 'mobile', 'updatedAt']);
+      // 회원 탈퇴는 본인, 정리는 관리자
+      allow delete: if request.auth != null && (request.auth.uid == userId || isAdmin());
     }
 
     // 아이디 → 이메일 연결 (로그인·아이디 중복확인용)

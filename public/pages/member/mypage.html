@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>내 정보 – 천주교 노원성당</title>
+  <link rel="stylesheet" href="../../css/style.css?v=3" />
+  <link rel="stylesheet" href="../../admin/css/manage.css" />
+  <style>
+    .m-main { max-width: 640px; }
+    .m-info { display: grid; grid-template-columns: 96px 1fr; gap: 8px 12px; font-size: 0.95rem; margin-bottom: 20px; }
+    .m-info dt { color: var(--sub); }
+    .m-info dd { margin: 0; color: var(--ink); }
+    .m-card.danger { border-color: #f1d2cf; }
+    .m-card.danger h2 { color: #c0392b; }
+    .edit-btn.danger { background: #c0392b; border-color: #c0392b; color: #fff; }
+    .edit-btn.danger:disabled { opacity: 0.5; }
+    .m-check { display: flex; gap: 8px; align-items: flex-start; font-size: 0.9rem; color: var(--ink); margin-bottom: 14px; }
+  </style>
+</head>
+<body class="manage is-guarding">
+
+  <header class="m-top">
+    <div class="m-top-inner">
+      <a class="m-brand" href="../../index.html"><span>✝</span>노원성당</a>
+      <nav class="m-nav"><a href="mypage.html" class="active">내 정보</a></nav>
+      <button type="button" class="edit-btn" id="logout">로그아웃</button>
+    </div>
+  </header>
+
+  <main class="m-main">
+    <div>
+      <h1 class="m-title">내 정보</h1>
+      <p class="m-lead">회원 정보를 확인하고 연락처·비밀번호를 바꿀 수 있습니다.</p>
+    </div>
+
+    <!-- 회원 정보 -->
+    <section class="m-card">
+      <h2>회원 정보</h2>
+      <p class="m-help">이름·아이디·이메일을 바꾸려면 본당 사무실(<span data-site="phone">02-933-9981</span>)로 연락해 주세요.</p>
+      <dl class="m-info" id="info"></dl>
+      <form id="infoForm">
+        <div class="m-field">
+          <label for="baptismalName">세례명</label>
+          <input class="m-input" id="baptismalName" maxlength="30">
+        </div>
+        <div class="m-field">
+          <label for="mobile">휴대폰</label>
+          <input class="m-input" id="mobile" inputmode="tel" maxlength="20" placeholder="010-0000-0000">
+        </div>
+        <div class="m-field">
+          <label for="phone">집 전화 <small style="color:var(--sub);font-weight:400">(선택)</small></label>
+          <input class="m-input" id="phone" inputmode="tel" maxlength="20">
+        </div>
+        <div class="m-actions">
+          <span class="m-msg" id="infoMsg"></span>
+          <button type="submit" class="edit-btn primary">저장</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- 비밀번호 -->
+    <section class="m-card">
+      <h2>비밀번호 변경</h2>
+      <p class="m-help">확인을 위해 지금 비밀번호를 먼저 입력해 주세요. 새 비밀번호는 8자 이상입니다.</p>
+      <form id="pwForm">
+        <input type="text" class="js-username" autocomplete="username" hidden>
+        <div class="m-field">
+          <label for="cur">지금 비밀번호</label>
+          <input class="m-input" type="password" id="cur" autocomplete="current-password" required>
+        </div>
+        <div class="m-field">
+          <label for="pw1">새 비밀번호</label>
+          <input class="m-input" type="password" id="pw1" autocomplete="new-password" minlength="8" required>
+        </div>
+        <div class="m-field">
+          <label for="pw2">새 비밀번호 확인</label>
+          <input class="m-input" type="password" id="pw2" autocomplete="new-password" minlength="8" required>
+        </div>
+        <div class="m-actions">
+          <span class="m-msg" id="pwMsg"></span>
+          <button type="submit" class="edit-btn primary">비밀번호 바꾸기</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- 탈퇴 -->
+    <section class="m-card danger">
+      <h2>회원 탈퇴</h2>
+      <p class="m-help">
+        탈퇴하면 회원 정보(이름·생년월일·연락처)가 바로 지워지고 되살릴 수 없습니다.
+        이미 쓴 게시글은 지워지지 않으니, 필요하면 탈퇴 전에 직접 지워 주세요.
+      </p>
+      <form id="byeForm">
+        <input type="text" class="js-username" autocomplete="username" hidden>
+        <div class="m-field">
+          <label for="byePw">비밀번호</label>
+          <input class="m-input" type="password" id="byePw" autocomplete="current-password" required>
+        </div>
+        <label class="m-check"><input type="checkbox" id="byeOk"> 위 내용을 확인했고, 탈퇴합니다.</label>
+        <div class="m-actions">
+          <span class="m-msg" id="byeMsg"></span>
+          <button type="submit" class="edit-btn danger" id="byeBtn" disabled>탈퇴하기</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script type="module">
+    import { auth, db } from '../../js/firebase-config.js';
+    import {
+      onAuthStateChanged, signOut, EmailAuthProvider, reauthenticateWithCredential, updatePassword, deleteUser,
+    } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+    import { doc, getDoc, updateDoc, deleteDoc, serverTimestamp }
+      from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+    import { getRole } from '../../js/roles.js';
+
+    const $ = id => document.getElementById(id);
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+    const say = (el, text, err) => { el.textContent = text; el.classList.toggle('err', !!err); };
+    const authErr = e => {
+      const c = e.code || '';
+      if (c.includes('invalid-credential') || c.includes('wrong-password')) return '비밀번호가 맞지 않습니다.';
+      if (c.includes('too-many-requests')) return '시도가 너무 많습니다. 잠시 후 다시 해 주세요.';
+      if (c.includes('weak-password')) return '새 비밀번호가 너무 쉽습니다. 더 길게 정해 주세요.';
+      return e.message;
+    };
+    const reauth = (user, pw) => reauthenticateWithCredential(user, EmailAuthProvider.credential(user.email, pw));
+
+    const user = await new Promise(ok => { const stop = onAuthStateChanged(auth, u => { stop(); ok(u); }); });
+    if (!user) location.replace('login.html');
+
+    const ref = doc(db, 'users', user.uid);
+    let me = {};
+    try { me = (await getDoc(ref)).data() || {}; } catch { /* 회원 문서가 없으면 빈 값 */ }
+
+    $('info').innerHTML = [
+      ['이름', me.name || user.displayName], ['아이디', me.userId], ['이메일', me.email || user.email], ['생년월일', me.birthDate],
+    ].filter(([, v]) => v).map(([k, v]) => `<dt>${k}</dt><dd>${esc(v)}</dd>`).join('');
+    $('baptismalName').value = me.baptismalName || '';
+    $('mobile').value = me.mobile || '';
+    $('phone').value = me.phone || '';
+    document.querySelectorAll('.js-username').forEach(i => { i.value = user.email; });
+    document.body.classList.remove('is-guarding');
+
+    $('logout').addEventListener('click', async () => { await signOut(auth); location.href = '../../index.html'; });
+
+    // 회원 정보
+    $('infoForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const mobile = $('mobile').value.trim();
+      if (mobile && !/^[0-9-]{9,20}$/.test(mobile)) return say($('infoMsg'), '휴대폰 번호를 숫자와 - 로 입력해 주세요.', true);
+      try {
+        await updateDoc(ref, {
+          baptismalName: $('baptismalName').value.trim(), mobile, phone: $('phone').value.trim(), updatedAt: serverTimestamp(),
+        });
+        say($('infoMsg'), '저장했습니다.');
+      } catch (err) { say($('infoMsg'), `저장하지 못했습니다: ${err.message}`, true); }
+    });
+
+    // 비밀번호
+    $('pwForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const msg = $('pwMsg');
+      if ($('pw1').value.length < 8) return say(msg, '새 비밀번호는 8자 이상이어야 합니다.', true);
+      if ($('pw1').value !== $('pw2').value) return say(msg, '새 비밀번호가 서로 다릅니다.', true);
+      if ($('pw1').value === $('cur').value) return say(msg, '지금과 다른 비밀번호를 입력해 주세요.', true);
+      say(msg, '바꾸는 중…');
+      try {
+        await reauth(user, $('cur').value);
+        await updatePassword(user, $('pw1').value);
+        ['cur', 'pw1', 'pw2'].forEach(id => { $(id).value = ''; });
+        say(msg, '비밀번호를 바꿨습니다. 다음 로그인부터 새 비밀번호를 쓰세요.');
+      } catch (err) { say(msg, authErr(err), true); }
+    });
+
+    // 탈퇴
+    $('byeOk').addEventListener('change', e => { $('byeBtn').disabled = !e.target.checked; });
+    $('byeForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const msg = $('byeMsg');
+      if (await getRole(user) === 'admin') {
+        return say(msg, '관리자는 탈퇴할 수 없습니다. 다른 분에게 관리자 권한을 넘긴 뒤, 그 관리자에게 권한 회수를 부탁해 주세요.', true);
+      }
+      if (!confirm('정말 탈퇴할까요? 되돌릴 수 없습니다.')) return;
+      $('byeBtn').disabled = true;
+      say(msg, '탈퇴 처리 중…');
+      try {
+        await reauth(user, $('byePw').value);       // 비밀번호가 틀리면 아무것도 지우지 않음
+        if (me.userId) await deleteDoc(doc(db, 'usernames', me.userId)).catch(() => {});
+        await deleteDoc(ref);
+        await deleteUser(user);
+        alert('탈퇴되었습니다. 그동안 함께해 주셔서 감사합니다.');
+        location.href = '../../index.html';
+      } catch (err) {
+        say(msg, authErr(err), true);
+        $('byeBtn').disabled = false;
+      }
+    });
+  </script>
+  <script type="module" src="../../js/site-data.js"></script>
+</body>
+</html>

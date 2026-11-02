@@ -203,6 +203,7 @@ ul { list-style: none; }
 }
 .btn-join:hover { background: var(--navy-dark); border-color: var(--navy-dark); }
 
+.user-greeting:hover { color: var(--navy); text-decoration: underline; }
 .user-greeting {
   color: var(--ink);
   font-size: 0.82rem;

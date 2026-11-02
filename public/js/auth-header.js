@@ -11,7 +11,7 @@ if (inner) {
   authDiv.innerHTML = `
     <a href="/pages/member/login.html" class="btn-login" id="btnLoginLink">로그인</a>
     <a href="/pages/member/join.html" class="btn-join" id="btnJoinLink">회원가입</a>
-    <span class="user-greeting" id="userGreeting" style="display:none"></span>
+    <a href="/pages/member/mypage.html" class="user-greeting" id="userGreeting" style="display:none" title="내 정보"></a>
     <button class="btn-logout" id="btnLogout" style="display:none">로그아웃</button>
   `;
   // 햄버거 버튼 앞에 삽입
@@ -36,7 +36,7 @@ onAuthStateChanged(auth, (user) => {
     btnJoin.style.display   = 'none';
     greeting.style.display  = 'inline';
     btnLogout.style.display = 'inline';
-    greeting.textContent    = `✝ ${user.displayName || ''}님`;
+    greeting.textContent    = `✝ ${user.displayName || ''}님 · 내 정보`;
   } else {
     btnLogin.style.display  = '';
     btnJoin.style.display   = '';
