@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>내 계정 – 노원성당 관리</title>
+  <link rel="stylesheet" href="../css/style.css?v=3" />
+  <link rel="stylesheet" href="css/manage.css" />
+</head>
+<body class="manage is-guarding">
+
+  <header class="m-top">
+    <div class="m-top-inner">
+      <a class="m-brand" href="dashboard.html"><span>✝</span>노원성당 관리</a>
+      <nav class="m-nav">
+        <a href="dashboard.html">관리 홈</a>
+        <a href="site.html">미사 시간·연락처</a>
+        <a href="roles.html" data-admin-only hidden>권한 관리</a>
+        <a href="account.html" class="active">내 계정</a>
+      </nav>
+      <span class="m-user" data-user-name></span>
+      <button type="button" class="edit-btn" data-logout>로그아웃</button>
+    </div>
+  </header>
+
+  <main class="m-main">
+    <div>
+      <h1 class="m-title">내 계정</h1>
+      <p class="m-lead">로그인한 계정: <strong id="me"></strong></p>
+    </div>
+
+    <section class="m-card" style="max-width:480px;">
+      <h2>비밀번호 변경</h2>
+      <p class="m-help">확인을 위해 지금 비밀번호를 먼저 입력해 주세요. 새 비밀번호는 8자 이상입니다.</p>
+      <form id="pwForm" autocomplete="on">
+        <input type="text" id="username" autocomplete="username" hidden>
+        <div class="m-field">
+          <label for="cur">지금 비밀번호</label>
+          <input class="m-input" type="password" id="cur" autocomplete="current-password" required>
+        </div>
+        <div class="m-field">
+          <label for="pw1">새 비밀번호</label>
+          <input class="m-input" type="password" id="pw1" autocomplete="new-password" minlength="8" required>
+        </div>
+        <div class="m-field">
+          <label for="pw2">새 비밀번호 확인</label>
+          <input class="m-input" type="password" id="pw2" autocomplete="new-password" minlength="8" required>
+        </div>
+        <div class="m-actions">
+          <span class="m-msg" id="msg"></span>
+          <button type="submit" class="edit-btn primary" id="btn">비밀번호 바꾸기</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script type="module">
+    import { EmailAuthProvider, reauthenticateWithCredential, updatePassword }
+      from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+    import { guard } from '../js/admin-guard.js';
+
+    const { user } = await guard();
+    document.getElementById('me').textContent = user.email;
+    document.getElementById('username').value = user.email;
+
+    const msg = document.getElementById('msg');
+    const show = (text, err) => { msg.textContent = text; msg.classList.toggle('err', !!err); };
+
+    document.getElementById('pwForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const cur = document.getElementById('cur').value;
+      const pw1 = document.getElementById('pw1').value;
+      const pw2 = document.getElementById('pw2').value;
+      if (pw1.length < 8) return show('새 비밀번호는 8자 이상이어야 합니다.', true);
+      if (pw1 !== pw2) return show('새 비밀번호가 서로 다릅니다.', true);
+      if (pw1 === cur) return show('지금과 다른 비밀번호를 입력해 주세요.', true);
+
+      const btn = document.getElementById('btn');
+      btn.disabled = true;
+      show('바꾸는 중…');
+      try {
+        await reauthenticateWithCredential(user, EmailAuthProvider.credential(user.email, cur));
+        await updatePassword(user, pw1);
+        e.target.reset();
+        document.getElementById('username').value = user.email;
+        show('비밀번호를 바꿨습니다. 다음 로그인부터 새 비밀번호를 쓰세요.');
+      } catch (err) {
+        const code = err.code || '';
+        show(
+          code.includes('invalid-credential') || code.includes('wrong-password') ? '지금 비밀번호가 맞지 않습니다.'
+          : code.includes('too-many-requests') ? '시도가 너무 많습니다. 잠시 후 다시 해 주세요.'
+          : code.includes('weak-password') ? '새 비밀번호가 너무 쉽습니다. 더 길게 정해 주세요.'
+          : `바꾸지 못했습니다: ${err.message}`, true);
+      }
+      btn.disabled = false;
+    });
+  </script>
+</body>
+</html>
