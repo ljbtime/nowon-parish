@@ -203,6 +203,7 @@ ul { list-style: none; }
 }
 .btn-join:hover { background: var(--navy-dark); border-color: var(--navy-dark); }
 
+@media (max-width: 600px) { .greet-name { display: none; } }
 .user-greeting:hover { color: var(--navy); text-decoration: underline; }
 .user-greeting {
   color: var(--ink);

@@ -36,7 +36,7 @@ onAuthStateChanged(auth, (user) => {
     btnJoin.style.display   = 'none';
     greeting.style.display  = 'inline';
     btnLogout.style.display = 'inline';
-    greeting.textContent    = `✝ ${user.displayName || ''}님 · 내 정보`;
+    greeting.innerHTML      = `<span class="greet-name">✝ ${(user.displayName || '').replace(/[&<>"']/g, '')}님 · </span>내 정보`;
   } else {
     btnLogin.style.display  = '';
     btnJoin.style.display   = '';
