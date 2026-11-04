@@ -12,7 +12,7 @@
     href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css?v=3" />
-  <link rel="stylesheet" href="css/home.css?v=4" />
+  <link rel="stylesheet" href="css/home.css?v=5" />
 </head>
 
 <body class="home">
@@ -146,6 +146,16 @@
           <span class="quick-title">공지사항</span>
           <span class="quick-sub">본당 알림</span>
         </a>
+        <a class="card quick-item" href="pages/catholic/class.html">
+          <svg class="ico" viewBox="0 0 24 24"><path d="M12 2v20"/><path d="M6 8h12"/></svg>
+          <span class="quick-title">예비신자 교리</span>
+          <span class="quick-sub">처음 오신 분</span>
+        </a>
+        <a class="card quick-item" href="pages/info/funeral.html">
+          <svg class="ico" viewBox="0 0 24 24"><path d="M12 22c4-3 7-6.5 7-11a7 7 0 0 0-14 0c0 4.5 3 8 7 11Z"/><path d="M12 7v6"/><path d="M9.5 9.5h5"/></svg>
+          <span class="quick-title">장례 안내</span>
+          <span class="quick-sub">연령회 · 장례 문의</span>
+        </a>
         <a class="card quick-item" href="#visit">
           <svg class="ico" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
           <span class="quick-title">오시는 길</span>
@@ -177,7 +187,19 @@
         <p class="card-foot">성시간 · <span data-mass="holyHour">매월 첫째 목요일 19:30 대성당</span></p>
       </div>
 
-      <div class="card span-4" id="gallery">
+      <div class="card span-2 newcomer" id="newcomer">
+        <div class="card-head">
+          <h2>처음 오신 분</h2>
+          <a class="card-more" href="pages/catholic/class.html">교리반 안내 ›</a>
+        </div>
+        <p class="newcomer-lead">세례를 받고 싶은 분, 오랜만에 성당을 다시 찾는 분 모두 환영합니다. 예비신자 교리반에서 함께 시작하세요.</p>
+        <dl class="newcomer-info">
+          <dt>교리 시간</dt><dd data-site="classTime">주일반 주일 오전 9시 · 화요반 화요일 저녁 8시</dd>
+          <dt>문의</dt><dd><a href="tel:010-2754-9242" data-site="classPhone">010-2754-9242</a></dd>
+          <dt>사무실</dt><dd><a href="tel:02-933-9981" data-site="phone">02-933-9981</a></dd>
+        </dl>
+      </div>
+      <div class="card span-2" id="gallery">
         <div class="card-head">
           <h2>본당 앨범</h2>
           <a class="card-more" href="pages/dataroom/photo.html">사진자료실 ›</a>
@@ -219,6 +241,10 @@
             <svg class="ico" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             <div><strong><a href="tel:02-933-9981" data-site="phone">02-933-9981</a></strong><span>본당 사무실</span></div>
           </li>
+          <li>
+            <svg class="ico" viewBox="0 0 24 24"><path d="M12 22c4-3 7-6.5 7-11a7 7 0 0 0-14 0c0 4.5 3 8 7 11Z"/><path d="M12 7v6"/><path d="M9.5 9.5h5"/></svg>
+            <div><strong><a href="tel:010-8756-1956" data-site="funeralPhone">010-8756-1956</a></strong><span>연령회 · 장례 문의</span></div>
+          </li>
         </ul>
       </div>
     </div>
@@ -236,7 +262,7 @@
           </div>
         </div>
         <div class="footer-info">
-          <p>전화 <span data-site="phone">02-933-9981</span> &nbsp;·&nbsp; 팩스 <span data-site="fax">02-933-9986</span></p>
+          <p>전화 <span data-site="phone">02-933-9981</span> &nbsp;·&nbsp; 팩스 <span data-site="fax">02-933-9986</span> &nbsp;·&nbsp; <a href="mailto:no1@nwsd.or.kr" data-site="email">no1@nwsd.or.kr</a></p>
         </div>
       </div>
       <div class="footer-bottom">

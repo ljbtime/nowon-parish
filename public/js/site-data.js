@@ -13,6 +13,10 @@ export const CONTACT_FIELDS = [
   { key: 'subwayDetail', label: '지하철 설명' },
   { key: 'bus',          label: '버스 정류장' },
   { key: 'busDetail',    label: '버스 노선' },
+  { key: 'email',        label: '이메일' },
+  { key: 'funeralPhone', label: '연령회 (장례 문의)' },
+  { key: 'classTime',    label: '예비신자 교리 시간' },
+  { key: 'classPhone',   label: '예비신자 교리 문의' },
 ];
 
 export const DEFAULT_CONTACT = {
@@ -24,6 +28,10 @@ export const DEFAULT_CONTACT = {
   subwayDetail: '10·11단지 아파트길로 약 500m, 도보 7~8분',
   bus: '주공 11단지성당 정류장',
   busDetail: '마을버스 노원08 · 11-885',
+  email: 'no1@nwsd.or.kr',
+  funeralPhone: '010-8756-1956',
+  classTime: '주일반 주일 오전 9시 · 화요반 화요일 저녁 8시',
+  classPhone: '010-2754-9242',
 };
 
 export async function loadContact() {
@@ -39,7 +47,9 @@ export function applyContact(c) {
     const v = c[el.dataset.site];
     if (!v) return;
     el.textContent = v;
-    if (el.tagName === 'A' && el.dataset.site === 'phone') el.href = `tel:${v}`;
+    if (el.tagName !== 'A') return;
+    if (/phone$/i.test(el.dataset.site)) el.href = `tel:${v}`;
+    if (el.dataset.site === 'email') el.href = `mailto:${v}`;
   });
 }
 
